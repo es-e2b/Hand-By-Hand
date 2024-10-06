@@ -14,8 +14,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         public Position Position;
 
-        public Shape Shape;
+        public HandCount Shape;
 
-        public Special Special;
+        public SpecialSO Special;
     }
 }

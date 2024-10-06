@@ -4,18 +4,14 @@ using UnityEngine;
 
 namespace HandByHand.NightSystem.SignLanguageSystem
 {
-    public enum HandPosition
+    public enum UsingHand
     {
-        OverHead,
-        Face,
-        Jaw,
-        Chest,
-        Belly
+        BothHand,
+        OneHand
     }
-
     [System.Serializable]
-    public class Position
+    public class HandCount
     {
-        public HandPosition HandPosition;
+        public UsingHand UsingHand;
     }
 }
