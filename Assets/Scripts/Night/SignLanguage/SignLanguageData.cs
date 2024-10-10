@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace HandByHand.NightSystem.SignLanguageSystem
 {
-    public class HandSignSaveManager : MonoBehaviour
+    public class SignLanguageData : MonoBehaviour
     {
         [HideInInspector]
         public bool IsFingerSignSelected = false;
@@ -31,10 +31,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         [SerializeField]
         private SpecialSO special;
 
-        public void ComparingHandSignSO(SignLanguageSO singLanguageSO)
-        {
-
-        }
 
         public void SaveFingerSignData(FingerSign _fingerSign)
         {

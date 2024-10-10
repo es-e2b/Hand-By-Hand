@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace HandByHand.NightSystem.SignLanguageSystem
 
 {
-    public class HandSignManager : MonoBehaviour
+    public class SignLanguageMasterManager : MonoBehaviour
     {
         public SignLanguageSO ComparingSignLanguage;
 

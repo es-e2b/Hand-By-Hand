@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace HandByHand.NightSystem.SignLanguageSystem
 {
-    public class FingerSignUIManager : MonoBehaviour
+    public class FingerSignManager : MonoBehaviour
     {
         private FingerSign fingerSign = new FingerSign();
 
@@ -17,6 +17,9 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         [SerializeField]
         private Sprite[] unfoldFingerImage = new Sprite[5];
+
+        [SerializeField]
+        private SignLanguageData handSignData;
 
         private void Start()
         {
@@ -30,6 +33,11 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             {
                 fingerSignImageComp[i].sprite = unfoldFingerImage[i];
             }
+        }
+
+        public void SaveData()
+        {
+            handSignData.SaveFingerSignData(fingerSign);
         }
 
         public void ThumbAction()
