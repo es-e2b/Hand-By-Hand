@@ -10,6 +10,9 @@ namespace HandByHand.NightSystem.SignLanguageSystem
     {
         public SignLanguageSO ComparingSignLanguage;
 
+
+
+
         public void ComparingHandSignSO(SignLanguageSO singLanguageSO)
         {
 
