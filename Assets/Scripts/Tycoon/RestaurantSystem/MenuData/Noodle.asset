@@ -16,5 +16,5 @@ MonoBehaviour:
   Name: "\uAD6D\uC218"
   Sprite: {fileID: -495477259, guid: 7f65d77739e304058aa36a83a4e73f8a, type: 3}
   Price: 5000
-  EatingDuration: 30
+  EatingDuration: 1
   Vocabulary: {fileID: 11400000, guid: eb4e2a2782fa04e45ace5e4b63b08a12, type: 2}
