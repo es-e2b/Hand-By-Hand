@@ -50,22 +50,12 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
         }
         public void AddWaitingCustomer(Customer customer)
         {
-            if(PayingCustomer==null)
-            {
-                PayingCustomer=customer;
-                return;
-            }
             WaitingCustomer.Enqueue(customer);
         }
         private IEnumerator WaitPayingCustomer()
         {
             yield return new WaitUntil(() => WaitingCustomer.Count>0);
             PayingCustomer=WaitingCustomer.Dequeue();
-        }
-        private void ChangeToNextCustomer()
-        {
-            if(WaitingCustomer.Count>0) PayingCustomer=WaitingCustomer.Dequeue();
-            else PayingCustomer=null;
         }
         public UnityEvent<Customer> OnChangedCustomer { get; private set; }
         public UnityEvent<int> OnChangedTotalPrice { get; private set; }
