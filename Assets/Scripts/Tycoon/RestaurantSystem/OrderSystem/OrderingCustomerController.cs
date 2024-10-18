@@ -6,7 +6,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
     using UnityEngine;
     using UnityEngine.UI;
 
-    public class CustomerController : MonoBehaviour
+    public class OrderingCustomerController : MonoBehaviour
     {
         private GameObject customerUI;
         [SerializeField]
