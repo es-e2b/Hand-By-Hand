@@ -14,7 +14,7 @@ namespace Assets.Scripts.SignLanguage
         private GameObject leftHandObject;
         private Coroutine leftHandRenderingCoroutine;
         private Coroutine rightHandRenderingCoroutine;
-        private bool isRedering;
+        private bool isRendering;
 
         // public Vocabulary vocabulary1;
         // public GameObject speaker;
@@ -41,13 +41,8 @@ namespace Assets.Scripts.SignLanguage
             leftHandObject.GetComponent<RectTransform>().sizeDelta = new Vector2(300,300);
             rightHandObject.GetComponent<RectTransform>().sizeDelta = new Vector2(300,300);
 
-            // leftHandObject.transform.SetParent(speaker.transform, false);
-            // rightHandObject.transform.SetParent(speaker.transform, false);
-
             leftHandObject.transform.localScale=Vector2.zero;
             rightHandObject.transform.localScale=Vector2.zero;
-
-            // EnqueueVocabulary(speaker, vocabulary1);
         }
         private bool IsVocabularyRenderingComplete()
         {
@@ -60,7 +55,7 @@ namespace Assets.Scripts.SignLanguage
         public void EnqueueVocabulary(GameObject speaker, Vocabulary vocabulary)
         {
             renderingQueue.Enqueue((speaker, vocabulary));
-            if(!isRedering)
+            if(!isRendering)
             {
                 StartCoroutine(StartAnimation());
             }
@@ -73,7 +68,7 @@ namespace Assets.Scripts.SignLanguage
         }
         private IEnumerator StartAnimation()
         {
-            isRedering=true;
+            isRendering=true;
             while (renderingQueue.Count > 0)
             {
                 (GameObject speaker, Vocabulary vocabulary) now = renderingQueue.Dequeue();
@@ -97,7 +92,7 @@ namespace Assets.Scripts.SignLanguage
             renderingQueue.Clear();
             yield return StopLeftHandAnimation();
             yield return StopRightHandAnimation();
-            isRedering=false;
+            isRendering=false;
         }
         private IEnumerator StopLeftHandAnimation()
         {
