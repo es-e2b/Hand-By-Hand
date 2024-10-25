@@ -48,6 +48,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
             OnChangedCustomer=new();
             OnChangedTotalPrice=new();
         }
+        private void Start()
+        {
+            StartCoroutine(WaitPayingCustomer());
+        }
         public void AddWaitingCustomer(Customer customer)
         {
             WaitingCustomer.Enqueue(customer);
