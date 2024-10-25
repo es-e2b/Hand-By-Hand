@@ -1,14 +1,14 @@
 namespace Assets.Scripts.SignLanguage
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.UI;
 
     public class SignAnimationRenderer : MonoBehaviour
     {
         #region Field
         public static SignAnimationRenderer Instance { get; private set; }
+        
+        [field:SerializeField]
+        public GameObject Hand { get; private set; }
         #endregion
 
         #region Method
