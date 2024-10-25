@@ -23,17 +23,15 @@ namespace Assets.Scripts.SignLanguage
         }
         private void Start()
         {
-            leftHandObject = new GameObject("Left Hand", typeof(Image));
-            rightHandObject = new GameObject("Right Hand", typeof(Image));
+            leftHandObject = Instantiate(SignAnimationRenderer.Instance.Hand, transform);
+            rightHandObject = Instantiate(SignAnimationRenderer.Instance.Hand, transform);
 
-            leftHandObject.GetComponent<RectTransform>().sizeDelta = new Vector2(300,300);
-            rightHandObject.GetComponent<RectTransform>().sizeDelta = new Vector2(300,300);
+            Rect speakerRect = gameObject.GetComponent<RectTransform>().rect;
 
-            leftHandObject.transform.localScale=Vector2.zero;
-            rightHandObject.transform.localScale=Vector2.zero;
+            float handSize = Mathf.Min(speakerRect.width, speakerRect.height)*0.3f;
 
-            leftHandObject.transform.SetParent(transform);
-            rightHandObject.transform.SetParent(transform);
+            leftHandObject.GetComponent<RectTransform>().sizeDelta = new Vector2(handSize, handSize);
+            rightHandObject.GetComponent<RectTransform>().sizeDelta = new Vector2(handSize, handSize);
         }
         private bool IsVocabularyRenderingComplete()
         {
