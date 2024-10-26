@@ -10,8 +10,11 @@ namespace HandByHand.NightSystem.SignLanguageSystem
     public class SignLanguageUIManager : MonoBehaviour
     {
         #region UI_COMPONENTS
-        public ButtonListUIComponent buttonListUIComponent;
-        public ViewportListUIComponent viewportListUIComponent;
+        [Header("UI Components")]
+        public GameObject SignLanguageCanvas;
+
+        public ButtonListUIComponent ButtonListUIComponent;
+        public ViewportListUIComponent ViewportListUIComponent;
 
         private List<TMP_Text> buttonText;
         private List<GameObject> UIObject;
@@ -19,8 +22,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         private void Awake()
         {
-            buttonText = buttonListUIComponent.buttonText;
-            UIObject = viewportListUIComponent.UIObject;
+            buttonText = ButtonListUIComponent.buttonText;
+            UIObject = ViewportListUIComponent.UIObject;
         }
 
         void Start()
@@ -31,6 +34,28 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             //HandCount오브젝트만 활성화
             UIObject[0].SetActive(true);
+
+            //캔버스 비활성화
+            if(SignLanguageCanvas.activeSelf)
+            {
+                SignLanguageCanvas.SetActive(false);
+            }
+        }
+
+        public void ActiveUIObject()
+        {
+            if (!SignLanguageCanvas.activeSelf)
+            {
+                SignLanguageCanvas.SetActive(true);
+            }
+        }
+
+        public void InactiveUIObject()
+        {
+            if (SignLanguageCanvas.activeSelf)
+            {
+                SignLanguageCanvas.SetActive(false);
+            }
         }
 
         public void ChangeUIObject()
@@ -62,8 +87,5 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                     break;
             }
         }
-
-
-        
     }
 }

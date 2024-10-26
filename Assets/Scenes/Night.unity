@@ -615,7 +615,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &277384927
 RectTransform:
@@ -1135,7 +1135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1209,8 +1209,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab850963a583c624b91af557f3a2835d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonListUIComponent: {fileID: 1928629948}
-  viewportListUIComponent: {fileID: 1145322218}
+  SignLanguageCanvas: {fileID: 277384923}
+  ButtonListUIComponent: {fileID: 1928629948}
+  ViewportListUIComponent: {fileID: 1145322218}
 --- !u!4 &626890650
 Transform:
   m_ObjectHideFlags: 0
@@ -1655,7 +1656,7 @@ GameObject:
   - component: {fileID: 930908945}
   - component: {fileID: 930908944}
   m_Layer: 0
-  m_Name: HandSignManager
+  m_Name: SignLanguageManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2117,6 +2118,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1087239874}
+  - component: {fileID: 1087239875}
   m_Layer: 0
   m_Name: PrintManager
   m_TagString: Untagged
@@ -2139,6 +2141,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1508803796}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1087239875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087239873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24b4c30d8b96adf4586556c3178fccbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueFile: {fileID: 0}
+  IsPrintEnd: 0
 --- !u!1 &1145322213
 GameObject:
   m_ObjectHideFlags: 0
@@ -2696,6 +2712,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1087239874}
+  - {fileID: 1548574216}
   - {fileID: 930908945}
   - {fileID: 202230700}
   m_Father: {fileID: 0}
@@ -2909,6 +2926,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1539995298}
   m_CullTransparentMesh: 1
+--- !u!1 &1548574215
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1548574216}
+  - component: {fileID: 1548574217}
+  m_Layer: 0
+  m_Name: DialogueManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1548574216
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548574215}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1508803796}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1548574217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548574215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97e4b3752e3475441938758b92faccc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueFileSO: {fileID: 0}
+  printManager: {fileID: 0}
+  signLanguageManager: {fileID: 0}
 --- !u!1 &1592028887
 GameObject:
   m_ObjectHideFlags: 0

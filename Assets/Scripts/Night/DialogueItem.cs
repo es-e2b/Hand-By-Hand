@@ -9,17 +9,26 @@ namespace HandByHand.NightSystem
     public enum WhoseItem
     {
         NPC,
-        Protagonist
+        Player
+    }
+
+    public enum itemType
+    {
+        NPCText,
+        PlayerText,
+        PlayerChoice
     }
 
     [System.Serializable]
     public class DialogueItem : MonoBehaviour
     {
-        public WhoseItem itemType;
+        public WhoseItem whoseItem;
+        public itemType itemType;
 
-        public DialogueItem(WhoseItem whoseItem)
+        public DialogueItem(WhoseItem whoseItem, itemType itemType)
         {
-            this.itemType = whoseItem;
+            this.whoseItem = whoseItem;
+            this.itemType = itemType;
         }
 
         public WhoseItem WhoseItem
@@ -33,7 +42,20 @@ namespace HandByHand.NightSystem
     {
         public TMP_Text Text;
 
-        public NPCText() : base(WhoseItem.NPC) { }
+        public NPCText() : base(WhoseItem.NPC, itemType.NPCText) { }
+
+        public TMP_Text text
+        {
+            get => this.Text;
+        }
+    }
+
+    [System.Serializable]
+    public class PlayerText : DialogueItem
+    {
+        public TMP_Text Text;
+
+        public PlayerText() : base(WhoseItem.Player, itemType.PlayerText) { }
 
         public TMP_Text text
         {
@@ -46,6 +68,7 @@ namespace HandByHand.NightSystem
     {
         public List<SignLanguageSO> SignLanguageItem;
 
-        public PlayerChoice() : base(WhoseItem.Protagonist) { SignLanguageItem = new List<SignLanguageSO>(); }
+        public PlayerChoice() : base(WhoseItem.Player, itemType.PlayerChoice) 
+        { SignLanguageItem = new List<SignLanguageSO>(); }
     }
 }

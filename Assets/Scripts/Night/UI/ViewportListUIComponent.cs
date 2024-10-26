@@ -6,6 +6,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 {
     public class ViewportListUIComponent : MonoBehaviour
     {
+        [HideInInspector]
         public List<GameObject> UIObject = new List<GameObject>();
 
         private void Awake()
