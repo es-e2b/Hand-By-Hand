@@ -16,6 +16,12 @@ namespace HandByHand.NightSystem
             DialogueItemList.Add(new NPCText());
         }
 
+        [ContextMenu("AddPlayerText")]
+        public void AddPlayerText()
+        {
+            DialogueItemList.Add(new PlayerText());
+        }
+
         [ContextMenu("AddPlayerChoice")]
         public void AddPlayerChoice()
         {

@@ -7,6 +7,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 {
     public class ButtonListUIComponent : MonoBehaviour
     {
+        [HideInInspector]
         public List<TMP_Text> buttonText = new List<TMP_Text>();
 
         private void Awake()
