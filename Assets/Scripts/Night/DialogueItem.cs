@@ -12,7 +12,7 @@ namespace HandByHand.NightSystem
         Player
     }
 
-    public enum itemType
+    public enum ItemType
     {
         NPCText,
         PlayerText,
@@ -20,12 +20,14 @@ namespace HandByHand.NightSystem
     }
 
     [System.Serializable]
-    public class DialogueItem : MonoBehaviour
+    public class DialogueItem
     {
+        [HideInInspector]
         public WhoseItem whoseItem;
-        public itemType itemType;
+        [HideInInspector]
+        public ItemType itemType;
 
-        public DialogueItem(WhoseItem whoseItem, itemType itemType)
+        public DialogueItem(WhoseItem whoseItem, ItemType itemType)
         {
             this.whoseItem = whoseItem;
             this.itemType = itemType;
@@ -35,31 +37,37 @@ namespace HandByHand.NightSystem
         {
             get => WhoseItem;
         }
+        public ItemType ItemType
+        {
+            get => ItemType;
+        }
     }
 
     [System.Serializable]
     public class NPCText : DialogueItem
     {
-        public TMP_Text Text;
+        [TextArea(3, 8)]
+        public string Text;
 
-        public NPCText() : base(WhoseItem.NPC, itemType.NPCText) { }
+        public NPCText() : base(WhoseItem.NPC, ItemType.NPCText) { }
 
-        public TMP_Text text
+        public string text
         {
-            get => this.Text;
+            get => Text;
         }
     }
 
     [System.Serializable]
     public class PlayerText : DialogueItem
     {
-        public TMP_Text Text;
+        [TextArea(3, 8)]
+        public string Text;
 
-        public PlayerText() : base(WhoseItem.Player, itemType.PlayerText) { }
+        public PlayerText() : base(WhoseItem.Player, ItemType.PlayerText) { }
 
-        public TMP_Text text
+        public string text
         {
-            get => this.Text;
+            get => Text;
         }
     }
 
@@ -68,7 +76,7 @@ namespace HandByHand.NightSystem
     {
         public List<SignLanguageSO> SignLanguageItem;
 
-        public PlayerChoice() : base(WhoseItem.Player, itemType.PlayerChoice) 
+        public PlayerChoice() : base(WhoseItem.Player, ItemType.PlayerChoice) 
         { SignLanguageItem = new List<SignLanguageSO>(); }
     }
 }

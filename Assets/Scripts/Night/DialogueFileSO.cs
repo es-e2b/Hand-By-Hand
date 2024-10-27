@@ -8,6 +8,10 @@ namespace HandByHand.NightSystem
     [CreateAssetMenu(fileName = "DialogueFile", menuName = "Scriptable Object/DialogueFile")]
     public class DialogueFileSO : ScriptableObject
     {
+        [SerializeReference]
+        #if UNITY_EDITOR
+        [ArrayElementTitle("itemType")]
+        #endif
         public List<DialogueItem> DialogueItemList = new List<DialogueItem>();
 
         [ContextMenu("AddNPCText")]

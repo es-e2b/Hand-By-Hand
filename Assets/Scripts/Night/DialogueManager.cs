@@ -5,7 +5,6 @@ using UnityEngine;
 
 //대화 시스템을 관장하는 매니저입니다.
 namespace HandByHand.NightSystem.SignLanguageSystem
-
 {
     public class DialogueManager : MonoBehaviour
     {
@@ -23,7 +22,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         void Start()
         {
-
+            StartCoroutine(StartDialogue());
         }
 
         IEnumerator StartDialogue()
@@ -38,10 +37,18 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
                 //대화 출력
                 printManager.StartPrint(itemList[itemCount]);
+
+                #region BUGFIXOFFSET
+                //오브젝트 연속 생성 버그 fix구문 (몰라도 되고 그냥 냅두삼)
+                float offsetTime = 0.3f;
+                yield return new WaitForSeconds(offsetTime);
+                #endregion
+
+                //대화가 출력될 때까지 대기
                 yield return new WaitUntil(() => printManager.IsPrintEnd == true);
 
                 //아이템이 수화 선택이 아니라면 계속하여 대화를 출력
-                if (itemList[itemCount].itemType != itemType.PlayerChoice)
+                if (itemList[itemCount].itemType != ItemType.PlayerChoice)
                 {
                     itemCount++;
                     continue; 
@@ -50,8 +57,10 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 {
                     //아이템이 수화라면 대화 출력 중지 후 수화 선택 시작
                     signLanguageUIManager.ActiveUIObject();
-                    yield return new WaitUntil(() => signLanguageManager.IsSignLanguageMade == true);
 
+
+
+                    yield return new WaitUntil(() => signLanguageManager.IsSignLanguageMade == true);
                     itemCount++;
                 }
             }
