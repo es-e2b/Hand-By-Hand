@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace HandByHand.NightSystem.SignLanguageSystem
+namespace HandByHand.NightSystem
 {
     public class ButtonListUIComponent : MonoBehaviour
     {

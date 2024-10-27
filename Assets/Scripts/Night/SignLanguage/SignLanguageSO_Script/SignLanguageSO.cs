@@ -8,14 +8,19 @@ namespace HandByHand.NightSystem.SignLanguageSystem
     [CreateAssetMenu(fileName = "SingLanguageSO", menuName = "Scriptable Object/SignLanguageSO")]
     public class SignLanguageSO : ScriptableObject
     {
+        //수어의 의미
         public string Mean;
 
-        public FingerSign FingerSign;
-
+        //수위
         public Position Position;
 
-        public HandCount Shape;
+        //개수
+        public HandCount HandCount;
 
-        public SpecialSO Special;
+        //특수
+        public Particular Special;
+
+        //수형+수향
+        public SymbolAndDirection SymbolAndDirection;
     }
 }

@@ -13,6 +13,11 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         [HideInInspector]
         public bool IsSignLanguageMade = false;
 
+        public void MakeSignLanguage()
+        {
+
+        }
+
         public void ComparingHandSignSO(SignLanguageSO singLanguageSO)
         {
 

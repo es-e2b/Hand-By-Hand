@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using HandByHand.NightSystem.SignLanguageSystem;
 
 //대화 시스템을 관장하는 매니저입니다.
-namespace HandByHand.NightSystem.SignLanguageSystem
+namespace HandByHand.NightSystem.DialogueSystem
 {
     public class DialogueManager : MonoBehaviour
     {
@@ -55,10 +56,11 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 }
                 else
                 {
-                    //아이템이 수화라면 대화 출력 중지 후 수화 선택 시작
+                    //아이템이 수화라면 대화 출력 중지 후 수화 만들기 시작
                     signLanguageUIManager.ActiveUIObject();
 
 
+                    signLanguageManager.MakeSignLanguage();
 
                     yield return new WaitUntil(() => signLanguageManager.IsSignLanguageMade == true);
                     itemCount++;

@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using HandByHand.NightSystem.SignLanguageSystem;
 
-namespace HandByHand.NightSystem
+namespace HandByHand.NightSystem.DialogueSystem
 {
     public enum WhoseItem
     {

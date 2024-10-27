@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HandByHand.NightSystem
+namespace HandByHand.NightSystem.DialogueSystem
 {
     [System.Serializable]
     [CreateAssetMenu(fileName = "DialogueFile", menuName = "Scriptable Object/DialogueFile")]

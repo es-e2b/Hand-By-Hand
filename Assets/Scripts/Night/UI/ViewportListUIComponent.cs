@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HandByHand.NightSystem.SignLanguageSystem
+namespace HandByHand.NightSystem
 {
     public class ViewportListUIComponent : MonoBehaviour
     {

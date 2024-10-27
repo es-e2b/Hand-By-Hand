@@ -4,10 +4,16 @@ using UnityEngine;
 
 namespace HandByHand.NightSystem.SignLanguageSystem
 {
-    [System.Serializable]
-    [CreateAssetMenu(fileName = "SpecialSO", menuName = "Scriptable Object/SpecialSO")]
-    public class SpecialSO : ScriptableObject
+    public enum ParticularEnum
     {
 
+    }
+
+    [System.Serializable]
+    public class Particular
+    {
+        public Sprite sprite;
+
+        public ParticularEnum particular;
     }
 }
