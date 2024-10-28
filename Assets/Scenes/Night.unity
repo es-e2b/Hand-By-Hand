@@ -201,31 +201,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5689786a844cecf4198e4ea63b62aa25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fingerSign:
-    Thumb: 1
-    IndexFinger: 1
-    MiddleFinger: 1
-    RingFinger: 1
-    Pinky: 1
-  fingerSignImageComp:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  foldFingerImage:
-  - {fileID: 21300000, guid: e6e7e087bf807224eb71640bbd53176e, type: 3}
-  - {fileID: 21300000, guid: ed4ac0fdde806e24cb4808d6d2043682, type: 3}
-  - {fileID: 21300000, guid: 51b466923bf9ecf4a84b113caac1f423, type: 3}
-  - {fileID: 21300000, guid: 0ca8ece2ae75a7649b8b63d5ac5f8b80, type: 3}
-  - {fileID: 21300000, guid: a1c49c9d8ae9d67409e10d9dc015021a, type: 3}
-  unfoldFingerImage:
-  - {fileID: 21300000, guid: 90cf8557c67b6094b91ae8b02f5b4609, type: 3}
-  - {fileID: 21300000, guid: d291c72651e680742a9941a270e3581e, type: 3}
-  - {fileID: 21300000, guid: e29f64c4ebbb5a24d946e3e4b8271d2b, type: 3}
-  - {fileID: 21300000, guid: 10bceaedaa9856d4ea1a7edec5ba7353, type: 3}
-  - {fileID: 21300000, guid: ac9a3e563e12b794b930a10b5dccb84a, type: 3}
-  handSignData: {fileID: 0}
 --- !u!1 &93522159
 GameObject:
   m_ObjectHideFlags: 0
@@ -1871,7 +1846,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ComparingSignLanguage: {fileID: 0}
-  IsSignLanguageMade: 0
 --- !u!4 &930908945
 Transform:
   m_ObjectHideFlags: 0
@@ -1881,11 +1855,11 @@ Transform:
   m_GameObject: {fileID: 930908943}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -152.07938, y: 11.676636, z: 11.220577}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1508803796}
+  m_Father: {fileID: 2020197580}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &951452270
 GameObject:
@@ -1931,21 +1905,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcb1c1aa659e33a47b01238e1fbce0f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsFingerSignSelected: 0
-  IsHandCountSelected: 0
-  IsPositionSelected: 0
-  IsSpecialSelected: 0
-  fingerSign:
-    Thumb: 0
-    IndexFinger: 0
-    MiddleFinger: 0
-    RingFinger: 0
-    Pinky: 0
-  handCount:
-    UsingHand: 0
-  position:
-    HandPosition: 0
-  special: {fileID: 0}
 --- !u!1 &971224004
 GameObject:
   m_ObjectHideFlags: 0
@@ -2332,11 +2291,11 @@ Transform:
   m_GameObject: {fileID: 1087239873}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -467.8002, y: -1021.05286, z: 17.867575}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1508803796}
+  m_Father: {fileID: 2020197580}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1087239875
 MonoBehaviour:
@@ -2350,11 +2309,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24b4c30d8b96adf4586556c3178fccbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerDialogiePrefab: {fileID: 6529128474545017102, guid: 40fe03b3e22fc6e40a9a8afc780289cb, type: 3}
-  NPCDialogiePrefab: {fileID: 6529128474545017102, guid: 7227d87ed0b7f8543ac8b0bfd3a103a1, type: 3}
+  PlayerDialoguePrefab: {fileID: 6529128474545017102, guid: 40fe03b3e22fc6e40a9a8afc780289cb, type: 3}
+  NPCDialoguePrefab: {fileID: 6529128474545017102, guid: 7227d87ed0b7f8543ac8b0bfd3a103a1, type: 3}
   PlayerChoicePrefab: {fileID: 2062859767934437028, guid: 913b581b60151604692cb17e9af18079, type: 3}
   dialogueCanvas: {fileID: 1521832664}
-  IsPrintEnd: 0
+  PanelUpperMovingOffset: 20
 --- !u!1 &1145322213
 GameObject:
   m_ObjectHideFlags: 0
@@ -2911,9 +2870,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1087239874}
-  - {fileID: 1548574216}
-  - {fileID: 930908945}
+  - {fileID: 2020197580}
   - {fileID: 202230700}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3254,12 +3211,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1548574215}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1508803796}
+  m_Father: {fileID: 2020197580}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1548574217
 MonoBehaviour:
@@ -3977,6 +3934,40 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!1 &2020197579
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2020197580}
+  m_Layer: 0
+  m_Name: aboutDialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2020197580
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020197579}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1548574216}
+  - {fileID: 1087239874}
+  - {fileID: 930908945}
+  m_Father: {fileID: 1508803796}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2036786501
 GameObject:
   m_ObjectHideFlags: 0

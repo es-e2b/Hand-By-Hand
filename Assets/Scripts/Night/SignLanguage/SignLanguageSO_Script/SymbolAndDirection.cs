@@ -15,7 +15,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
     }
 
     [System.Serializable]
-    public class SymbolAndDirection : MonoBehaviour
+    public class SymbolAndDirection
     {
         public Sprite sprite;
 

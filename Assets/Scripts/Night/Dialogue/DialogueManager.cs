@@ -40,11 +40,11 @@ namespace HandByHand.NightSystem.DialogueSystem
                 printManager.StartPrint(itemList[itemCount]);
 
                 #region BUGFIXOFFSET
-                //오브젝트 연속 생성 버그 fix구문 (몰라도 되고 그냥 냅두삼)
+                //오브젝트 연속 Print 버그 fix구문 (몰라도 되고 그냥 냅두삼)
                 float offsetTime = 0.3f;
                 yield return new WaitForSeconds(offsetTime);
                 #endregion
-
+                
                 //대화가 출력될 때까지 대기
                 yield return new WaitUntil(() => printManager.IsPrintEnd == true);
 
@@ -58,6 +58,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                 {
                     //아이템이 수화라면 대화 출력 중지 후 수화 만들기 시작
                     signLanguageUIManager.ActiveUIObject();
+
 
 
                     signLanguageManager.MakeSignLanguage();
