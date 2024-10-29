@@ -8,13 +8,24 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 {
     public class SignLanguageManager : MonoBehaviour
     {
-        public SignLanguageSO ComparingSignLanguage;
+        [HideInInspector]
+        public SignLanguageSO SignLanguageSO;
 
         public bool IsSignLanguageMade { get; private set; }
 
+        void Start()
+        {
+            IsSignLanguageMade = false;
+        }
+
+        public void SetSelectedSignLanguageSO(SignLanguageSO signLanguageSO)
+        {
+            SignLanguageSO = signLanguageSO;
+        }
+
         public void MakeSignLanguage()
         {
-
+            
         }
 
         public void ComparingHandSignSO(SignLanguageSO singLanguageSO)

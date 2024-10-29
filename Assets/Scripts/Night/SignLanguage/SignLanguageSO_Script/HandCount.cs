@@ -7,8 +7,10 @@ namespace HandByHand.NightSystem.SignLanguageSystem
     public enum UsingHand
     {
         BothHand,
-        OneHand
+        OneHand,
+        None
     }
+
     [System.Serializable]
     public class HandCount
     {

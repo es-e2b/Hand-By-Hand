@@ -12,19 +12,30 @@ namespace HandByHand.NightSystem.DialogueSystem
         //현재 인게임에서 사용될 dialogueSO
         public DialogueFileSO dialogueFileSO;
 
-        [SerializeField]
-        private PrintManager printManager;
-
-        [SerializeField]
-        private SignLanguageManager signLanguageManager;
-
+        #region MANAGERCOMPONENT
         [SerializeField]
         private SignLanguageUIManager signLanguageUIManager;
+
+        private PrintManager printManager;
+
+        private SignLanguageManager signLanguageManager;
+
+        private DialogueChoiceSelectManager dialogueChoiceSelectManager;
+        #endregion
+
+        #region INIT
+        void Awake()
+        {
+            printManager = gameObject.transform.Find("PrintManager").GetComponent<PrintManager>();
+            signLanguageManager = gameObject.transform.Find("SignLanguageManager").GetComponent<SignLanguageManager>();
+            dialogueChoiceSelectManager = gameObject.transform.Find("DialogueChoiceSelectManager").GetComponent<DialogueChoiceSelectManager>();
+        }
 
         void Start()
         {
             StartCoroutine(StartDialogue());
         }
+        #endregion
 
         IEnumerator StartDialogue()
         {
@@ -56,14 +67,22 @@ namespace HandByHand.NightSystem.DialogueSystem
                 }
                 else
                 {
-                    //아이템이 수화라면 대화 출력 중지 후 수화 만들기 시작
+                    //아이템이 playerChoice라면 플레이어의 선택을 대기
+                    dialogueChoiceSelectManager.WaitForSelectChoice();
+                    yield return new WaitUntil(() => dialogueChoiceSelectManager.IsChoiceSelected == true);
+
+                    SignLanguageSO selectedSignLanguageSO = dialogueChoiceSelectManager.GetSelectedSignLanguageSO();
+
+                    //선택 후 수화 만들기
                     signLanguageUIManager.ActiveUIObject();
 
-
-
+                    signLanguageManager.SetSelectedSignLanguageSO(selectedSignLanguageSO);
                     signLanguageManager.MakeSignLanguage();
 
+                    signLanguageUIManager.InActiveUIObject();
+
                     yield return new WaitUntil(() => signLanguageManager.IsSignLanguageMade == true);
+
                     itemCount++;
                 }
             }

@@ -41,11 +41,15 @@ namespace HandByHand.NightSystem.DialogueSystem
         #endregion
 
         #region VARIABLE
-        [Header("UIVariableField")]
+        [Header("VariableField")]
 
         public float PanelUpperMovingOffset;
 
-        public bool IsPrintEnd {  get; private set; }
+        public bool IsPrintEnd { get; private set; }
+
+        //DialogueChoiceSelectManager에서 선택지 오브젝트를 받아오기 위한 변수
+        [HideInInspector]
+        public List<GameObject> ChoiceObjectList;
 
         #endregion
 
@@ -68,14 +72,14 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         public void StartPrint(DialogueItem dialogueItem)
         {
-            //플레이어 텍스트가 올라오는 경우
-            if (dialogueItem.ItemType != ItemType.PlayerChoice)
+            //텍스트가 올라오는 경우
+            if (dialogueItem.itemType != ItemType.PlayerChoice)
             {
                 //오브젝트 프리팹 Instantiate
                 GameObject instance = InstantiateDialogueObject(dialogueItem.whoseItem);
 
                 //오브젝트 가로 위치 조정
-                MoveDialogueObjectHorizontalPosition(instance, dialogueItem.whoseItem);
+                AdjustDialogueObjectHorizontalPosition(instance, dialogueItem.whoseItem);
 
                 //Text 설정
                 SetTextContent(instance, dialogueItem);
@@ -86,18 +90,19 @@ namespace HandByHand.NightSystem.DialogueSystem
             }
 
             //플레이어 선택지가 올라오는 경우
-            //else if(dialogueItem.ItemType == ItemType.PlayerChoice)
+            //else if(dialogueItem.itemType == ItemType.PlayerChoice)
             else
             {
                 //선택지 리스트로 받아오기
-                List<SignLanguageSO> choiceList = new List<SignLanguageSO>( ( (PlayerChoice)dialogueItem ).SignLanguageItem);
+                List<SignLanguageSO> choiceList = new List<SignLanguageSO>(((PlayerChoice)dialogueItem).SignLanguageItem);
 
                 //오브젝트 프리팹 Instantiate
-                float objectIntervalOffset = 20f;
+                float objectIntervalOffset = 50f;
                 List<GameObject> choiceObjectList = InstantiateChoiceObject(choiceList.Count, objectIntervalOffset, out float dialoguePanelMovingHeight);
+                ChoiceObjectList = new List<GameObject>(choiceObjectList);
 
                 //오브젝트 가로 위치 조정
-                MoveChoiceObjectHorizontalPosition(ref choiceObjectList);
+                AdjustChoiceObjectHorizontalPosition(ref choiceObjectList);
 
                 //버튼당 컨텐츠 설정
                 SetChoiceContent(ref choiceObjectList, ref choiceList);
@@ -128,7 +133,7 @@ namespace HandByHand.NightSystem.DialogueSystem
             return instance;
         }
 
-        private void MoveDialogueObjectHorizontalPosition(GameObject instance, WhoseItem whoseItem)
+        private void AdjustDialogueObjectHorizontalPosition(GameObject instance, WhoseItem whoseItem)
         {
             float halfWidth = (instance.GetComponent<RectTransform>().rect.width) * 0.5f;
             //NPC 오브젝트는 앵커가 왼쪽이므로 오른쪽으로 반만큼 밀어주기
@@ -176,7 +181,7 @@ namespace HandByHand.NightSystem.DialogueSystem
             Vector3 originalPositionOfinstantiatePanel = instancePrefab.transform.position;
             #endregion
 
-            for(int i = 0; i < objectCount; i++)
+            for (int i = 0; i < objectCount; i++)
             {
                 //오브젝트 프리팹 Instantiate
                 GameObject instance = Instantiate(instancePrefab, instantiatePanel.transform);
@@ -188,17 +193,18 @@ namespace HandByHand.NightSystem.DialogueSystem
                 dialoguePanelMovingHeight += movingHeightOfInstantiatePanel;
             }
 
-            instantiatePanel.transform.position = originalPositionOfinstantiatePanel;
+            dialoguePanelMovingHeight += PanelUpperMovingOffset;
+            instantiatePanel.transform.position = originalPositionOfinstantiatePanel * 0.5f;
 
             return choiceObjectList;
         }
 
-        private void MoveChoiceObjectHorizontalPosition(ref List<GameObject> choiceObjectList)
+        private void AdjustChoiceObjectHorizontalPosition(ref List<GameObject> choiceObjectList)
         {
             float halfWidth = (choiceObjectList[0].GetComponent<RectTransform>().rect.width) * 0.5f;
             //플레이어 오브젝트는 앵커가 오른쪽이므로 왼쪽으로 반만큼 밀어주기
 
-            for(int i = 0; i < choiceObjectList.Count; i++)
+            for (int i = 0; i < choiceObjectList.Count; i++)
             {
                 choiceObjectList[i].transform.position -= new Vector3(halfWidth, 0, 0);
             }
@@ -226,7 +232,7 @@ namespace HandByHand.NightSystem.DialogueSystem
         }
         #endregion
 
-        #region PANELANIMATION
+        #region COROUTINE
 
         IEnumerator DialoguePanelUpperSlidingAnimationCoroutine(float VerticalMovingHeight)
         {
@@ -263,8 +269,6 @@ namespace HandByHand.NightSystem.DialogueSystem
             yield return StartCoroutine(AnnouncePrintDone());
         }
 
-        #endregion
-
         IEnumerator AnnouncePrintDone()
         {
             IsPrintEnd = true;
@@ -273,5 +277,7 @@ namespace HandByHand.NightSystem.DialogueSystem
             IsPrintEnd = false;
             yield return null;
         }
+
+        #endregion
     }
 }
