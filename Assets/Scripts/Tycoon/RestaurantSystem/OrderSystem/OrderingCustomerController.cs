@@ -64,7 +64,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
         }
         private void CheckOrderMenu(Menu menu, int index)
         {
-            SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(customerImage, menu.Vocabulary);
+            StartCoroutine(SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(customerImage, menu.Vocabulary));
             OrderManager.Instance.OrderIndex=index;
             foreach(GameObject orderMenuButton in orderMenuButtons)
             {
