@@ -23,10 +23,6 @@ namespace Assets.Scripts.SignLanguage
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        private void Start()
-        {
-            // renderingQueue=new Queue<(GameObject, Vocabulary)>();
-        }
         public IEnumerator EnqueueVocabulary(GameObject speaker, Vocabulary vocabulary)
         {
             if(speaker == null)
