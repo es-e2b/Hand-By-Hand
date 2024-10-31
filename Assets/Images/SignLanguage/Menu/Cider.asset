@@ -15,5 +15,29 @@ MonoBehaviour:
   Name: "\uC0AC\uC774\uB2E4"
   Hint: "\u3145, \uC774, \uCE94\uC744 \uB530\uB294 \uBAA8\uC591\uC744 \uD569\uCE5C
     \uAC83 \uAC19\uC2B5\uB2C8\uB2E4. "
-  RightHandshapes: []
-  LeftHandshapes: []
+  RightHandshapes:
+  - HandshapeImage: {fileID: 21300000, guid: cef6a375f767f4bf593cd4be119603cf, type: 3}
+    StartPosition: {x: -0.05, y: 0.05}
+    EndPosition: {x: -0.05, y: 0.05}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 1
+  - HandshapeImage: {fileID: 21300000, guid: 8c5613120a1c0465e88a99b0d237a518, type: 3}
+    StartPosition: {x: -0.05, y: -0.1}
+    EndPosition: {x: -0.025, y: -0.05}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: -30}
+    Duration: 0.75
+  LeftHandshapes:
+  - HandshapeImage: {fileID: 21300000, guid: cef6a375f767f4bf593cd4be119603cf, type: 3}
+    StartPosition: {x: -0.05, y: 0.05}
+    EndPosition: {x: -0.05, y: 0.05}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 1
+  - HandshapeImage: {fileID: 21300000, guid: b722a8dccac5a47da95a3e1f18048d0c, type: 3}
+    StartPosition: {x: 0.05, y: -0.15}
+    EndPosition: {x: 0.05, y: -0.15}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.75
