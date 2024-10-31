@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1c6f32e5cca44680902abcf1d5e7481, type: 3}
+  m_Name: Coffee Menu
+  m_EditorClassIdentifier: 
+  MenuType: 1
+  Name: "\uCEE4\uD53C"
+  Sprite: {fileID: 165732698, guid: c9e561388126f484ba3dda7bcc784bc2, type: 3}
+  Price: 5000
+  EatingDuration: 4
+  Vocabulary: {fileID: 11400000, guid: 2a232e64b0ff148d9b1a5d9d31b738c6, type: 2}
