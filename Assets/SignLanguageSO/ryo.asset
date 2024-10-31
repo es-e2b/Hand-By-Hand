@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a50819e51fb9b8f4287a4751bd691b50, type: 3}
-  m_Name: SingLanguageSO
+  m_Name: ryo
   m_EditorClassIdentifier: 
-  Mean: 123
+  Mean: ryo
   Position:
     HandPosition: 0
   HandCount:
     UsingHand: 0
   Special:
-    sprite: {fileID: 0}
-    particular: 0
+    Sprite: {fileID: 21300000, guid: eb69f55c4a5efca40b5427a801fd206c, type: 3}
+    _Particular: 0
   SymbolAndDirection:
-    sprite: {fileID: 0}
-    symbol: 0
-    direction: 0
+    Sprite: {fileID: 21300000, guid: f4a99013b06145243bb43a45e5a8300f, type: 3}
+    Symbol: 0
+    Direction: 0

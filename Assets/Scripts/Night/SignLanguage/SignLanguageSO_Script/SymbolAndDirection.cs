@@ -6,21 +6,21 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 {
     public enum Symbol 
     {
-
+        None
     }
 
     public enum Direction
     {
-
+        None
     }
 
     [System.Serializable]
     public class SymbolAndDirection
     {
-        public Sprite sprite;
+        public Sprite Sprite;
 
-        public Symbol symbol;
+        public Symbol Symbol;
 
-        public Direction direction;
+        public Direction Direction;
     }
 }

@@ -24,19 +24,18 @@ MonoBehaviour:
       data:
         whoseItem: 1
         itemType: 1
-        Text: how are you?
+        Text: What's matter?
     - rid: 7494054188638011393
       type: {class: NPCText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
       data:
         whoseItem: 0
         itemType: 0
-        Text: good.
+        Text: botchi and ryo
     - rid: 7494054188638011395
       type: {class: PlayerChoice, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
       data:
         whoseItem: 1
         itemType: 2
         SignLanguageItem:
-        - {fileID: 11400000, guid: b0e0844f6d02f4c439cc7c33f9ec7273, type: 2}
-        - {fileID: 11400000, guid: b0e0844f6d02f4c439cc7c33f9ec7273, type: 2}
-        - {fileID: 11400000, guid: b0e0844f6d02f4c439cc7c33f9ec7273, type: 2}
+        - {fileID: 11400000, guid: 2430ec6c261af064186e221f768bd09b, type: 2}
+        - {fileID: 11400000, guid: ee7de5e71418bab45be774d412ab5a60, type: 2}

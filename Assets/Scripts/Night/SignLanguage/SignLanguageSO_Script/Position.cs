@@ -10,7 +10,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         Face,
         Jaw,
         Chest,
-        Belly
+        Belly,
+        None
     }
 
     [System.Serializable]

@@ -6,14 +6,14 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 {
     public enum ParticularEnum
     {
-
+        None
     }
 
     [System.Serializable]
     public class Particular
     {
-        public Sprite sprite;
+        public Sprite Sprite;
 
-        public ParticularEnum particular;
+        public ParticularEnum _Particular;
     }
 }

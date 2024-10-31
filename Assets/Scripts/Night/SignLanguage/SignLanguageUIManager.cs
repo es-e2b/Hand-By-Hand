@@ -15,10 +15,13 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         public ButtonListUIComponent ButtonListUIComponent;
         public ViewportListUIComponent ViewportListUIComponent;
+        public GameObject InvisibleViewportObject;
 
         private List<TMP_Text> buttonText;
-        private List<GameObject> scrollViewObject;
+        private List<GameObject> viewportObject;
+        private ScrollRect scrollViewScrollRectComponent;
 
+        public TMP_Text WordToMake;
         private GameObject UIObjectInSignLanguageCanvas;
         private Vector3 originalUIObjectPosition;
         private float screenHeight = Screen.height;
@@ -28,40 +31,30 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         private void Awake()
         {
             buttonText = ButtonListUIComponent.buttonText;
-            scrollViewObject = ViewportListUIComponent.UIObject;
+            viewportObject = ViewportListUIComponent.UIObject;
             UIObjectInSignLanguageCanvas = SignLanguageCanvas.transform.Find("UIObject").gameObject;
             originalUIObjectPosition = UIObjectInSignLanguageCanvas.transform.localPosition;
+            scrollViewScrollRectComponent = ViewportListUIComponent.gameObject.transform.parent.GetComponent<ScrollRect>();
         }
 
         private void Start()
         {
-            //UIObjectInSignLanguageCanvas.transform.position -= new Vector3(0, screenHeight, 0);
-
-            #region OBJECTINACTIVE
-            /*if (SignLanguageCanvas.activeSelf)
+            for (int i = 1; i < viewportObject.Count; i++)
             {
-                //오브젝트 비활성화
-                for (int i = 0; i < scrollViewObject.Count; i++)
-                { scrollViewObject[i].SetActive(false); }
-
-                //HandCount오브젝트만 활성화
-                scrollViewObject[0].SetActive(true);
-
-                //캔버스 비활성화
-                SignLanguageCanvas.SetActive(false);
-            } */
-            #endregion
+                viewportObject[i].transform.SetParent(InvisibleViewportObject.transform);
+            }
         }
         #endregion
 
-        #region SETACTIVEFUNCTION
-        public void ActiveUIObject()
+        #region CANVASACTIVATEFUNCTION
+        public void ActiveUIObject(string SignLanguageMean)
         {
             if (SignLanguageCanvas.activeSelf)
             {
                 Vector3 targetPosition = originalUIObjectPosition + new Vector3(0, screenHeight, 0);
+                WordToMake.SetText("Make The Word : " + SignLanguageMean);
 
-                StartCoroutine( UIObjectVerticalSlideCoroutine(targetPosition) );
+                StartCoroutine( UICanvasVerticalSlideCoroutine(targetPosition) );
             }
         }
 
@@ -71,7 +64,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             {
                 Vector3 targetPosition = originalUIObjectPosition;
 
-                StartCoroutine( UIObjectVerticalSlideCoroutine(targetPosition) );
+                StartCoroutine( UICanvasVerticalSlideCoroutine(targetPosition) );
             }
         }
         #endregion
@@ -82,28 +75,35 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             //함수를 부른 버튼 오브젝트의 이름 받기
             string eventButtonName = EventSystem.current.currentSelectedGameObject.name;
 
-            for (int i = 0; i < scrollViewObject.Count; i++)
+            for (int i = 0; i < viewportObject.Count; i++)
             {
-                scrollViewObject[i].SetActive(false);
+                //scrollViewObject[i].SetActive(false);
+                viewportObject[i].transform.SetParent(InvisibleViewportObject.transform);
             }
 
             switch (eventButtonName)
             {
                 case "HandCountButton":
-                    scrollViewObject[0].SetActive(true);
+                    ShowObject(0);
                     break;
 
-                case "HandSymbolAndDirectionButton":
-                    scrollViewObject[1].SetActive(true);
+                case "SymbolAndDirectionButton":
+                    ShowObject(1);
                     break;
 
                 case "HandPositionButton":
-                    scrollViewObject[2].SetActive(true);
+                    ShowObject(2);
                     break;
 
                 case "ParticularButton":
-                    scrollViewObject[3].SetActive(true);
+                    ShowObject(3);
                     break;
+            }
+
+            void ShowObject(int index)
+            {
+                viewportObject[index].transform.SetParent(ViewportListUIComponent.gameObject.transform);
+                scrollViewScrollRectComponent.content = viewportObject[index].GetComponent<RectTransform>();
             }
         }
 
@@ -113,7 +113,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// </summary>
         /// <param name="targetPosition">목표 지점</param>
         /// <returns></returns>
-        IEnumerator UIObjectVerticalSlideCoroutine(Vector3 targetPosition)
+        IEnumerator UICanvasVerticalSlideCoroutine(Vector3 targetPosition)
         {
             //변수 선언
             #region VARIABLEFIELD

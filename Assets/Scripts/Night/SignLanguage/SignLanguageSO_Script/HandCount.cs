@@ -6,8 +6,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 {
     public enum UsingHand
     {
-        BothHand,
         OneHand,
+        BothHand,
         None
     }
 

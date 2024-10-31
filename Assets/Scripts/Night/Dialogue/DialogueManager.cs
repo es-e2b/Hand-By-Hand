@@ -74,14 +74,14 @@ namespace HandByHand.NightSystem.DialogueSystem
                     SignLanguageSO selectedSignLanguageSO = dialogueChoiceSelectManager.GetSelectedSignLanguageSO();
 
                     //선택 후 수화 만들기
-                    signLanguageUIManager.ActiveUIObject();
+                    //Show SignLanguageUICanvas
+                    signLanguageUIManager.ActiveUIObject(selectedSignLanguageSO.Mean);
 
-                    signLanguageManager.SetSelectedSignLanguageSO(selectedSignLanguageSO);
-                    signLanguageManager.MakeSignLanguage();
+                    signLanguageManager.MakeSignLanguage(selectedSignLanguageSO);
+                    //수화를 만들때까지 대기
+                    yield return new WaitUntil(() => signLanguageManager.IsSignLanguageMade == true);
 
                     signLanguageUIManager.InActiveUIObject();
-
-                    yield return new WaitUntil(() => signLanguageManager.IsSignLanguageMade == true);
 
                     itemCount++;
                 }
