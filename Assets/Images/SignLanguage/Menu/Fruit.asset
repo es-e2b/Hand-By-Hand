@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Fruit
   m_EditorClassIdentifier: 
   Name: "\uACFC\uC77C"
-  Hint: "\uAECD\uC9C8\uC744 \uBC97\uAE30\uB294 \uBAA8\uC591\uC778 \uB4EF\uD569\uB2C8\uB2E4."
+  Hint: "\uC190\uC9C8\uD558\uB294 \uBAA8\uC591\uC744 \uD45C\uD604\uD558\uB294 \uB4EF\uD569\uB2C8\uB2E4."
   RightHandshapes: []
   LeftHandshapes: []
