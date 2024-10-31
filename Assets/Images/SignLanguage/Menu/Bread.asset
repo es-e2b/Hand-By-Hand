@@ -24,13 +24,13 @@ MonoBehaviour:
     Duration: 0.2
   - HandshapeImage: {fileID: 21300000, guid: 9404df44b4b504830a9284ec1f555ae1, type: 3}
     StartPosition: {x: 0, y: -0.1}
-    EndPosition: {x: 0, y: -0.1}
+    EndPosition: {x: 0, y: -0.05}
     StartRotation: {x: 0, y: 0, z: 0}
     EndRotation: {x: 0, y: 0, z: 0}
     Duration: 0.3
   - HandshapeImage: {fileID: 21300000, guid: a7a2c50d427754308aee67cd75d32fa0, type: 3}
-    StartPosition: {x: 0, y: -0.1}
-    EndPosition: {x: 0, y: -0.1}
+    StartPosition: {x: 0, y: -0.05}
+    EndPosition: {x: 0, y: -0.05}
     StartRotation: {x: 0, y: 0, z: 0}
     EndRotation: {x: 0, y: 0, z: 0}
     Duration: 0.6
