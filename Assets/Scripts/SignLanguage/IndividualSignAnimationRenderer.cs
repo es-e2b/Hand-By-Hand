@@ -33,31 +33,26 @@ namespace Assets.Scripts.SignLanguage
             leftHandObject.GetComponent<RectTransform>().sizeDelta = new Vector2(handSize, handSize);
             rightHandObject.GetComponent<RectTransform>().sizeDelta = new Vector2(handSize, handSize);
         }
-        private bool IsVocabularyRenderingComplete()
-        {
-            if(leftHandRenderingCoroutine==null && rightHandRenderingCoroutine==null)
-            {
-                return true;
-            }
-            return false;
-        }
-        public void EnqueueVocabulary(Vocabulary vocabulary)
+        // private bool IsVocabularyRenderingComplete()
+        // {
+        //     if(leftHandRenderingCoroutine==null && rightHandRenderingCoroutine==null)
+        //     {
+        //         return true;
+        //     }
+        //     return false;
+        // }
+        public IEnumerator EnqueueVocabulary(Vocabulary vocabulary)
         {
             renderingQueue.Enqueue(vocabulary);
             if(!isRendering)
             {
-                StartCoroutine(StartAnimation());
+                yield return StartAnimation();
             }
         }
-        public void StopAndEnqueueVocabulary(Vocabulary vocabulary)
-        {
-            StartCoroutine(StopAndEnqueueVocabularyEnumerator(vocabulary));
-        }
-        public IEnumerator StopAndEnqueueVocabularyEnumerator(Vocabulary vocabulary)
+        public IEnumerator StopAndEnqueueVocabulary(Vocabulary vocabulary)
         {
             yield return StopAnimation();
-            yield return new WaitUntil(() => IsVocabularyRenderingComplete());
-            EnqueueVocabulary(vocabulary);
+            yield return EnqueueVocabulary(vocabulary);
         }
         private IEnumerator StartAnimation()
         {
@@ -72,9 +67,12 @@ namespace Assets.Scripts.SignLanguage
                 rightHandRenderingCoroutine = StartCoroutine(AnimateHandshape(now.RightHandshapes, rightHandObject));
                 leftHandRenderingCoroutine = StartCoroutine(AnimateHandshape(now.LeftHandshapes, leftHandObject));
 
-                yield return new WaitUntil(() => IsVocabularyRenderingComplete());
+                // yield return null;
+                yield return rightHandRenderingCoroutine;
+                yield return leftHandRenderingCoroutine;
+                print("Both Hand is Stop");
             }
-            StartCoroutine(StopAnimation());
+            yield return StopAnimation();
         }
         private IEnumerator StopAnimation()
         {
@@ -88,7 +86,7 @@ namespace Assets.Scripts.SignLanguage
             if(leftHandRenderingCoroutine == null) yield break;
             print("Called Stop Left Hand Animation Method");
             leftHandObject.transform.localScale=Vector2.zero;
-            StopCoroutine(leftHandRenderingCoroutine);
+            // StopCoroutine(leftHandRenderingCoroutine);
             leftHandRenderingCoroutine = null;
         }
         private IEnumerator StopRightHandAnimation()
@@ -96,7 +94,7 @@ namespace Assets.Scripts.SignLanguage
             if(rightHandRenderingCoroutine == null) yield break;
             print("Called Stop Right Hand Animation Method");
             rightHandObject.transform.localScale=Vector2.zero;
-            StopCoroutine(rightHandRenderingCoroutine);
+            // StopCoroutine(rightHandRenderingCoroutine);
             rightHandRenderingCoroutine = null;
         }
         private IEnumerator AnimateHandshape(List<Handshape> handshapes, GameObject handObject)
