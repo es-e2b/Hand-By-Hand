@@ -13,6 +13,24 @@ MonoBehaviour:
   m_Name: Coke
   m_EditorClassIdentifier: 
   Name: "\uCF5C\uB77C"
-  Hint: "\uCE94\uC744 \uB530\uB294 \uBAA8\uC591\uC778 \uB4EF\uD569\uB2C8\uB2E4."
-  RightHandshapes: []
-  LeftHandshapes: []
+  Hint: "\uCE94\uC744 \uB530\uB294 \uBAA8\uC591\uC744 \uD45C\uD604\uD558\uB294 \uB4EF\uD569\uB2C8\uB2E4."
+  RightHandshapes:
+  - HandshapeImage: {fileID: 21300000, guid: ef92af8617362408382346f1ae8e3284, type: 3}
+    StartPosition: {x: -0.05, y: 0}
+    EndPosition: {x: -0.05, y: 0}
+    StartRotation: {x: 0, y: 0, z: 45}
+    EndRotation: {x: 0, y: 0, z: 10}
+    Duration: 0.6
+  - HandshapeImage: {fileID: 21300000, guid: ef92af8617362408382346f1ae8e3284, type: 3}
+    StartPosition: {x: -0.05, y: 0}
+    EndPosition: {x: -0.05, y: 0}
+    StartRotation: {x: 0, y: 0, z: 10}
+    EndRotation: {x: 0, y: 0, z: 10}
+    Duration: 0.4
+  LeftHandshapes:
+  - HandshapeImage: {fileID: 21300000, guid: ef92af8617362408382346f1ae8e3284, type: 3}
+    StartPosition: {x: -0.05, y: 0}
+    EndPosition: {x: -0.05, y: 0}
+    StartRotation: {x: 0, y: 0, z: 45}
+    EndRotation: {x: 0, y: 0, z: 10}
+    Duration: 0.6
