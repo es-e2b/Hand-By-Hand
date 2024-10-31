@@ -13,6 +13,25 @@ MonoBehaviour:
   m_Name: Water
   m_EditorClassIdentifier: 
   Name: "\uBB3C"
-  Hint: "\uB9C8\uC2DC\uB294 \uD589\uC704\uB97C \uD45C\uD604\uD55C \uAC83 \uAC19\uC2B5\uB2C8\uB2E4."
-  RightHandshapes: []
+  Hint: "\uC77C\uBC18\uC801\uC73C\uB85C \uB9C8\uC2DC\uB294 \uD589\uC704\uB97C \uD45C\uD604\uD55C
+    \uAC83 \uAC19\uC2B5\uB2C8\uB2E4."
+  RightHandshapes:
+  - HandshapeImage: {fileID: 21300000, guid: 4423d2523b9cb4c26a4832ee39ddeb8a, type: 3}
+    StartPosition: {x: -0.1, y: 0.05}
+    EndPosition: {x: -0.1, y: 0.05}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.2
+  - HandshapeImage: {fileID: 21300000, guid: 6655e5f02e184495c8d7e03fa36ee8bb, type: 3}
+    StartPosition: {x: -0.1, y: 0.05}
+    EndPosition: {x: -0.1, y: 0.1}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.3
+  - HandshapeImage: {fileID: 21300000, guid: 60e4e88f68ebf4a04830ae039586b87e, type: 3}
+    StartPosition: {x: -0.1, y: 0.1}
+    EndPosition: {x: -0.1, y: 0.125}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.5
   LeftHandshapes: []
