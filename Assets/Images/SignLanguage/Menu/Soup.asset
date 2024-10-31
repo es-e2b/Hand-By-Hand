@@ -14,5 +14,59 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: "\uAD6D"
   Hint: "\uBB3C\uACFC \uC8FD\uC744 \uD568\uAED8 \uD45C\uD604\uD55C \uB4EF\uD569\uB2C8\uB2E4."
-  RightHandshapes: []
-  LeftHandshapes: []
+  RightHandshapes:
+  - HandshapeImage: {fileID: 21300000, guid: 4423d2523b9cb4c26a4832ee39ddeb8a, type: 3}
+    StartPosition: {x: -0.1, y: 0.05}
+    EndPosition: {x: -0.1, y: 0.05}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.2
+  - HandshapeImage: {fileID: 21300000, guid: 6655e5f02e184495c8d7e03fa36ee8bb, type: 3}
+    StartPosition: {x: -0.1, y: 0.05}
+    EndPosition: {x: -0.1, y: 0.1}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.3
+  - HandshapeImage: {fileID: 21300000, guid: 60e4e88f68ebf4a04830ae039586b87e, type: 3}
+    StartPosition: {x: -0.1, y: 0.1}
+    EndPosition: {x: -0.1, y: 0.125}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.5
+  - HandshapeImage: {fileID: 21300000, guid: 21db04b80a0634ee3a5e4a89907d4079, type: 3}
+    StartPosition: {x: -0.05, y: -0.1}
+    EndPosition: {x: 0.05, y: -0.1}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.375
+  - HandshapeImage: {fileID: 21300000, guid: 21db04b80a0634ee3a5e4a89907d4079, type: 3}
+    StartPosition: {x: 0.05, y: -0.1}
+    EndPosition: {x: -0.05, y: -0.1}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.375
+  - HandshapeImage: {fileID: 21300000, guid: 21db04b80a0634ee3a5e4a89907d4079, type: 3}
+    StartPosition: {x: -0.05, y: -0.1}
+    EndPosition: {x: 0.05, y: -0.1}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.375
+  - HandshapeImage: {fileID: 21300000, guid: 21db04b80a0634ee3a5e4a89907d4079, type: 3}
+    StartPosition: {x: 0.05, y: -0.1}
+    EndPosition: {x: -0.05, y: -0.1}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.375
+  LeftHandshapes:
+  - HandshapeImage: {fileID: 21300000, guid: e76c7b37ea07b47c2ba6fa2f2529eeda, type: 3}
+    StartPosition: {x: 0, y: 0}
+    EndPosition: {x: 0, y: 0}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 1
+  - HandshapeImage: {fileID: 21300000, guid: 585be5db171f14decba03eb2024d7e93, type: 3}
+    StartPosition: {x: 0.025, y: -0.15}
+    EndPosition: {x: 0.025, y: -0.15}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 1.5
