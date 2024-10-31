@@ -10,13 +10,13 @@ namespace Assets.Scripts
         private Coroutine _timerCoroutine;
         private readonly Func<IEnumerator, Coroutine> _startTimer;
         private readonly Action _onTimeEnded;
-        private readonly Action<Coroutine> _stopTime;
+        private readonly Action<Coroutine> _stopTimer;
         public UniversalTimer(float interval, Action onTimeEnded, Func<IEnumerator, Coroutine> startTimer, Action<Coroutine> stopTime)
         {
             _interval = interval;
             _startTimer = startTimer;
             _onTimeEnded = onTimeEnded;
-            _stopTime = stopTime;
+            _stopTimer = stopTime;
         }
         public void StartTimer(float targetTime)
         {
@@ -36,7 +36,7 @@ namespace Assets.Scripts
         {
             if (_timerCoroutine != null)
             {
-                _stopTime.Invoke(_timerCoroutine);
+                _stopTimer.Invoke(_timerCoroutine);
                 _timerCoroutine = null; // 코루틴 중지 후 null로 설정
             }
         }
