@@ -73,17 +73,19 @@ namespace Assets.Scripts.SignLanguage
         }
         private IEnumerator EndLeftHandAnimation()
         {
-            if(leftHandRenderingCoroutine == null) yield break;
+            // if(leftHandRenderingCoroutine == null) yield break;
             print("Called Stop Left Hand Animation Method");
             leftHandObject.transform.localScale=Vector2.zero;
             leftHandRenderingCoroutine = null;
+            yield break;
         }
         private IEnumerator EndRightHandAnimation()
         {
-            if(rightHandRenderingCoroutine == null) yield break;
+            // if(rightHandRenderingCoroutine == null) yield break;
             print("Called Stop Right Hand Animation Method");
             rightHandObject.transform.localScale=Vector2.zero;
             rightHandRenderingCoroutine = null;
+            yield break;
         }
         private IEnumerator AnimateHandshape(List<Handshape> handshapes, GameObject handObject)
         {
