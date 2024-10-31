@@ -6,7 +6,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
 
     public abstract class InputDisplayObject : MonoBehaviour
     {
-        [SerializeField]
         protected int index;
         [SerializeField]
         protected GameObject selectedUI;
@@ -54,6 +53,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
         protected virtual void Start()
         {
             GetComponent<Button>().onClick.AddListener(()=>SeletIndex.Invoke(index));
+            index=transform.GetSiblingIndex();
             selectedUI.SetActive(false);
             gameObject.SetActive(false);
         }
