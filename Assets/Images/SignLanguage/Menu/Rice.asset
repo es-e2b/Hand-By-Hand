@@ -14,5 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: "\uBC25"
   Hint: "\uB178\uB780 \uBCBC\uB97C \uB098\uD0C0\uB0B4\uB294 \uB4EF\uD569\uB2C8\uB2E4"
-  RightHandshapes: []
+  RightHandshapes:
+  - HandshapeImage: {fileID: 21300000, guid: b66779fa1c26440a1825ed0be4ab0cdf, type: 3}
+    StartPosition: {x: 0, y: 0.05}
+    EndPosition: {x: 0, y: 0.05}
+    StartRotation: {x: 0, y: 0, z: 30}
+    EndRotation: {x: 0, y: 0, z: 30}
+    Duration: 0.5
+  - HandshapeImage: {fileID: 21300000, guid: fbc1e531cd83240d083373920619f3d5, type: 3}
+    StartPosition: {x: 0, y: 0.05}
+    EndPosition: {x: 0, y: 0.05}
+    StartRotation: {x: 0, y: 0, z: 30}
+    EndRotation: {x: 0, y: 0, z: 30}
+    Duration: 0.25
+  - HandshapeImage: {fileID: 21300000, guid: 5360efda983e14148bbfb5890b201d04, type: 3}
+    StartPosition: {x: -0.05, y: 0.05}
+    EndPosition: {x: -0.05, y: 0.1}
+    StartRotation: {x: 0, y: 0, z: 60}
+    EndRotation: {x: 0, y: 0, z: 60}
+    Duration: 0.5
   LeftHandshapes: []
