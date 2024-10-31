@@ -78,6 +78,12 @@ namespace HandByHand.NightSystem.DialogueSystem
                     signLanguageUIManager.ActiveUIObject(selectedSignLanguageSO.Mean);
 
                     signLanguageManager.MakeSignLanguage(selectedSignLanguageSO);
+
+                    //캔버스가 올라오는 시간을 offset으로 기다려줌
+                    yield return new WaitForSeconds(1.5f);
+                    //선택한 선택지를 텍스트로 바꾸는 함수 실행
+                    printManager.AdjustPanelHeightAfterSelectChoice();
+
                     //수화를 만들때까지 대기
                     yield return new WaitUntil(() => signLanguageManager.IsSignLanguageMade == true);
 

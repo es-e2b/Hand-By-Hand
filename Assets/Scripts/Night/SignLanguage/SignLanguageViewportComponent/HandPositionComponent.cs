@@ -16,6 +16,9 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         List<TMP_Text> textObject = new List<TMP_Text>();
 
         public bool IsCorrect { get; private set; }
+
+        [SerializeField]
+        private int ignoreLayoutNumber = 1;
         #endregion
 
         #region INIT
@@ -28,14 +31,15 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         void Start()
         {
-            for (int i = 0; i < transform.childCount; i++)
+            for (int i = ignoreLayoutNumber; i < transform.childCount; i++)
             {
                 //버튼 오브젝트의 Text 컴포넌트 받아오기
                 TMP_Text tmp = transform.GetChild(i).transform.GetChild(0).GetComponent<TMP_Text>();
                 textObject.Add(tmp);
 
+                int index = i - ignoreLayoutNumber;
                 //텍스트 할당
-                textObject[i].text = ( (HandPosition) i ).ToString();
+                textObject[index].text = ( (HandPosition) (index)).ToString();
             }
         }
         #endregion
@@ -51,8 +55,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             GameObject clickObject = EventSystem.current.currentSelectedGameObject;
             int clickObjectHierarchyIndex = clickObject.transform.GetSiblingIndex();
 
-            playerAnswerPosition.HandPosition = (HandPosition) clickObjectHierarchyIndex;    
-            if((HandPosition)clickObjectHierarchyIndex == answerPosition.HandPosition)
+            playerAnswerPosition.HandPosition = (HandPosition) (clickObjectHierarchyIndex - ignoreLayoutNumber);
+            if(playerAnswerPosition.HandPosition == answerPosition.HandPosition)
                 IsCorrect = true;
             else
                 IsCorrect = false;

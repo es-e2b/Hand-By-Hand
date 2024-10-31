@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using HandByHand.NightSystem.SignLanguageSystem;
 using UnityEditor.U2D.Aseprite;
+using Unity.VisualScripting;
+
 
 #if UNITY_EDITOR
 using static UnityEditor.PlayerSettings;
@@ -51,6 +53,10 @@ namespace HandByHand.NightSystem.DialogueSystem
         [HideInInspector]
         public List<GameObject> ChoiceObjectList;
 
+        //선택지를 출력 했을 때 패널을 올린 높이를 담아둘 값
+        private float movedPanelHeightOfChoice = 0;
+
+        DialogueChoiceSelectManager dialogueChoiceSelectManager;
         #endregion
 
         #region INIT
@@ -60,6 +66,7 @@ namespace HandByHand.NightSystem.DialogueSystem
             IsPrintEnd = false;
             instantiatePanel = dialogueCanvas.transform.Find("InstantiatePanel").gameObject;
             dialoguePanel = dialogueCanvas.transform.Find("DialoguePanel").gameObject;
+            dialogueChoiceSelectManager = transform.parent.Find("DialogueChoiceSelectManager").GetComponent<DialogueChoiceSelectManager>();
         }
 
         void Start()
@@ -97,9 +104,10 @@ namespace HandByHand.NightSystem.DialogueSystem
                 List<SignLanguageSO> choiceList = new List<SignLanguageSO>(((PlayerChoice)dialogueItem).SignLanguageItem);
 
                 //오브젝트 프리팹 Instantiate
-                float objectIntervalOffset = 50f;
-                List<GameObject> choiceObjectList = InstantiateChoiceObject(choiceList.Count, objectIntervalOffset, out float dialoguePanelMovingHeight);
+                float objectIntervalOffset = 25f;
+                List<GameObject> choiceObjectList = InstantiateChoiceObject(choiceList.Count, objectIntervalOffset, out float movedPanelHeightOfChoice);
                 ChoiceObjectList = new List<GameObject>(choiceObjectList);
+                this.movedPanelHeightOfChoice = movedPanelHeightOfChoice;
 
                 //오브젝트 가로 위치 조정
                 AdjustChoiceObjectHorizontalPosition(ref choiceObjectList);
@@ -108,8 +116,42 @@ namespace HandByHand.NightSystem.DialogueSystem
                 SetChoiceContent(ref choiceObjectList, ref choiceList);
 
                 //선택지의 개수만큼 올림
-                StartCoroutine(DialoguePanelUpperSlidingAnimationCoroutine(dialoguePanelMovingHeight));
+                StartCoroutine(DialoguePanelUpperSlidingAnimationCoroutine(movedPanelHeightOfChoice));
             }
+        }
+
+        public void AdjustPanelHeightAfterSelectChoice()
+        {
+            PlayerText playerText = new PlayerText();
+
+            playerText.Text = dialogueChoiceSelectManager.GetSelectedSignLanguageSO().Mean;
+
+            //선택지 오브젝트 삭제
+            for (int i = 0; i < ChoiceObjectList.Count; i++)
+            {
+                Destroy(ChoiceObjectList[i]);
+            }
+            //리스트 초기화
+            ChoiceObjectList.Clear();
+
+            //패널 아래로 내리기
+            dialoguePanel.transform.position -= new Vector3(0, movedPanelHeightOfChoice, 0);
+            //reset variable
+            movedPanelHeightOfChoice = 0;
+
+
+            //텍스트 생성
+            //오브젝트 프리팹 Instantiate
+            GameObject instance = InstantiateDialogueObject(playerText.whoseItem);
+
+            //오브젝트 가로 위치 조정
+            AdjustDialogueObjectHorizontalPosition(instance, playerText.whoseItem);
+
+            //Text 설정
+            SetTextContent(instance, playerText);
+
+            float movingHeightOfDialoguePanel = PanelUpperMovingOffset + instance.GetComponent<RectTransform>().rect.height;
+            dialoguePanel.transform.position += new Vector3(0, movingHeightOfDialoguePanel, 0);
         }
 
         #region DIALOGUEPRINTFUNCTION
@@ -167,7 +209,7 @@ namespace HandByHand.NightSystem.DialogueSystem
         #endregion
 
         #region CHOICEPRINTFUNCTION
-        private List<GameObject> InstantiateChoiceObject(int objectCount, float objectIntervalOffset, out float dialoguePanelMovingHeight)
+        private List<GameObject> InstantiateChoiceObject(int objectCount, float objectIntervalOffset, out float movedPanelHeightOfChoice)
         {
             #region VARIABLEFIELD
             instancePrefab = PlayerChoicePrefab;
@@ -176,9 +218,9 @@ namespace HandByHand.NightSystem.DialogueSystem
 
             float movingHeightOfInstantiatePanel = objectIntervalOffset + PlayerChoicePrefab.GetComponent<RectTransform>().rect.height;
 
-            dialoguePanelMovingHeight = 0;
+            movedPanelHeightOfChoice = 0;
 
-            Vector3 originalPositionOfinstantiatePanel = instancePrefab.transform.position;
+            Vector3 originalPositionOfinstantiatePanel = instantiatePanel.transform.position;
             #endregion
 
             for (int i = 0; i < objectCount; i++)
@@ -189,12 +231,12 @@ namespace HandByHand.NightSystem.DialogueSystem
                 choiceObjectList.Add(instance);
                 instance.transform.SetParent(dialoguePanel.transform, true);
 
-                instantiatePanel.transform.position -= new Vector3(0, movingHeightOfInstantiatePanel, 0);
-                dialoguePanelMovingHeight += movingHeightOfInstantiatePanel;
+                instantiatePanel.transform.localPosition -= new Vector3(0, movingHeightOfInstantiatePanel, 0);
+                movedPanelHeightOfChoice += movingHeightOfInstantiatePanel;
             }
 
-            dialoguePanelMovingHeight += PanelUpperMovingOffset;
-            instantiatePanel.transform.position = originalPositionOfinstantiatePanel * 0.5f;
+            movedPanelHeightOfChoice += PanelUpperMovingOffset;
+            instantiatePanel.transform.position = originalPositionOfinstantiatePanel;
 
             return choiceObjectList;
         }

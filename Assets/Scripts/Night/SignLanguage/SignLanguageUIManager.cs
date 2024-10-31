@@ -54,7 +54,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 Vector3 targetPosition = originalUIObjectPosition + new Vector3(0, screenHeight, 0);
                 WordToMake.SetText("Make The Word : " + SignLanguageMean);
 
-                StartCoroutine( UICanvasVerticalSlideCoroutine(targetPosition) );
+                StartCoroutine(UICanvasVerticalSlideCoroutine(targetPosition));
             }
         }
 
@@ -64,7 +64,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             {
                 Vector3 targetPosition = originalUIObjectPosition;
 
-                StartCoroutine( UICanvasVerticalSlideCoroutine(targetPosition) );
+                StartCoroutine(UICanvasVerticalSlideCoroutine(targetPosition));
             }
         }
         #endregion
@@ -126,13 +126,29 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             float offset = 0.1f;
             #endregion
 
-            //패널을 아래로 부드럽게 올린다
-            while (targetPosition.y - offset > UIObjectInSignLanguageCanvas.transform.localPosition.y)
-            {
-                float positionY = Mathf.SmoothDamp(UIObjectInSignLanguageCanvas.transform.localPosition.y, targetPosition.y, ref velocityY, smoothTime);
-                UIObjectInSignLanguageCanvas.transform.localPosition = new Vector3(UIObjectX, positionY, UIObjectZ);
 
-                yield return null;
+            //패널을 위로 부드럽게 올린다
+            //목표 지점이 패널의 현재 위치보다 위에 있을 경우
+            if (targetPosition.y - offset > UIObjectInSignLanguageCanvas.transform.localPosition.y)
+            {
+                while (targetPosition.y - offset > UIObjectInSignLanguageCanvas.transform.localPosition.y)
+                {
+                    float positionY = Mathf.SmoothDamp(UIObjectInSignLanguageCanvas.transform.localPosition.y, targetPosition.y, ref velocityY, smoothTime);
+                    UIObjectInSignLanguageCanvas.transform.localPosition = new Vector3(UIObjectX, positionY, UIObjectZ);
+
+                    yield return null;
+                }
+            }
+            //목표 지점이 아래 있을 경우
+            else
+            {
+                while (targetPosition.y + offset < UIObjectInSignLanguageCanvas.transform.localPosition.y)
+                {
+                    float positionY = Mathf.SmoothDamp(UIObjectInSignLanguageCanvas.transform.localPosition.y, targetPosition.y, ref velocityY, smoothTime);
+                    UIObjectInSignLanguageCanvas.transform.localPosition = new Vector3(UIObjectX, positionY, UIObjectZ);
+
+                    yield return null;
+                }
             }
 
             UIObjectInSignLanguageCanvas.transform.localPosition = targetPosition;
