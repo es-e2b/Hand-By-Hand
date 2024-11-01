@@ -40,6 +40,8 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         private GameObject instantiatePanel;
         private GameObject dialoguePanel;
+
+        public GameObject ScrollView;
         #endregion
 
         #region VARIABLE
@@ -86,7 +88,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                 GameObject instance = InstantiateDialogueObject(dialogueItem.whoseItem);
 
                 //오브젝트 가로 위치 조정
-                AdjustDialogueObjectHorizontalPosition(instance, dialogueItem.whoseItem);
+                //AdjustDialogueObjectHorizontalPosition(instance, dialogueItem.whoseItem);
 
                 //Text 설정
                 SetTextContent(instance, dialogueItem);
@@ -110,7 +112,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                 this.movedPanelHeightOfChoice = movedPanelHeightOfChoice;
 
                 //오브젝트 가로 위치 조정
-                AdjustChoiceObjectHorizontalPosition(ref choiceObjectList);
+                //AdjustChoiceObjectHorizontalPosition(ref choiceObjectList);
 
                 //버튼당 컨텐츠 설정
                 SetChoiceContent(ref choiceObjectList, ref choiceList);
