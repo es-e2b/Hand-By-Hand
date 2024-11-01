@@ -3,19 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using HandByHand.NightSystem.SignLanguageSystem;
-using UnityEditor.U2D.Aseprite;
-using Unity.VisualScripting;
 
 
-#if UNITY_EDITOR
-using static UnityEditor.PlayerSettings;
-using static UnityEditor.Progress;
-#endif
-
-
-//´ëÈ­¸¦ Ãâ·ÂÇÏ´Â ¸Å´ÏÀúÀÔ´Ï´Ù.
+//ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
 namespace HandByHand.NightSystem.DialogueSystem
 {
     public class PrintManager : MonoBehaviour
@@ -51,11 +42,11 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         public bool IsPrintEnd { get; private set; }
 
-        //DialogueChoiceSelectManager¿¡¼­ ¼±ÅÃÁö ¿ÀºêÁ§Æ®¸¦ ¹Þ¾Æ¿À±â À§ÇÑ º¯¼ö
+        //DialogueChoiceSelectManagerï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         [HideInInspector]
         public List<GameObject> ChoiceObjectList;
 
-        //¼±ÅÃÁö¸¦ Ãâ·Â ÇßÀ» ¶§ ÆÐ³ÎÀ» ¿Ã¸° ³ôÀÌ¸¦ ´ã¾ÆµÑ °ª
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ð³ï¿½ï¿½ï¿½ ï¿½Ã¸ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½Æµï¿½ ï¿½ï¿½
         private float movedPanelHeightOfChoice = 0;
 
         DialogueChoiceSelectManager dialogueChoiceSelectManager;
@@ -81,37 +72,37 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         public void StartPrint(DialogueItem dialogueItem)
         {
-            //ÅØ½ºÆ®°¡ ¿Ã¶ó¿À´Â °æ¿ì
+            //ï¿½Ø½ï¿½Æ®ï¿½ï¿½ ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             if (dialogueItem.itemType != ItemType.PlayerChoice)
             {
-                //¿ÀºêÁ§Æ® ÇÁ¸®ÆÕ Instantiate
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Instantiate
                 GameObject instance = InstantiateDialogueObject(dialogueItem.whoseItem);
 
-                //Text ¼³Á¤
+                //Text ï¿½ï¿½ï¿½ï¿½
                 SetTextContent(instance, dialogueItem);
 
-                //ÆÐ³ÎÀ» ¹Ð¾î¿Ã¸®´Â ¾Ö´Ï¸ÞÀÌ¼Ç
+                //ï¿½Ð³ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½Ã¸ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½
                 float movingHeightOfDialoguePanel = PanelUpperMovingOffset + instance.GetComponent<RectTransform>().rect.height;
                 StartCoroutine(DialoguePanelUpperSlidingAnimationCoroutine(movingHeightOfDialoguePanel));
             }
 
-            //ÇÃ·¹ÀÌ¾î ¼±ÅÃÁö°¡ ¿Ã¶ó¿À´Â °æ¿ì
+            //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             //else if(dialogueItem.itemType == ItemType.PlayerChoice)
             else
             {
-                //¼±ÅÃÁö ¸®½ºÆ®·Î ¹Þ¾Æ¿À±â
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½
                 List<SignLanguageSO> choiceList = new List<SignLanguageSO>(((PlayerChoice)dialogueItem).SignLanguageItem);
 
-                //¿ÀºêÁ§Æ® ÇÁ¸®ÆÕ Instantiate
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Instantiate
                 float objectIntervalOffset = 25f;
                 List<GameObject> choiceObjectList = InstantiateChoiceObject(choiceList.Count, objectIntervalOffset, out float movedPanelHeightOfChoice);
                 ChoiceObjectList = new List<GameObject>(choiceObjectList);
                 this.movedPanelHeightOfChoice = movedPanelHeightOfChoice;
 
-                //¹öÆ°´ç ÄÁÅÙÃ÷ ¼³Á¤
+                //ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 SetChoiceContent(ref choiceObjectList, ref choiceList);
 
-                //¼±ÅÃÁöÀÇ °³¼ö¸¸Å­ ¿Ã¸²
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å­ ï¿½Ã¸ï¿½
                 StartCoroutine(DialoguePanelUpperSlidingAnimationCoroutine(movedPanelHeightOfChoice));
             }
         }
@@ -122,25 +113,25 @@ namespace HandByHand.NightSystem.DialogueSystem
 
             playerText.Text = dialogueChoiceSelectManager.GetSelectedSignLanguageSO().Mean;
 
-            //¼±ÅÃÁö ¿ÀºêÁ§Æ® »èÁ¦
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
             for (int i = 0; i < ChoiceObjectList.Count; i++)
             {
                 Destroy(ChoiceObjectList[i]);
             }
-            //¸®½ºÆ® ÃÊ±âÈ­
+            //ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ê±ï¿½È­
             ChoiceObjectList.Clear();
 
-            //ÆÐ³Î ¾Æ·¡·Î ³»¸®±â
+            //ï¿½Ð³ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             dialoguePanel.transform.position -= new Vector3(0, movedPanelHeightOfChoice, 0);
             //reset variable
             movedPanelHeightOfChoice = 0;
 
 
-            //ÅØ½ºÆ® »ý¼º
-            //¿ÀºêÁ§Æ® ÇÁ¸®ÆÕ Instantiate
+            //ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Instantiate
             GameObject instance = InstantiateDialogueObject(playerText.whoseItem);
 
-            //Text ¼³Á¤
+            //Text ï¿½ï¿½ï¿½ï¿½
             SetTextContent(instance, playerText);
 
             float movingHeightOfDialoguePanel = PanelUpperMovingOffset + instance.GetComponent<RectTransform>().rect.height;
@@ -160,7 +151,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                     break;
             }
 
-            //¿ÀºêÁ§Æ® ÇÁ¸®ÆÕ Instantiate
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Instantiate
             GameObject instance = Instantiate(instancePrefab, instantiatePanel.transform);
             instantiatedPrefab.Add(instance);
             instance.transform.SetParent(dialoguePanel.transform, true);
@@ -172,7 +163,7 @@ namespace HandByHand.NightSystem.DialogueSystem
         {
             TMP_Text textComponent = instance.transform.GetChild(0).GetComponent<TMP_Text>();
 
-            //¾ÆÀÌÅÛ Å¸ÀÔ¿¡ µû¶ó ´Ù¿îÄ³½ºÆÃÇÏ¿© ÅØ½ºÆ® ¼³Á¤
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½Ä³ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Ø½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
             if (dialogueItem.itemType == ItemType.PlayerText)
             {
                 textComponent.SetText(((PlayerText)dialogueItem).Text);
@@ -203,7 +194,7 @@ namespace HandByHand.NightSystem.DialogueSystem
 
             for (int i = 0; i < objectCount; i++)
             {
-                //¿ÀºêÁ§Æ® ÇÁ¸®ÆÕ Instantiate
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Instantiate
                 GameObject instance = Instantiate(instancePrefab, instantiatePanel.transform);
                 instantiatedPrefab.Add(instance);
                 choiceObjectList.Add(instance);
@@ -224,16 +215,16 @@ namespace HandByHand.NightSystem.DialogueSystem
             #region ERRORCHECK
             if (choiceObjectList.Count != choiceList.Count)
             {
-                Debug.LogError("½ºÅ©¸³Æ® ¿À·ù in PrintManager.cs");
+                Debug.LogError("ï¿½ï¿½Å©ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ in PrintManager.cs");
             }
             #endregion
 
             for (int i = 0; i < choiceObjectList.Count; i++)
             {
-                //choice ¿ÀºêÁ§Æ®¿¡ SOÇÒ´ç
+                //choice ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ SOï¿½Ò´ï¿½
                 choiceObjectList[i].GetComponent<ChoiceInformation>().signLanguageSO = choiceList[i];
 
-                //ÅØ½ºÆ® ÇÒ´ç
+                //ï¿½Ø½ï¿½Æ® ï¿½Ò´ï¿½
                 TMP_Text textComponent = choiceObjectList[i].transform.GetChild(0).GetComponent<TMP_Text>();
 
                 textComponent.SetText(choiceList[i].Mean);
@@ -245,7 +236,7 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         IEnumerator DialoguePanelUpperSlidingAnimationCoroutine(float VerticalMovingHeight)
         {
-            //º¯¼ö ¼±¾ð
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             #region VARIABLEFIELD
             //float dialoguePanelHeight = dialoguePanel.GetComponent<RectTransform>().rect.height;
             Vector3 targetPosition = dialoguePanel.transform.position + new Vector3(0, VerticalMovingHeight, 0);
@@ -259,7 +250,7 @@ namespace HandByHand.NightSystem.DialogueSystem
             float offset = 0.1f;
             #endregion
 
-            //ÆÐ³ÎÀ» À§·Î ºÎµå·´°Ô ¿Ã¸°´Ù
+            //ï¿½Ð³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµå·´ï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½
             while (targetPosition.y - offset > dialoguePanel.transform.position.y)
             {
                 float positionY = Mathf.SmoothDamp(dialoguePanel.transform.position.y, targetPosition.y, ref velocityY, smoothTime);
@@ -270,11 +261,11 @@ namespace HandByHand.NightSystem.DialogueSystem
 
             dialoguePanel.transform.position = targetPosition;
 
-            //´ëÈ­¸¦ ÀÐ±â À§ÇÑ ¾à°£ÀÇ ½Ã°£À» ±â´Ù·ÁÁØ´Ù
+            //ï¿½ï¿½È­ï¿½ï¿½ ï¿½Ð±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½à°£ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½Ù·ï¿½ï¿½Ø´ï¿½
             float playerReadWaitingTime = 1.0f;
             yield return new WaitForSeconds(playerReadWaitingTime);
 
-            //¾Ö´Ï¸ÞÀÌ¼Ç ¿Ï·á¸¦ ¾Ë¸²
+            //ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½Ï·á¸¦ ï¿½Ë¸ï¿½
             yield return StartCoroutine(AnnouncePrintDone());
         }
 
