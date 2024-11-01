@@ -231,6 +231,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 626890649}
+        m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
+          Assembly-CSharp
+        m_MethodName: ChangeToNextUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &56776286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,6 +451,19 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
           Assembly-CSharp
         m_MethodName: ChangeColorOfButtonEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 626890649}
+        m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
+          Assembly-CSharp
+        m_MethodName: ChangeToNextUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1311,6 +1337,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 626890649}
+        m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
+          Assembly-CSharp
+        m_MethodName: ChangeToNextUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &366540927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2042,6 +2081,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 626890649}
+        m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
+          Assembly-CSharp
+        m_MethodName: ChangeToNextUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &601616431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2505,6 +2557,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 626890649}
+        m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
+          Assembly-CSharp
+        m_MethodName: ChangeToNextUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &742905132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2643,6 +2708,19 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
           Assembly-CSharp
         m_MethodName: ChangeColorOfButtonEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 626890649}
+        m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
+          Assembly-CSharp
+        m_MethodName: ChangeToNextUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3747,6 +3825,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 626890649}
+        m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
+          Assembly-CSharp
+        m_MethodName: ChangeToNextUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1159717662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4027,6 +4118,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 626890649}
+        m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
+          Assembly-CSharp
+        m_MethodName: ChangeToNextUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1214482101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4164,6 +4268,19 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
           Assembly-CSharp
         m_MethodName: ChangeColorOfButtonEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 626890649}
+        m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
+          Assembly-CSharp
+        m_MethodName: ChangeToNextUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5082,6 +5199,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 626890649}
+        m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
+          Assembly-CSharp
+        m_MethodName: ChangeToNextUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &1700106049
 GameObject:
   m_ObjectHideFlags: 0
@@ -5459,6 +5589,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 626890649}
+        m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
+          Assembly-CSharp
+        m_MethodName: ChangeToNextUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1783366463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5596,6 +5739,19 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
           Assembly-CSharp
         m_MethodName: ChangeColorOfButtonEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 626890649}
+        m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
+          Assembly-CSharp
+        m_MethodName: ChangeToNextUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6046,6 +6202,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 626890649}
+        m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
+          Assembly-CSharp
+        m_MethodName: ChangeToNextUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1980482387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6354,6 +6523,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 626890649}
+        m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
+          Assembly-CSharp
+        m_MethodName: ChangeToNextUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &2049130707
 GameObject:
   m_ObjectHideFlags: 0
@@ -6566,6 +6748,19 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
           Assembly-CSharp
         m_MethodName: ChangeColorOfButtonEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 626890649}
+        m_TargetAssemblyTypeName: HandByHand.NightSystem.SignLanguageSystem.SignLanguageUIManager,
+          Assembly-CSharp
+        m_MethodName: ChangeToNextUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -23,6 +23,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         private List<TMP_Text> buttonTextList;
         private List<GameObject> buttonGameObjectList;
         private List<GameObject> viewportObjectList;
+        private bool[] buttonHadPushed = new bool[3] {false, false , false }; 
         private ScrollRect scrollViewScrollRectComponent;
 
         private GameObject UIObjectInSignLanguageCanvas;
@@ -75,6 +76,15 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 image.color = new Color(1, 1, 1, 1);
             }
         }
+
+        /// <summary>
+        /// HadPushed배열 값을 false로 초기화
+        /// </summary>
+        private void InitHadPushedArray()
+        {
+            for(int i = 0; i < buttonHadPushed.Length; i++)
+                buttonHadPushed[i] = false;
+        }
         #endregion
 
         #region CANVASACTIVATEFUNCTION
@@ -106,22 +116,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             //함수를 부른 버튼 오브젝트의 hierarchy상 인덱스 받기
             int eventButtonSiblingIndex = EventSystem.current.currentSelectedGameObject.transform.GetSiblingIndex();
 
-            #region OBSOLETECODE
-            /*
-            //모든 오브젝트를 안 보이게 처리
-            for (int i = 0; i < viewportObjectList.Count; i++)
-            {
-                viewportObjectList[i].transform.SetParent(InvisibleViewportObject.transform);
-            }
-
-            //함수를 부른 오브젝트만 보이도록 처리
-            viewportObjectList[eventButtonSiblingIndex].transform.SetParent(ViewportListUIComponent.gameObject.transform);
-
-            //스크롤이 가능하도록 처리
-            //scrollViewScrollRectComponent.content = viewportObjectList[eventButtonSiblingIndex].GetComponent<RectTransform>();
-            */
-            #endregion
-
             Vector2 targetPosition = viewportObjectList[eventButtonSiblingIndex].GetComponent<RectTransform>().anchoredPosition;
 
 
@@ -135,9 +129,20 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         public void ChangeToNextUI()
         {
             //함수를 부른 버튼 오브젝트의 hierarchy상 인덱스 받기
-            int eventButtonSiblingIndex = EventSystem.current.currentSelectedGameObject.transform.GetSiblingIndex();
+            int eventButtonSiblingIndex = EventSystem.current.currentSelectedGameObject.transform.parent.GetSiblingIndex();
 
+            if (eventButtonSiblingIndex != 3 && !buttonHadPushed[eventButtonSiblingIndex])
+            {
+                Vector2 targetPosition = viewportObjectList[eventButtonSiblingIndex + 1].GetComponent<RectTransform>().anchoredPosition;
 
+                if (horizontalSlideCoroutine != null)
+                {
+                    StopCoroutine(horizontalSlideCoroutine);
+                }
+                horizontalSlideCoroutine = StartCoroutine(ViewportHorizontalSlideCoroutine(targetPosition));
+
+                buttonHadPushed[eventButtonSiblingIndex] = true;
+            }
         }
 
         /// <summary>
@@ -296,6 +301,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             {
                 InitViewportObject();
                 InitButtonColor();
+                InitHadPushedArray();
             }
 
             isVerticalAnimationDone = true;
