@@ -42,6 +42,11 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
         }
         private void Start()
         {
+            StartCoroutine(Initialize());
+        }
+        private IEnumerator Initialize()
+        {
+            yield return new WaitUntil(()=>PaymentManager.Instance!=null);
             PaymentManager.Instance.OnChangedTenThousandNumber.AddListener(number=>
                 {
                 numberObjects[0].AnswerValue=number;
