@@ -3,18 +3,26 @@ namespace Assets.Scripts
     using UnityEngine;
     using CharacterData;
     using UnityEngine.Events;
+    using UnityEngine.SceneManagement;
 
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
+        [SerializeField]
+        private Object[] DayCycleScenes;
         private DayCycle _currentDayCycle;
         public DayCycle CurrentDayCycle
         {
             get => _currentDayCycle;
             set
             {
+                if(value==0)
+                {
+                    value++;
+                }
                 _currentDayCycle=value;
                 OnChangedDayCycle.Invoke(value);
+                SceneManager.LoadScene((int)value);
             }
         }
         public Character[] CharacterPool;
@@ -54,6 +62,7 @@ namespace Assets.Scripts
         private void Start()
         {
             DayCount=1;
+            Debug.Log("Gama Manager Started");
         }
         public UnityEvent<int> OnChangedDayCount { get; private set; }
         public UnityEvent<int> OnChangedDailySales { get; private set; }
@@ -61,9 +70,10 @@ namespace Assets.Scripts
     }
     public enum DayCycle
     {
+        Start,
         Day,
-        DayToNight,
+        // DayToNight,
         Night,
-        NightToDay,
+        // NightToDay,
     }
 }
