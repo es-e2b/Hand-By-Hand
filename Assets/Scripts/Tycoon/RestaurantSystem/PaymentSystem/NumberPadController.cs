@@ -51,13 +51,15 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
             PaymentManager.Instance.OnChangedTenThousandUnit.AddListener(number=>numberObjects[1].AnswerValue=number);
             PaymentManager.Instance.OnChangedThousandNumber.AddListener(number=>numberObjects[2].AnswerValue=number);
             PaymentManager.Instance.OnChangedThousandUnit.AddListener(number=>numberObjects[3].AnswerValue=number);
-            hintTimer=new UniversalTimer(1, ()=>Array.ForEach(numberObjects, numberObject=>numberObject.OpenHint()), StartCoroutine, StopCoroutine);
+            hintTimer=new UniversalTimer(1, ()=>Array.ForEach(numberObjects, numberObject=>{/*numberObject.OpenHint()*/}), StartCoroutine, StopCoroutine);
             PaymentManager.Instance.OnChangedCustomer.AddListener(customer=>hintTimer.StartTimer(hintOpenTime));
             for(int i=1;i<=9;i++)
             {
                 int inputNumber=i;
                 numberInputButtons[i-1].InputAction=()=>InputInSelectedIndex(inputNumber);
             }
+            unitInputButtons[0].transform.Find("Image").GetComponent<Animator>().SetInteger("Input Number", 10000);
+            unitInputButtons[1].transform.Find("Image").GetComponent<Animator>().SetInteger("Input Number", 1000);
             unitInputButtons[0].InputAction=()=>InputInSelectedIndex(10000);
             unitInputButtons[1].InputAction=()=>InputInSelectedIndex(1000);
             deleteButton.InputAction=ResetInput;
