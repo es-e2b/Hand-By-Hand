@@ -58,13 +58,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// </summary>
         private void InitViewportObject()
         {
-            //Viewport의 UI를 재정렬
-            viewportObjectList[0].transform.SetParent(ViewportListUIComponent.transform);
-
-            for (int i = 1; i < viewportObjectList.Count; i++)
-            {
-                viewportObjectList[i].transform.SetParent(InvisibleViewportObject.transform);
-            }
+            Vector2 initVector = new Vector2(0, 0);
+            StartCoroutine(ViewportHorizontalSlideCoroutine(initVector));
         }
 
         /// <summary>
@@ -231,8 +226,10 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// <returns></returns>
         IEnumerator ViewportHorizontalSlideCoroutine(Vector2 viewportObjectRectPosition)
         {
-            //수직 이동 애니메이션이 실행중일 경우에는 작동 x
-            if (!isVerticalAnimationDone) yield break;
+            if (!isVerticalAnimationDone)
+            {
+                yield return new WaitUntil(() => isVerticalAnimationDone == true);
+            }
 
             //변수 선언
             #region VARIABLEFIELD
