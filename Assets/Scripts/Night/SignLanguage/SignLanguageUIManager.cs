@@ -17,21 +17,26 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         public ViewportListUIComponent ViewportListUIComponent;
         public GameObject InvisibleViewportObject;
 
-        private List<TMP_Text> buttonText;
-        private List<GameObject> viewportObject;
+        private List<TMP_Text> buttonTextList;
+        private List<GameObject> buttonGameObjectList;
+        private List<GameObject> viewportObjectList;
         private ScrollRect scrollViewScrollRectComponent;
 
         public TMP_Text WordToMake;
+        public Button CompareEventButton;
         private GameObject UIObjectInSignLanguageCanvas;
         private Vector3 originalUIObjectPosition;
         private float screenHeight = Screen.height;
         #endregion
 
+
+
         #region INIT
         private void Awake()
         {
-            buttonText = ButtonListUIComponent.buttonText;
-            viewportObject = ViewportListUIComponent.UIObject;
+            buttonTextList = ButtonListUIComponent.buttonText;
+            buttonGameObjectList = ButtonListUIComponent.buttonGameObject;
+            viewportObjectList = ViewportListUIComponent.UIObject;
             UIObjectInSignLanguageCanvas = SignLanguageCanvas.transform.Find("UIObject").gameObject;
             originalUIObjectPosition = UIObjectInSignLanguageCanvas.transform.localPosition;
             scrollViewScrollRectComponent = ViewportListUIComponent.gameObject.transform.parent.GetComponent<ScrollRect>();
@@ -39,9 +44,35 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         private void Start()
         {
-            for (int i = 1; i < viewportObject.Count; i++)
+            InitViewportObject();
+        }
+
+        /// <summary>
+        /// UI 재정렬 함수
+        /// </summary>
+        private void InitViewportObject()
+        {
+            //Viewport의 UI를 재정렬
+            viewportObjectList[0].transform.SetParent(ViewportListUIComponent.transform);
+            
+            for (int i = 1; i < viewportObjectList.Count; i++)
             {
-                viewportObject[i].transform.SetParent(InvisibleViewportObject.transform);
+                viewportObjectList[i].transform.SetParent(InvisibleViewportObject.transform);
+            }
+        }
+
+        /// <summary>
+        /// 버튼 색깔 초기화 함수
+        /// </summary>
+        private void InitButtonColor()
+        {
+            for(int i = 0; i < buttonGameObjectList.Count; i++)
+            {
+                //버튼 색깔 초기화
+                Image image = buttonGameObjectList[i].GetComponent<Image>();
+
+                //R255 G255 B255 A255
+                image.color = new Color(1, 1, 1, 1);
             }
         }
         #endregion
@@ -54,7 +85,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 Vector3 targetPosition = originalUIObjectPosition + new Vector3(0, screenHeight, 0);
                 WordToMake.SetText("Make The Word : " + SignLanguageMean);
 
-                StartCoroutine(UICanvasVerticalSlideCoroutine(targetPosition));
+                StartCoroutine(UICanvasVerticalSlideCoroutine(targetPosition, false));
             }
         }
 
@@ -64,48 +95,64 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             {
                 Vector3 targetPosition = originalUIObjectPosition;
 
-                StartCoroutine(UICanvasVerticalSlideCoroutine(targetPosition));
+                StartCoroutine(UICanvasVerticalSlideCoroutine(targetPosition, true));
             }
         }
         #endregion
 
-
+        #region BUTTONFUNCTION
         public void ChangeUIObject()
         {
-            //함수를 부른 버튼 오브젝트의 이름 받기
-            string eventButtonName = EventSystem.current.currentSelectedGameObject.name;
+            //함수를 부른 버튼 오브젝트의 hierarchy상 인덱스 받기
+            int eventButtonSiblingIndex = EventSystem.current.currentSelectedGameObject.transform.GetSiblingIndex();
 
-            for (int i = 0; i < viewportObject.Count; i++)
+            //모든 오브젝트를 안 보이게 처리
+            for (int i = 0; i < viewportObjectList.Count; i++)
             {
-                //scrollViewObject[i].SetActive(false);
-                viewportObject[i].transform.SetParent(InvisibleViewportObject.transform);
+                viewportObjectList[i].transform.SetParent(InvisibleViewportObject.transform);
             }
+
+            //함수를 부른 오브젝트만 보이도록 처리
+            viewportObjectList[eventButtonSiblingIndex].transform.SetParent(ViewportListUIComponent.gameObject.transform);
+            //스크롤이 가능하도록 처리
+            //scrollViewScrollRectComponent.content = viewportObjectList[eventButtonSiblingIndex].GetComponent<RectTransform>();
+        }
+
+        public void ChangeToNextUI()
+        {
+            //함수를 부른 버튼 오브젝트의 hierarchy상 인덱스 받기
+            int eventButtonSiblingIndex = EventSystem.current.currentSelectedGameObject.transform.GetSiblingIndex();
+
+
+        }
+
+        public void ChangeColorOfButton()
+        {
+            string eventButtonName = EventSystem.current.currentSelectedGameObject.transform.parent.name;
+            int eventButtonIndex = 0;
 
             switch (eventButtonName)
             {
-                case "HandCountButton":
-                    ShowObject(0);
+                case "HandCountContent":
+                    eventButtonIndex = 0;
                     break;
-
-                case "SymbolAndDirectionButton":
-                    ShowObject(1);
+                case "SymbolAndDirectionContent":
+                    eventButtonIndex = 1;
                     break;
-
-                case "HandPositionButton":
-                    ShowObject(2);
+                case "HandPositionContent":
+                    eventButtonIndex = 2;
                     break;
-
-                case "ParticularButton":
-                    ShowObject(3);
+                case "ParticularContent":
+                    eventButtonIndex = 3;
                     break;
             }
 
-            void ShowObject(int index)
-            {
-                viewportObject[index].transform.SetParent(ViewportListUIComponent.gameObject.transform);
-                scrollViewScrollRectComponent.content = viewportObject[index].GetComponent<RectTransform>();
-            }
+            Image image = buttonGameObjectList[eventButtonIndex].GetComponent<Image>();
+
+            //R0 G255 B0 A255
+            image.color = new Color(0, 1, 0, 1);
         }
+        #endregion
 
         #region COROUTINE
         /// <summary>
@@ -113,7 +160,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// </summary>
         /// <param name="targetPosition">목표 지점</param>
         /// <returns></returns>
-        IEnumerator UICanvasVerticalSlideCoroutine(Vector3 targetPosition)
+        IEnumerator UICanvasVerticalSlideCoroutine(Vector3 targetPosition, bool isInitObject)
         {
             //변수 선언
             #region VARIABLEFIELD
@@ -154,11 +201,16 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             UIObjectInSignLanguageCanvas.transform.localPosition = targetPosition;
 
             //애니메이션 완료를 알림
-            yield return StartCoroutine(AnnounceAnimationDone());
+            yield return StartCoroutine(AnnounceAnimationDone(isInitObject));
         }
 
-        IEnumerator AnnounceAnimationDone()
+        IEnumerator AnnounceAnimationDone(bool isInitObject)
         {
+            if (isInitObject)
+            {
+                InitViewportObject();
+                InitButtonColor();
+            }
             yield return null;
         }
         #endregion

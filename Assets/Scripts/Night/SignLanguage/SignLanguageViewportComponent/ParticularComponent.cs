@@ -101,5 +101,10 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             answerChoiceGameObjectIndex = randomNumber;
         }
         #endregion
+
+        public void InitBoolean()
+        {
+            IsCorrect = false;
+        }
     }
 }

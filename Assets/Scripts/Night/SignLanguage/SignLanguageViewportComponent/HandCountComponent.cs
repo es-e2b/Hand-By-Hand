@@ -40,5 +40,10 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             else
                 IsCorrect = false;
         }
+
+        public void InitBoolean()
+        {
+            IsCorrect = false;
+        }
     }
 }

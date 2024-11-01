@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HandByHand.NightSystem
 {
@@ -9,6 +10,9 @@ namespace HandByHand.NightSystem
     {
         [HideInInspector]
         public List<TMP_Text> buttonText = new List<TMP_Text>();
+
+        [HideInInspector]
+        public List<GameObject> buttonGameObject = new List<GameObject>();
 
         private void Awake()
         {
@@ -20,9 +24,12 @@ namespace HandByHand.NightSystem
             for (int i = 0; i < 4; i++)
             {
                 TMP_Text textComponent = gameObject.transform.GetChild(i).gameObject.transform.GetChild(0).GetComponent<TMP_Text>();
+                GameObject button = gameObject.transform.GetChild(i).gameObject;
 
-                //버튼 오브젝트 할당
+                //TMP Component 리스트에 추가
                 buttonText.Add(textComponent);
+                //버튼 게임 오브젝트 리스트에 추가
+                buttonGameObject.Add(button);
             }
         }
     }

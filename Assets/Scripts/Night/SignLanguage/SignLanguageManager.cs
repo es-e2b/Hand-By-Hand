@@ -90,7 +90,16 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             IsSignLanguageMade = false;
             isSignLanguageCorrect = false;
+            InitBooleanOfEachComponent();
             yield return null;
+        }
+
+        private void InitBooleanOfEachComponent()
+        {
+            handCountComponent.InitBoolean();
+            symbolAndDirectionComponent.InitBoolean();
+            handPositionComponent.InitBoolean();
+            particularComponent.InitBoolean();
         }
         #endregion
     }
