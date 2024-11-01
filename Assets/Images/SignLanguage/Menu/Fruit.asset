@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab78eecb4505a4c9ab4da1e0e9b860c6, type: 3}
+  m_Name: Fruit
+  m_EditorClassIdentifier: 
+  Name: "\uACFC\uC77C"
+  Hint: "\uC190\uC9C8\uD558\uB294 \uBAA8\uC591\uC744 \uD45C\uD604\uD558\uB294 \uB4EF\uD569\uB2C8\uB2E4."
+  RightHandshapes:
+  - HandshapeImage: {fileID: 21300000, guid: aeb0e133b7b1d4178bf637858a226cd9, type: 3}
+    StartPosition: {x: 0, y: -0.075}
+    EndPosition: {x: 0, y: -0.075}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.1
+  - HandshapeImage: {fileID: 21300000, guid: c124e6f72fd0144438aba7d9deb8c7c1, type: 3}
+    StartPosition: {x: 0, y: -0.075}
+    EndPosition: {x: 0, y: -0.15}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.25
+  - HandshapeImage: {fileID: 21300000, guid: 0fa9fda18dcec4792ada5e6a01b56b77, type: 3}
+    StartPosition: {x: 0, y: -0.15}
+    EndPosition: {x: 0, y: -0.15}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.25
+  - HandshapeImage: {fileID: 21300000, guid: f5b82ade90b664f95bbd7f3cef3a68c4, type: 3}
+    StartPosition: {x: 0.2, y: 0}
+    EndPosition: {x: 0, y: 0}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.3
+  - HandshapeImage: {fileID: 21300000, guid: f99889739a71249a995cc599051243eb, type: 3}
+    StartPosition: {x: 0, y: 0}
+    EndPosition: {x: -0.25, y: 0}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.4
+  LeftHandshapes:
+  - HandshapeImage: {fileID: 21300000, guid: 76896d03487a24e819734b8a3c1a7e59, type: 3}
+    StartPosition: {x: 0.05, y: -0.1}
+    EndPosition: {x: 0.05, y: -0.1}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.6
