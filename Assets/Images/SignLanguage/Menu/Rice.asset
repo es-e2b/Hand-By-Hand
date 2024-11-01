@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab78eecb4505a4c9ab4da1e0e9b860c6, type: 3}
+  m_Name: Rice
+  m_EditorClassIdentifier: 
+  Name: "\uBC25"
+  Hint: "\uB178\uB780 \uBCBC\uC640 \uBA39\uB2E4\uB97C \uD569\uCE5C \uAC83 \uAC19\uC2B5\uB2C8\uB2E4."
+  RightHandshapes:
+  - HandshapeImage: {fileID: 21300000, guid: b66779fa1c26440a1825ed0be4ab0cdf, type: 3}
+    StartPosition: {x: 0, y: 0.05}
+    EndPosition: {x: 0, y: 0.05}
+    StartRotation: {x: 0, y: 0, z: 30}
+    EndRotation: {x: 0, y: 0, z: 30}
+    Duration: 0.5
+  - HandshapeImage: {fileID: 21300000, guid: fbc1e531cd83240d083373920619f3d5, type: 3}
+    StartPosition: {x: 0, y: 0.05}
+    EndPosition: {x: 0, y: 0.05}
+    StartRotation: {x: 0, y: 0, z: 30}
+    EndRotation: {x: 0, y: 0, z: 30}
+    Duration: 0.25
+  - HandshapeImage: {fileID: 21300000, guid: 5360efda983e14148bbfb5890b201d04, type: 3}
+    StartPosition: {x: -0.05, y: 0.05}
+    EndPosition: {x: -0.05, y: 0.1}
+    StartRotation: {x: 0, y: 0, z: 60}
+    EndRotation: {x: 0, y: 0, z: 60}
+    Duration: 0.5
+  LeftHandshapes: []

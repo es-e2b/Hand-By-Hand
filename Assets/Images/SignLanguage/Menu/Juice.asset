@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab78eecb4505a4c9ab4da1e0e9b860c6, type: 3}
+  m_Name: Juice
+  m_EditorClassIdentifier: 
+  Name: "\uC8FC\uC2A4"
+  Hint: "\uBE68\uB300\uB85C \uBE60\uB294 \uBAA8\uC591\uC744 \uD45C\uD604\uD558\uB294
+    \uB4EF\uD569\uB2C8\uB2E4."
+  RightHandshapes:
+  - HandshapeImage: {fileID: 21300000, guid: cef6a375f767f4bf593cd4be119603cf, type: 3}
+    StartPosition: {x: -0.05, y: -0.05}
+    EndPosition: {x: -0.05, y: 0.1}
+    StartRotation: {x: 0, y: 0, z: -140}
+    EndRotation: {x: 0, y: 0, z: -140}
+    Duration: 0.8
+  - HandshapeImage: {fileID: 21300000, guid: cef6a375f767f4bf593cd4be119603cf, type: 3}
+    StartPosition: {x: -0.05, y: 0.1}
+    EndPosition: {x: -0.05, y: 0.1}
+    StartRotation: {x: 0, y: 0, z: -140}
+    EndRotation: {x: 0, y: 0, z: -140}
+    Duration: 0.4
+  LeftHandshapes:
+  - HandshapeImage: {fileID: 21300000, guid: 92cb029302f054ef68ae7966181d3126, type: 3}
+    StartPosition: {x: 0.05, y: -0.2}
+    EndPosition: {x: 0.05, y: -0.05}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.8
+  - HandshapeImage: {fileID: 21300000, guid: 92cb029302f054ef68ae7966181d3126, type: 3}
+    StartPosition: {x: 0.05, y: -0.05}
+    EndPosition: {x: 0.05, y: -0.05}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.4

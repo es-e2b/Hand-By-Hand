@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab78eecb4505a4c9ab4da1e0e9b860c6, type: 3}
+  m_Name: Coffee
+  m_EditorClassIdentifier: 
+  Name: "\uCEE4\uD53C"
+  Hint: "\uCF54(Co)\uC640 \uCC28\uB97C \uD45C\uD604\uD558\uB294 \uB4EF\uD569\uB2C8\uB2E4."
+  RightHandshapes:
+  - HandshapeImage: {fileID: 21300000, guid: cef6a375f767f4bf593cd4be119603cf, type: 3}
+    StartPosition: {x: -0.05, y: 0.05}
+    EndPosition: {x: -0.05, y: 0.05}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 1
+  - HandshapeImage: {fileID: 21300000, guid: cef6a375f767f4bf593cd4be119603cf, type: 3}
+    StartPosition: {x: -0.05, y: 0}
+    EndPosition: {x: 0.05, y: 0}
+    StartRotation: {x: 0, y: 0, z: -150}
+    EndRotation: {x: 0, y: 0, z: -150}
+    Duration: 0.4
+  - HandshapeImage: {fileID: 21300000, guid: cef6a375f767f4bf593cd4be119603cf, type: 3}
+    StartPosition: {x: 0.05, y: 0}
+    EndPosition: {x: -0.05, y: 0}
+    StartRotation: {x: 0, y: 0, z: -150}
+    EndRotation: {x: 0, y: 0, z: -150}
+    Duration: 0.4
+  - HandshapeImage: {fileID: 21300000, guid: cef6a375f767f4bf593cd4be119603cf, type: 3}
+    StartPosition: {x: -0.05, y: 0}
+    EndPosition: {x: 0.05, y: 0}
+    StartRotation: {x: 0, y: 0, z: -150}
+    EndRotation: {x: 0, y: 0, z: -150}
+    Duration: 0.4
+  - HandshapeImage: {fileID: 21300000, guid: cef6a375f767f4bf593cd4be119603cf, type: 3}
+    StartPosition: {x: 0.05, y: 0}
+    EndPosition: {x: -0.05, y: 0}
+    StartRotation: {x: 0, y: 0, z: -150}
+    EndRotation: {x: 0, y: 0, z: -150}
+    Duration: 0.4
+  LeftHandshapes:
+  - HandshapeImage: {fileID: 21300000, guid: cef6a375f767f4bf593cd4be119603cf, type: 3}
+    StartPosition: {x: -0.05, y: 0.05}
+    EndPosition: {x: -0.05, y: 0.05}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 1
+  - HandshapeImage: {fileID: 21300000, guid: 92cb029302f054ef68ae7966181d3126, type: 3}
+    StartPosition: {x: 0.05, y: -0.2}
+    EndPosition: {x: 0.05, y: -0.2}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 1.6

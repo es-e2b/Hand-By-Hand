@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a1c6f32e5cca44680902abcf1d5e7481, type: 3}
-  m_Name: Noodle
+  m_Name: Rice Menu
   m_EditorClassIdentifier: 
   MenuType: 0
-  Name: "\uAD6D\uC218"
-  Sprite: {fileID: -495477259, guid: 7f65d77739e304058aa36a83a4e73f8a, type: 3}
-  Price: 5000
-  EatingDuration: 30
-  Vocabulary: {fileID: 11400000, guid: eb4e2a2782fa04e45ace5e4b63b08a12, type: 2}
+  Name: "\uBC25"
+  Sprite: {fileID: 1214454333, guid: c9e561388126f484ba3dda7bcc784bc2, type: 3}
+  Price: 1000
+  EatingDuration: 3
+  Vocabulary: {fileID: 11400000, guid: f44a49ef2d89d4479b1018ed7da1edf4, type: 2}

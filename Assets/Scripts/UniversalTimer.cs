@@ -6,25 +6,39 @@ namespace Assets.Scripts
 
     public class UniversalTimer
     {
-        private readonly float interval;
-        private readonly Action<float> onTimeElapsed;
-        private readonly Action onTimeEnded;
-        public UniversalTimer(float interval, Action<float> onTimeElapsed, Action onTimeEnded)
+        private readonly float _interval;
+        private Coroutine _timerCoroutine;
+        private readonly Func<IEnumerator, Coroutine> _startTimer;
+        private readonly Action _onTimeEnded;
+        private readonly Action<Coroutine> _stopTimer;
+        public UniversalTimer(float interval, Action onTimeEnded, Func<IEnumerator, Coroutine> startTimer, Action<Coroutine> stopTime)
         {
-            this.interval = interval;
-            this.onTimeElapsed = onTimeElapsed;
-            this.onTimeEnded = onTimeEnded;
+            _interval = interval;
+            _startTimer = startTimer;
+            _onTimeEnded = onTimeEnded;
+            _stopTimer = stopTime;
         }
-        public IEnumerator TimerStart(float targetTime)
+        public void StartTimer(float targetTime)
+        {
+            _timerCoroutine = _startTimer.Invoke(TimerStart(targetTime));
+        }
+        private IEnumerator TimerStart(float targetTime)
         {
             float leftTime = targetTime;
-            while(leftTime>0)
+            while (leftTime > 0)
             {
-                onTimeElapsed.Invoke(leftTime);
-                yield return new WaitForSeconds(interval);
-                leftTime -= interval;
+                yield return new WaitForSeconds(_interval);
+                leftTime -= _interval;
             }
-            onTimeEnded.Invoke();
+            _onTimeEnded.Invoke();
+        }
+        public void StopTimer()
+        {
+            if (_timerCoroutine != null)
+            {
+                _stopTimer.Invoke(_timerCoroutine);
+                _timerCoroutine = null; // 코루틴 중지 후 null로 설정
+            }
         }
     }
 }
