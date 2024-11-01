@@ -1,5 +1,6 @@
 namespace Assets.Scripts.SignLanguage
 {
+    using System.Collections;
     using UnityEngine;
 
     public class SignAnimationRenderer : MonoBehaviour
@@ -22,30 +23,30 @@ namespace Assets.Scripts.SignLanguage
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        private void Start()
-        {
-            // renderingQueue=new Queue<(GameObject, Vocabulary)>();
-        }
-        public void EnqueueVocabulary(GameObject speaker, Vocabulary vocabulary)
+        public IEnumerator EnqueueVocabulary(GameObject speaker, Vocabulary vocabulary)
         {
             if(speaker == null)
             {
                 Debug.LogError("Speaker object does not exist");
-                return;
+                yield break;
+            }
+            if(vocabulary == null)
+            {
+                yield break;
             }
             if(!speaker.TryGetComponent<IndividualSignAnimationRenderer>(out var individualSignAnimationRenderer))
             {
                 individualSignAnimationRenderer=speaker.AddComponent<IndividualSignAnimationRenderer>();
             }
-            individualSignAnimationRenderer.EnqueueVocabulary(vocabulary);
+            yield return individualSignAnimationRenderer.EnqueueVocabulary(vocabulary);
         }
-        public void StopAndEnqueueVocabulary(GameObject speaker, Vocabulary vocabulary)
+        public IEnumerator StopAndEnqueueVocabulary(GameObject speaker, Vocabulary vocabulary)
         {
             if(!speaker.TryGetComponent<IndividualSignAnimationRenderer>(out var individualSignAnimationRenderer))
             {
                 individualSignAnimationRenderer=speaker.AddComponent<IndividualSignAnimationRenderer>();
             }
-            individualSignAnimationRenderer.StopAndEnqueueVocabulary(vocabulary);
+            yield return individualSignAnimationRenderer.StopAndEnqueueVocabulary(vocabulary);
         }
         #endregion
     }
