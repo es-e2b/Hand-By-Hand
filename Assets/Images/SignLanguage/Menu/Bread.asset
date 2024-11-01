@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Bread
   m_EditorClassIdentifier: 
   Name: "\uBE75"
-  Hint: "\uBB34\uC5B8\uAC00 \uBD80\uD480\uC5B4 \uBAA8\uC591\uC744 \uD45C\uD604\uD558\uB294
-    \uB4EF\uD569\uB2C8\uB2E4."
+  Hint: "\uBB34\uC5B8\uAC00 \uBD80\uD480\uC5B4 \uC624\uB974\uB294 \uBAA8\uC591\uC744
+    \uD45C\uD604\uD558\uB294 \uB4EF\uD569\uB2C8\uB2E4."
   RightHandshapes:
   - HandshapeImage: {fileID: 21300000, guid: 19a08ce0ff6a24355a74ce32e83fab29, type: 3}
     StartPosition: {x: 0, y: -0.1}
@@ -24,12 +24,12 @@ MonoBehaviour:
     Duration: 0.2
   - HandshapeImage: {fileID: 21300000, guid: 9404df44b4b504830a9284ec1f555ae1, type: 3}
     StartPosition: {x: 0, y: -0.1}
-    EndPosition: {x: 0, y: -0.05}
+    EndPosition: {x: 0, y: -0.075}
     StartRotation: {x: 0, y: 0, z: 0}
     EndRotation: {x: 0, y: 0, z: 0}
     Duration: 0.3
   - HandshapeImage: {fileID: 21300000, guid: a7a2c50d427754308aee67cd75d32fa0, type: 3}
-    StartPosition: {x: 0, y: -0.05}
+    StartPosition: {x: 0, y: -0.075}
     EndPosition: {x: 0, y: -0.05}
     StartRotation: {x: 0, y: 0, z: 0}
     EndRotation: {x: 0, y: 0, z: 0}

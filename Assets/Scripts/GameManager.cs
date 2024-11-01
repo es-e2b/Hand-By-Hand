@@ -7,6 +7,16 @@ namespace Assets.Scripts
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
+        private DayCycle _currentDayCycle;
+        public DayCycle CurrentDayCycle
+        {
+            get => _currentDayCycle;
+            set
+            {
+                _currentDayCycle=value;
+                OnChangedDayCycle.Invoke(value);
+            }
+        }
         public Character[] CharacterPool;
         private int _dayCount;
         public int DayCount
@@ -37,14 +47,23 @@ namespace Assets.Scripts
             }
             Instance = this;
             DontDestroyOnLoad(this);
+            OnChangedDayCount=new();
+            OnChangedDailySales=new();
+            OnChangedDayCycle=new();
         }
         private void Start()
         {
             DayCount=1;
         }
-        [field:SerializeField]
         public UnityEvent<int> OnChangedDayCount { get; private set; }
-        [field:SerializeField]
         public UnityEvent<int> OnChangedDailySales { get; private set; }
+        public UnityEvent<DayCycle> OnChangedDayCycle { get; private set; }
+    }
+    public enum DayCycle
+    {
+        Day,
+        DayToNight,
+        Night,
+        NightToDay,
     }
 }

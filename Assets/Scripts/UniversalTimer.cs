@@ -22,6 +22,10 @@ namespace Assets.Scripts
         {
             _timerCoroutine = _startTimer.Invoke(TimerStart(targetTime));
         }
+        public void StartTimer(float targetTime, Action onIntervalElapsed)
+        {
+            _timerCoroutine = _startTimer.Invoke(TimerStart(targetTime, onIntervalElapsed));
+        }
         private IEnumerator TimerStart(float targetTime)
         {
             float leftTime = targetTime;
@@ -29,6 +33,17 @@ namespace Assets.Scripts
             {
                 yield return new WaitForSeconds(_interval);
                 leftTime -= _interval;
+            }
+            _onTimeEnded.Invoke();
+        }
+        private IEnumerator TimerStart(float targetTime, Action onIntervalElapsed)
+        {
+            float leftTime = targetTime;
+            while (leftTime > 0)
+            {
+                yield return new WaitForSeconds(_interval);
+                leftTime -= _interval;
+                onIntervalElapsed.Invoke();
             }
             _onTimeEnded.Invoke();
         }
