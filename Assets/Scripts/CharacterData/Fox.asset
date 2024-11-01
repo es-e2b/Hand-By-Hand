@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59cf5d5188d4c4486aa5cd0b1ca105f7, type: 3}
   m_Name: Fox
   m_EditorClassIdentifier: 
-  CharacterSprite: {fileID: 21300000, guid: 851c369f57c0a48a5b43cbb418a8a415, type: 3}
+  CharacterSprite: {fileID: 21300000, guid: e78ceb28198bc4baf8084bb3ac24f77e, type: 3}
   Name: "\uC5EC\uC6B0"
