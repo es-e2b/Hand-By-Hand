@@ -262,7 +262,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                     float positionX = Mathf.SmoothDamp(viewportRectTransformComponent.anchoredPosition.x, targetPosition.x, ref velocityX, smoothTime);
                     viewportRectTransformComponent.anchoredPosition = new Vector2(positionX, UIObjectY);
 
-                    Debug.Log("work");
                     yield return null;
                 }
             }
@@ -275,7 +274,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                     float positionX = Mathf.SmoothDamp(viewportRectTransformComponent.anchoredPosition.x, targetPosition.x, ref velocityX, smoothTime);
                     viewportRectTransformComponent.anchoredPosition = new Vector2(positionX, UIObjectY);
 
-                    Debug.Log("work");
                     yield return null;
                 }
             }

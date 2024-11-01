@@ -11,16 +11,16 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         //수어의 의미
         public string Mean;
 
-        //수위
-        public Position Position;
-
         //개수
         public HandCount HandCount;
 
-        //특수
-        public Particular Special;
-
         //수형+수향
         public SymbolAndDirection SymbolAndDirection;
+
+        //수위
+        public Position Position;
+
+        //특수
+        public Particular Special;
     }
 }

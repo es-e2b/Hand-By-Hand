@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: DialogueFile
   m_EditorClassIdentifier: 
   DialogueItemList:
+  - rid: 2568517060510351365
+  - rid: 2568517060510351364
   - rid: 7494054188638011392
   - rid: 7494054188638011393
   - rid: 7494054188638011395
@@ -26,15 +28,28 @@ MonoBehaviour:
       data:
         whoseItem: 0
         itemType: 0
-        Text: Next one
+        Text: I wish you like it.
     - rid: 2568517060510351361
       type: {class: PlayerChoice, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
       data:
         whoseItem: 1
         itemType: 2
         SignLanguageItem:
-        - {fileID: 11400000, guid: 2430ec6c261af064186e221f768bd09b, type: 2}
-        - {fileID: 11400000, guid: ee7de5e71418bab45be774d412ab5a60, type: 2}
+        - {fileID: 11400000, guid: 95c1a715e6e3ecf4ea18ec6a8762e146, type: 2}
+        - {fileID: 11400000, guid: 77b17019441af96449746e63dccd1e75, type: 2}
+    - rid: 2568517060510351364
+      type: {class: PlayerChoice, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 1
+        itemType: 2
+        SignLanguageItem:
+        - {fileID: 11400000, guid: cd0d25f208a66674093b5adbb3127c08, type: 2}
+    - rid: 2568517060510351365
+      type: {class: NPCText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 0
+        itemType: 0
+        Text: Hi!
     - rid: 7494054188638011392
       type: {class: PlayerText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
       data:
@@ -46,12 +61,11 @@ MonoBehaviour:
       data:
         whoseItem: 0
         itemType: 0
-        Text: botchi and ryo
+        Text: I made cake for you!
     - rid: 7494054188638011395
       type: {class: PlayerChoice, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
       data:
         whoseItem: 1
         itemType: 2
         SignLanguageItem:
-        - {fileID: 11400000, guid: 2430ec6c261af064186e221f768bd09b, type: 2}
-        - {fileID: 11400000, guid: ee7de5e71418bab45be774d412ab5a60, type: 2}
+        - {fileID: 11400000, guid: b6e7a840c17f73e4e934ec4c408889af, type: 2}

@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a50819e51fb9b8f4287a4751bd691b50, type: 3}
-  m_Name: botchi
+  m_Name: Hello
   m_EditorClassIdentifier: 
-  Mean: botchi
+  Mean: Hello
   Position:
-    HandPosition: 0
+    HandPosition: 3
   HandCount:
     UsingHand: 1
   Special:
-    Sprite: {fileID: 21300000, guid: 06f920e1d3e0d734fb4351e1c3935666, type: 3}
+    Sprite: {fileID: 21300000, guid: 5c6864b5e9acf284ba5f81f2982e42d9, type: 3}
     _Particular: 0
   SymbolAndDirection:
-    Sprite: {fileID: 21300000, guid: 90c10e5e448650642a2340d2ff961742, type: 3}
+    Sprite: {fileID: 21300000, guid: e9892e2980f5d964ea422f2500e653af, type: 3}
     Symbol: 0
     Direction: 0
