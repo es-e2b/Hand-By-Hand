@@ -15,7 +15,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         public GameObject SignLanguageCanvas;
         public TMP_Text WordToMake;
         public Button CompareEventButton;
-        public GameObject InvisibleViewportObject;
 
         [Header("UIListComponent")]
         public ButtonListUIComponent ButtonListUIComponent;
@@ -101,7 +100,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         }
         #endregion
 
-        #region BUTTONFUNCTION
+        #region BUTTONEVENTFUNCTION
         public void ChangeUIObject()
         {
             //함수를 부른 버튼 오브젝트의 hierarchy상 인덱스 받기
@@ -141,7 +140,10 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         }
 
-        public void ChangeColorOfButton()
+        /// <summary>
+        /// 선택지 선택시 버튼 색깔을 초록색깔로 변경하는 이벤트용 함수
+        /// </summary>
+        public void ChangeColorOfButtonEvent()
         {
             string eventButtonName = EventSystem.current.currentSelectedGameObject.transform.parent.name;
             int eventButtonIndex = 0;
@@ -168,6 +170,14 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             image.color = new Color(0, 1, 0, 1);
         }
         #endregion
+
+        public void CheckWrongAnswerButton(int hierarchyIndex)
+        {
+            Image image = buttonGameObjectList[hierarchyIndex].GetComponent<Image>();
+
+            //R255 G0 B0 A255
+            image.color = new Color(1, 0, 0, 1);
+        }
 
         #region COROUTINE
         /// <summary>
@@ -236,7 +246,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             //Viewport의 현재 위치를 받아오기 위한 변수
             RectTransform viewportRectTransformComponent = ViewportListUIComponent.GetComponent<RectTransform>();
             Vector2 viewportPosition = new Vector2(0, 0);
-            
+
             float UIObjectY = viewportRectTransformComponent.anchoredPosition.y;
 
             //목표 위치를 저장할 변수
@@ -286,10 +296,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             {
                 InitViewportObject();
                 InitButtonColor();
-            }
-            else
-            {
-
             }
 
             isVerticalAnimationDone = true;

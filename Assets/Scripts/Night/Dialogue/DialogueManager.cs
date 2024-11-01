@@ -79,7 +79,7 @@ namespace HandByHand.NightSystem.DialogueSystem
 
                     signLanguageManager.MakeSignLanguage(selectedSignLanguageSO);
 
-                    float waitingTimeOffset = 1f;
+                    float waitingTimeOffset = 1.5f;
                     //캔버스가 올라오는 시간을 offset으로 기다려줌
                     yield return new WaitForSeconds(waitingTimeOffset);
                     //선택한 선택지를 텍스트로 바꾸는 함수 실행

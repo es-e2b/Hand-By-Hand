@@ -21,6 +21,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         #region SIGNLANGUAGECOMPONENT
         private SignLanguageSO signLanguageSO;
+        public SignLanguageUIManager signLanguageUIManager;
 
         private bool isSignLanguageCorrect = false;
         public bool IsSignLanguageMade { get; private set; }
@@ -47,7 +48,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         {
             //수화 SO 파일 받아오기
             this.signLanguageSO = signLanguageSO;
-            
+
             //각 뷰포트의 component스크립트에 변수 할당
             SetComponent();
         }
@@ -64,14 +65,25 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         public void ComparingHandSignSO()
         {
             //검사 후 맞는지 틀린지에 따라 isSignLanguageCorrect = true;
-            if(handCountComponent.IsCorrect && symbolAndDirectionComponent.IsCorrect
-                &&handPositionComponent.IsCorrect && particularComponent.IsCorrect)
+            if (handCountComponent.IsCorrect && symbolAndDirectionComponent.IsCorrect
+                && handPositionComponent.IsCorrect && particularComponent.IsCorrect)
             {
                 isSignLanguageCorrect = true;
                 StartCoroutine(MadeSignLanguageCoroutine());
             }
             else
-                isSignLanguageCorrect= false;
+            {
+                if (!handCountComponent.IsCorrect)
+                    signLanguageUIManager.CheckWrongAnswerButton(0);
+                if (!symbolAndDirectionComponent.IsCorrect)
+                    signLanguageUIManager.CheckWrongAnswerButton(1);
+                if (!handPositionComponent.IsCorrect)
+                    signLanguageUIManager.CheckWrongAnswerButton(2);
+                if (!particularComponent.IsCorrect)
+                    signLanguageUIManager.CheckWrongAnswerButton(3);
+
+                isSignLanguageCorrect = false;
+            }
         }
 
         #region COROUTINE
@@ -81,7 +93,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             yield return StartCoroutine(AnnounceSignLanguageMade());
         }
-        
+
         IEnumerator AnnounceSignLanguageMade()
         {
             //Reset variable
