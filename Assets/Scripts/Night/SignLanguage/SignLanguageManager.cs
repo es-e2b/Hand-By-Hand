@@ -73,17 +73,27 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             }
             else
             {
-                if (!handCountComponent.IsCorrect)
-                    signLanguageUIManager.ChangeColorOfWrongAnswerButton(0);
-                if (!symbolAndDirectionComponent.IsCorrect)
-                    signLanguageUIManager.ChangeColorOfWrongAnswerButton(1);
-                if (!handPositionComponent.IsCorrect)
-                    signLanguageUIManager.ChangeColorOfWrongAnswerButton(2);
-                if (!particularComponent.IsCorrect)
-                    signLanguageUIManager.ChangeColorOfWrongAnswerButton(3);
-
-                isSignLanguageCorrect = false;
+                CheckWrongAnswerAndDisableCorrectAnswer();
             }
+        }
+
+        private void CheckWrongAnswerAndDisableCorrectAnswer()
+        {
+            //모든 버튼의 상호작용 여부 끄기
+            signLanguageUIManager.SetButtonInteractable(false);
+
+            //틀린 정답만 버튼 상호작용을 킨다
+            if (!handCountComponent.IsCorrect)
+                signLanguageUIManager.ChangeWrongAnswerButton(0);
+            if (!symbolAndDirectionComponent.IsCorrect)
+                signLanguageUIManager.ChangeWrongAnswerButton(1);
+            if (!handPositionComponent.IsCorrect)
+                signLanguageUIManager.ChangeWrongAnswerButton(2);
+            if (!particularComponent.IsCorrect)
+                signLanguageUIManager.ChangeWrongAnswerButton(3);
+
+            signLanguageUIManager.ChangeToWrongAnswerUI();
+            isSignLanguageCorrect = false;
         }
 
         #region COROUTINE

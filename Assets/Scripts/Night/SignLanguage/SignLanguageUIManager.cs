@@ -143,12 +143,12 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             //함수를 부른 버튼 오브젝트의 hierarchy상 인덱스 받기
             //int eventButtonSiblingIndex = EventSystem.current.currentSelectedGameObject.transform.parent.GetSiblingIndex();
 
-            int nextIndex = FindUnselectedNextUI();
+            int unselectedIndex = FindUnselectedNextUI();
 
             //if (nextIndex != -1 && !buttonHadPushed[eventButtonSiblingIndex])
-            if (nextIndex != -1)
+            if (unselectedIndex != -1)
             {
-                Vector2 targetPosition = viewportObjectList[nextIndex].GetComponent<RectTransform>().anchoredPosition;
+                Vector2 targetPosition = viewportObjectList[unselectedIndex].GetComponent<RectTransform>().anchoredPosition;
 
                 if (horizontalSlideCoroutine != null)
                 {
@@ -157,7 +157,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 horizontalSlideCoroutine = StartCoroutine(ViewportHorizontalSlideCoroutine(targetPosition));
 
                 //상단 버튼 오브젝트 투명도 변경
-                this.ButtonListUIComponent.GetComponent<WhatIsSelectedComponent>().AdjustOpacityOfIndex(nextIndex);
+                this.ButtonListUIComponent.GetComponent<WhatIsSelectedComponent>().AdjustOpacityOfIndex(unselectedIndex);
 
                 //buttonHadPushed[eventButtonSiblingIndex] = true;
             }
@@ -198,15 +198,57 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         }
         #endregion
 
-        public void ChangeColorOfWrongAnswerButton(int hierarchyIndex)
+        #region COMPAREANSWER
+        //SignLanguage.cs에서 수화 정답 비교 후 UI변경을 위해 불러오는 함수
+
+
+        /// <summary>
+        /// 모든 버튼의 상호작용 불가능으로 변경
+        /// </summary>
+        /// <param name="interactable"></param>
+        public void SetButtonInteractable(bool interactable)
         {
+            for(int i = 0; i < buttonGameObjectList.Count; i++)
+            {
+                buttonGameObjectList[i].GetComponent<Button>().interactable = false;
+            }
+        }
+
+        /// <summary>
+        /// 틀린 정답을 고른 버튼의 색깔을 빨간색으로 변경
+        /// </summary>
+        /// <param name="hierarchyIndex"></param>
+        public void ChangeWrongAnswerButton(int hierarchyIndex)
+        {
+            buttonGameObjectList[hierarchyIndex].GetComponent<Button>().interactable = true;
+
             Image image = buttonGameObjectList[hierarchyIndex].GetComponent<Image>();
 
             //R255 G0 B0 A255
             image.color = new Color(1, 0, 0, 1);
         }
 
-        //ChangeToNextUI() 함수 실행 후 아래 함수를 실행하여 수화 완성 여부 판단
+        /// <summary>
+        /// SignLanguage.cs, ComparingSignLanguage() 함수에서 수화 비교후 틀린 정답으로 패널을 바꾸도록 함.
+        /// </summary>
+        public void ChangeToWrongAnswerUI()
+        {
+            int incorrectIndex = FindIncorrectNextUI();
+
+            Vector2 targetPosition = viewportObjectList[incorrectIndex].GetComponent<RectTransform>().anchoredPosition;
+
+            if (horizontalSlideCoroutine != null)
+            {
+                StopCoroutine(horizontalSlideCoroutine);
+            }
+            horizontalSlideCoroutine = StartCoroutine(ViewportHorizontalSlideCoroutine(targetPosition));
+
+            this.ButtonListUIComponent.GetComponent<WhatIsSelectedComponent>().AdjustOpacityOfIndex(incorrectIndex);
+        }
+
+        /// <summary>
+        /// ChangeToNextUI() 함수 실행 후 아래 함수를 실행하여 수화 완성 여부 판단
+        /// </summary>
         private void CheckSignLanguageComplete()
         {
             if (FindUnselectedNextUI() == -1)
@@ -217,6 +259,11 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             }
         }
 
+        #region FINDFUNCTION
+        /// <summary>
+        /// 선택되지 않은 UI의 인덱스를 반환
+        /// </summary>
+        /// <returns></returns>
         private int FindUnselectedNextUI()
         {
             if (viewportObjectList[0].GetComponent<HandCountComponent>().IsSelected == false)
@@ -240,6 +287,36 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 return -1;
             }
         }
+
+        /// <summary>
+        /// 틀린 정답의 UI 인덱스를 반환
+        /// </summary>
+        /// <returns></returns>
+        private int FindIncorrectNextUI()
+        {
+            if (viewportObjectList[0].GetComponent<HandCountComponent>().IsCorrect == false)
+            {
+                return 0;
+            }
+            else if (viewportObjectList[1].GetComponent<SymbolAndDirectionComponent>().IsCorrect == false)
+            {
+                return 1;
+            }
+            else if (viewportObjectList[2].GetComponent<HandPositionComponent>().IsCorrect == false)
+            {
+                return 2;
+            }
+            else if (viewportObjectList[3].GetComponent<ParticularComponent>().IsCorrect == false)
+            {
+                return 3;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+        #endregion
+        #endregion
 
         #region COROUTINE
         /// <summary>
