@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Start Scene.unity
+    guid: 9443959f988b648659f01948f4c72f4a
+  - enabled: 1
     path: Assets/Scenes/Tycoon Scene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Night.unity
+    guid: a2ee83376f71c4c4eae7677564c71beb
   m_configObjects: {}

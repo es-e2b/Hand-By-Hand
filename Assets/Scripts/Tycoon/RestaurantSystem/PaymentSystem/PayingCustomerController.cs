@@ -1,5 +1,6 @@
 namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
 {
+    using System.Collections;
     using UnityEngine;
     using UnityEngine.UI;
 
@@ -26,6 +27,11 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
         }
         private void Start()
         {
+            StartCoroutine(Initailize());
+        }
+        private IEnumerator Initailize()
+        {
+            yield return new WaitUntil(()=>PaymentManager.Instance!=null);
             PaymentManager.Instance.OnChangedCustomer.AddListener((customer)=>Customer=customer);
             gameObject.SetActive(false);
         }

@@ -11,8 +11,9 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
         private Menu menu;
         [SerializeField]
         private GameObject selectedUI;
-        [SerializeField]
         private int orderIndex;
+        [SerializeField]
+        private Image menuImage;
         [SerializeField]
         private GameObject questionMarkOjbect;
         public UnityAction<Menu, int> CheckOrderMenuAction;
@@ -23,13 +24,13 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
             {
                 menu=value;
                 questionMarkOjbect.SetActive(true);
-                GetComponent<Image>().sprite=menu.Sprite;
+                menuImage.sprite=menu.Sprite;
             }
         }
         private void Start()
         {
             GetComponent<Button>().onClick.AddListener(Invoke);
-
+            orderIndex=transform.GetSiblingIndex();
             gameObject.SetActive(false);
         }
         private void Invoke()

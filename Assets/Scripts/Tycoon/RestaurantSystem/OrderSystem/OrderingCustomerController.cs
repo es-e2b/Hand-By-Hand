@@ -1,5 +1,6 @@
 namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
 {
+    using System.Collections;
     using Assets.Scripts.SignLanguage;
     using Assets.Scripts.Tycoon.RestaurantSystem.MenuData;
     using TMPro;
@@ -51,6 +52,11 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
         }
         private void Start()
         {
+            StartCoroutine(Initailize());
+        }
+        private IEnumerator Initailize()
+        {
+            yield return new WaitUntil(()=>OrderManager.Instance!=null);
             customerUI=gameObject;
             OrderManager.Instance.OnChangedCustomer.AddListener((customer)=>Customer=customer);
             OrderManager.Instance.OnCorrectAnswer.AddListener((index)=>orderMenuButtons[index].GetComponent<OrderMenuButton>().RemoveQuestionMark());

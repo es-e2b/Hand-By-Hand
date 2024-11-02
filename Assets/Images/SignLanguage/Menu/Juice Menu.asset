@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MenuType: 1
   Name: "\uC8FC\uC2A4"
-  Sprite: {fileID: -450135878, guid: c9e561388126f484ba3dda7bcc784bc2, type: 3}
+  Sprite: {fileID: 1931861879, guid: 66a2860177c6346c0a81039a7920cd11, type: 3}
   Price: 4000
   EatingDuration: 3
   Vocabulary: {fileID: 11400000, guid: 93590b85c56d845e3bab0761bd1a4355, type: 2}
