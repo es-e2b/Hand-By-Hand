@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using System;
+using System.Reflection;
 
 namespace HandByHand.NightSystem.SignLanguageSystem
 {
@@ -31,9 +33,14 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         private Vector3 originalUIObjectPosition;
         private float screenHeight = Screen.height;
         private Vector3 originalCompareEventButtonPosition;
+        public int presentPanelIndex { get; private set; } = 0;
 
         Coroutine horizontalSlideCoroutine;
-        public bool isVerticalAnimationDone { get; private set; }
+        public bool IsVerticalAnimationDone { get; private set; }
+        public bool SignLanguageUIActiveSelf { get; private set; } = false;
+
+        [HideInInspector]
+        public List<int> incorrectAnswerIndexList = new List<int>() { -1 };
         #endregion
         #endregion
 
@@ -48,7 +55,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             originalCompareEventButtonPosition = CompareEventButton.GetComponent<RectTransform>().anchoredPosition;
             scrollViewScrollRectComponent = ViewportListUIComponent.gameObject.transform.parent.GetComponent<ScrollRect>();
 
-            isVerticalAnimationDone = true;
+            IsVerticalAnimationDone = true;
         }
 
         private void Start()
@@ -97,7 +104,42 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         {
             CompareEventButton.transform.localPosition = originalCompareEventButtonPosition;
         }
+
+        private void InitViewportAndButtonOpacity()
+        {
+            for(int i = 0; i < viewportObjectList.Count; i++)
+            {
+                viewportObjectList[i].GetComponent<WhatIsSelectedComponent>().Init();
+            }
+            this.ButtonListUIComponent.GetComponent<WhatIsSelectedComponent>().AdjustOpacityOfIndex(0);
+        }
+
+        private void InitButtonInteractable()
+        {
+            SetButtonInteractable(false);
+        }
         #endregion
+
+        /// <summary>
+        /// viewportObjectList[index]로 패널을 부드럽게 슬라이드 이동, 상단 버튼 투명도 변경까지
+        /// </summary>
+        /// <param name="index"></param>
+        public void ChangeUI(int index)
+        {
+            Vector2 targetPosition = viewportObjectList[index].GetComponent<RectTransform>().anchoredPosition;
+
+            if (horizontalSlideCoroutine != null)
+            {
+                StopCoroutine(horizontalSlideCoroutine);
+            }
+            horizontalSlideCoroutine = StartCoroutine(ViewportHorizontalSlideCoroutine(targetPosition));
+
+            //상단 버튼 오브젝트 투명도 변경
+            this.ButtonListUIComponent.GetComponent<WhatIsSelectedComponent>().AdjustOpacityOfIndex(index);
+
+            presentPanelIndex = index;
+            //buttonHadPushed[eventButtonSiblingIndex] = true;
+        }
 
         #region CANVASACTIVATEFUNCTION
         public void ActiveUIObject(string SignLanguageMean)
@@ -106,6 +148,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             {
                 Vector3 targetPosition = new Vector3(0, 0, 0);
                 WordToMake.SetText("수화로 표현해보자! : \n\"" + SignLanguageMean + "\"");
+                SignLanguageUIActiveSelf = true;
 
                 StartCoroutine(UICanvasVerticalSlideCoroutine(targetPosition, false));
             }
@@ -116,6 +159,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             if (SignLanguageCanvas.activeSelf)
             {
                 Vector3 targetPosition = new Vector3(0, -1 * screenHeight, 0);
+                SignLanguageUIActiveSelf = false;
 
                 StartCoroutine(UICanvasVerticalSlideCoroutine(targetPosition, true));
             }
@@ -123,6 +167,9 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         #endregion
 
         #region BUTTONEVENTFUNCTION
+        /// <summary>
+        /// ?? 이 함수는 무슨 언제 만든건지 모르겠다
+        /// </summary>
         public void ChangeUIObject()
         {
             //함수를 부른 버튼 오브젝트의 hierarchy상 인덱스 받기
@@ -148,18 +195,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             //if (nextIndex != -1 && !buttonHadPushed[eventButtonSiblingIndex])
             if (unselectedIndex != -1)
             {
-                Vector2 targetPosition = viewportObjectList[unselectedIndex].GetComponent<RectTransform>().anchoredPosition;
-
-                if (horizontalSlideCoroutine != null)
-                {
-                    StopCoroutine(horizontalSlideCoroutine);
-                }
-                horizontalSlideCoroutine = StartCoroutine(ViewportHorizontalSlideCoroutine(targetPosition));
-
-                //상단 버튼 오브젝트 투명도 변경
-                this.ButtonListUIComponent.GetComponent<WhatIsSelectedComponent>().AdjustOpacityOfIndex(unselectedIndex);
-
-                //buttonHadPushed[eventButtonSiblingIndex] = true;
+                ChangeUI(unselectedIndex);
             }
 
             CheckSignLanguageComplete();
@@ -208,7 +244,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// <param name="interactable"></param>
         public void SetButtonInteractable(bool interactable)
         {
-            for(int i = 0; i < buttonGameObjectList.Count; i++)
+            for (int i = 0; i < buttonGameObjectList.Count; i++)
             {
                 buttonGameObjectList[i].GetComponent<Button>().interactable = false;
             }
@@ -233,17 +269,12 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// </summary>
         public void ChangeToWrongAnswerUI()
         {
-            int incorrectIndex = FindIncorrectNextUI();
+            this.incorrectAnswerIndexList = FindIncorrectNextUI();
 
-            Vector2 targetPosition = viewportObjectList[incorrectIndex].GetComponent<RectTransform>().anchoredPosition;
-
-            if (horizontalSlideCoroutine != null)
+            if (incorrectAnswerIndexList[0] != -1)
             {
-                StopCoroutine(horizontalSlideCoroutine);
+                ChangeUI(incorrectAnswerIndexList[0]);
             }
-            horizontalSlideCoroutine = StartCoroutine(ViewportHorizontalSlideCoroutine(targetPosition));
-
-            this.ButtonListUIComponent.GetComponent<WhatIsSelectedComponent>().AdjustOpacityOfIndex(incorrectIndex);
         }
 
         /// <summary>
@@ -289,30 +320,39 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         }
 
         /// <summary>
-        /// 틀린 정답의 UI 인덱스를 반환
+        /// 틀린 정답인 인덱스들의 리스트를 반환
         /// </summary>
         /// <returns></returns>
-        private int FindIncorrectNextUI()
+        private List<int> FindIncorrectNextUI()
         {
+            List<int> incorrectIndexList = new List<int>();
+
             if (viewportObjectList[0].GetComponent<HandCountComponent>().IsCorrect == false)
             {
-                return 0;
+                incorrectIndexList.Add(0);
             }
-            else if (viewportObjectList[1].GetComponent<SymbolAndDirectionComponent>().IsCorrect == false)
+            if (viewportObjectList[1].GetComponent<SymbolAndDirectionComponent>().IsCorrect == false)
             {
-                return 1;
+                incorrectIndexList.Add(1);
             }
-            else if (viewportObjectList[2].GetComponent<HandPositionComponent>().IsCorrect == false)
+            if (viewportObjectList[2].GetComponent<HandPositionComponent>().IsCorrect == false)
             {
-                return 2;
+                incorrectIndexList.Add(2);
             }
-            else if (viewportObjectList[3].GetComponent<ParticularComponent>().IsCorrect == false)
+            if (viewportObjectList[3].GetComponent<ParticularComponent>().IsCorrect == false)
             {
-                return 3;
+                incorrectIndexList.Add(3);
+            }
+
+
+            if(incorrectIndexList.Count > 0)
+            {
+                return incorrectIndexList;
             }
             else
             {
-                return -1;
+                incorrectIndexList.Add(-1);
+                return incorrectIndexList;
             }
         }
         #endregion
@@ -338,7 +378,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             float offset = 0.1f;
             #endregion
 
-            isVerticalAnimationDone = false;
+            IsVerticalAnimationDone = false;
             //패널을 위로 부드럽게 올린다
             //목표 지점이 패널의 현재 위치보다 위에 있을 경우
             if (targetPosition.y - offset > UIObjectInSignLanguageCanvas.transform.localPosition.y)
@@ -375,9 +415,9 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// <returns></returns>
         IEnumerator ViewportHorizontalSlideCoroutine(Vector2 viewportObjectRectPosition)
         {
-            if (!isVerticalAnimationDone)
+            if (!IsVerticalAnimationDone)
             {
-                yield return new WaitUntil(() => isVerticalAnimationDone == true);
+                yield return new WaitUntil(() => IsVerticalAnimationDone == true);
             }
 
             //변수 선언
@@ -437,10 +477,16 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 InitButtonColor();
                 InitHadPushedArray();
                 InitCompareEventButtonPosition();
+                InitViewportAndButtonOpacity();
+                InitButtonInteractable();
                 completeButtonHadPushed = false;
+
+                SignLanguageUIActiveSelf = false;
+                incorrectAnswerIndexList = new List<int>() { -1 };
+                presentPanelIndex = 0;
             }
 
-            isVerticalAnimationDone = true;
+            IsVerticalAnimationDone = true;
             yield return null;
         }
 
