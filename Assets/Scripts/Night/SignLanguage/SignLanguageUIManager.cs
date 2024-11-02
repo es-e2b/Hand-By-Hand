@@ -23,12 +23,14 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         private List<TMP_Text> buttonTextList;
         private List<GameObject> buttonGameObjectList;
         private List<GameObject> viewportObjectList;
-        private bool[] buttonHadPushed = new bool[3] {false, false , false }; 
+        private bool[] buttonHadPushed = new bool[4] { false, false, false, false };
+        private bool completeButtonHadPushed { get; set; } = false;
         private ScrollRect scrollViewScrollRectComponent;
 
         private GameObject UIObjectInSignLanguageCanvas;
         private Vector3 originalUIObjectPosition;
         private float screenHeight = Screen.height;
+        private Vector3 originalCompareEventButtonPosition;
 
         Coroutine horizontalSlideCoroutine;
         public bool isVerticalAnimationDone { get; private set; }
@@ -43,6 +45,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             viewportObjectList = ViewportListUIComponent.UIObject;
             UIObjectInSignLanguageCanvas = SignLanguageCanvas.transform.Find("UIObject").gameObject;
             originalUIObjectPosition = UIObjectInSignLanguageCanvas.transform.localPosition;
+            originalCompareEventButtonPosition = CompareEventButton.GetComponent<RectTransform>().anchoredPosition;
             scrollViewScrollRectComponent = ViewportListUIComponent.gameObject.transform.parent.GetComponent<ScrollRect>();
 
             isVerticalAnimationDone = true;
@@ -51,6 +54,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         private void Start()
         {
             //InitViewportObject();
+            UIObjectInSignLanguageCanvas.transform.position -= new Vector3(0, screenHeight, 0);
         }
 
         /// <summary>
@@ -82,8 +86,16 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// </summary>
         private void InitHadPushedArray()
         {
-            for(int i = 0; i < buttonHadPushed.Length; i++)
+            for (int i = 0; i < buttonHadPushed.Length; i++)
                 buttonHadPushed[i] = false;
+        }
+
+        /// <summary>
+        /// CompareEventButton의 위치를 원래대로 재조정
+        /// </summary>
+        private void InitCompareEventButtonPosition()
+        {
+            CompareEventButton.transform.localPosition = originalCompareEventButtonPosition;
         }
         #endregion
 
@@ -92,8 +104,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         {
             if (SignLanguageCanvas.activeSelf)
             {
-                Vector3 targetPosition = originalUIObjectPosition + new Vector3(0, screenHeight, 0);
-                WordToMake.SetText("Make The Word : " + SignLanguageMean);
+                Vector3 targetPosition = new Vector3(0, 0, 0);
+                WordToMake.SetText("수화로 표현해보자! : \n\"" + SignLanguageMean + "\"");
 
                 StartCoroutine(UICanvasVerticalSlideCoroutine(targetPosition, false));
             }
@@ -103,7 +115,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         {
             if (SignLanguageCanvas.activeSelf)
             {
-                Vector3 targetPosition = originalUIObjectPosition;
+                Vector3 targetPosition = new Vector3(0, -1 * screenHeight, 0);
 
                 StartCoroutine(UICanvasVerticalSlideCoroutine(targetPosition, true));
             }
@@ -129,11 +141,14 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         public void ChangeToNextUI()
         {
             //함수를 부른 버튼 오브젝트의 hierarchy상 인덱스 받기
-            int eventButtonSiblingIndex = EventSystem.current.currentSelectedGameObject.transform.parent.GetSiblingIndex();
+            //int eventButtonSiblingIndex = EventSystem.current.currentSelectedGameObject.transform.parent.GetSiblingIndex();
 
-            if (eventButtonSiblingIndex != 3 && !buttonHadPushed[eventButtonSiblingIndex])
+            int nextIndex = FindUnselectedNextUI();
+
+            //if (nextIndex != -1 && !buttonHadPushed[eventButtonSiblingIndex])
+            if (nextIndex != -1)
             {
-                Vector2 targetPosition = viewportObjectList[eventButtonSiblingIndex + 1].GetComponent<RectTransform>().anchoredPosition;
+                Vector2 targetPosition = viewportObjectList[nextIndex].GetComponent<RectTransform>().anchoredPosition;
 
                 if (horizontalSlideCoroutine != null)
                 {
@@ -141,8 +156,13 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 }
                 horizontalSlideCoroutine = StartCoroutine(ViewportHorizontalSlideCoroutine(targetPosition));
 
-                buttonHadPushed[eventButtonSiblingIndex] = true;
+                //상단 버튼 오브젝트 투명도 변경
+                this.ButtonListUIComponent.GetComponent<WhatIsSelectedComponent>().AdjustOpacityOfIndex(nextIndex);
+
+                //buttonHadPushed[eventButtonSiblingIndex] = true;
             }
+
+            CheckSignLanguageComplete();
         }
 
         /// <summary>
@@ -171,17 +191,54 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             Image image = buttonGameObjectList[eventButtonIndex].GetComponent<Image>();
 
+            float A = image.color.a;
+
             //R0 G255 B0 A255
-            image.color = new Color(0, 1, 0, 1);
+            image.color = new Color(0, 1, 0, A);
         }
         #endregion
 
-        public void CheckWrongAnswerButton(int hierarchyIndex)
+        public void ChangeColorOfWrongAnswerButton(int hierarchyIndex)
         {
             Image image = buttonGameObjectList[hierarchyIndex].GetComponent<Image>();
 
             //R255 G0 B0 A255
             image.color = new Color(1, 0, 0, 1);
+        }
+
+        //ChangeToNextUI() 함수 실행 후 아래 함수를 실행하여 수화 완성 여부 판단
+        private void CheckSignLanguageComplete()
+        {
+            if (FindUnselectedNextUI() == -1)
+            {
+                Vector3 offsetPosition = new Vector3(250, -850, 0);
+                StartCoroutine(CompleteButtonVerticalSlideCoroutine(offsetPosition));
+                completeButtonHadPushed = true;
+            }
+        }
+
+        private int FindUnselectedNextUI()
+        {
+            if (viewportObjectList[0].GetComponent<HandCountComponent>().IsSelected == false)
+            {
+                return 0;
+            }
+            else if (viewportObjectList[1].GetComponent<SymbolAndDirectionComponent>().IsSelected == false)
+            {
+                return 1;
+            }
+            else if (viewportObjectList[2].GetComponent<HandPositionComponent>().IsSelected == false)
+            {
+                return 2;
+            }
+            else if (viewportObjectList[3].GetComponent<ParticularComponent>().IsSelected == false)
+            {
+                return 3;
+            }
+            else
+            {
+                return -1;
+            }
         }
 
         #region COROUTINE
@@ -302,9 +359,52 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 InitViewportObject();
                 InitButtonColor();
                 InitHadPushedArray();
+                InitCompareEventButtonPosition();
+                completeButtonHadPushed = false;
             }
 
             isVerticalAnimationDone = true;
+            yield return null;
+        }
+
+        IEnumerator CompleteButtonVerticalSlideCoroutine(Vector3 targetPosition)
+        {
+            #region VARIABLEFIELD
+            float UIObjectX = CompareEventButton.transform.localPosition.x;
+            float UIObjectZ = CompareEventButton.transform.localPosition.z;
+
+            float velocityY = 0f;
+            float smoothTime = 0.3f;
+
+            float offset = 0.1f;
+            #endregion
+
+            //패널을 위로 부드럽게 올린다
+            //목표 지점이 패널의 현재 위치보다 위에 있을 경우
+            if (targetPosition.y - offset > CompareEventButton.transform.localPosition.y)
+            {
+                while (targetPosition.y - offset > CompareEventButton.transform.localPosition.y)
+                {
+                    float positionY = Mathf.SmoothDamp(CompareEventButton.transform.localPosition.y, targetPosition.y, ref velocityY, smoothTime);
+                    CompareEventButton.transform.localPosition = new Vector3(UIObjectX, positionY, UIObjectZ);
+
+                    yield return null;
+                }
+            }
+            //목표 지점이 아래 있을 경우
+            else
+            {
+                while (targetPosition.y + offset < CompareEventButton.transform.localPosition.y)
+                {
+                    float positionY = Mathf.SmoothDamp(CompareEventButton.transform.localPosition.y, targetPosition.y, ref velocityY, smoothTime);
+                    CompareEventButton.transform.localPosition = new Vector3(UIObjectX, positionY, UIObjectZ);
+
+                    yield return null;
+                }
+            }
+
+            CompareEventButton.transform.localPosition = targetPosition;
+
             yield return null;
         }
         #endregion

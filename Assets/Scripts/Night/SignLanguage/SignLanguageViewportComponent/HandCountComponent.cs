@@ -14,6 +14,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         public bool IsCorrect { get; private set; }
 
+        public bool IsSelected { get; private set; } = false;
+
         void Awake()
         {
             answerHandCount.UsingHand = UsingHand.None;
@@ -35,6 +37,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             UsingHand usingHand = (UsingHand)clickObjectHierarchyIndex;
             playerAnswerHandCount.UsingHand = usingHand;
 
+            IsSelected = true;
+
             if(playerAnswerHandCount.UsingHand == answerHandCount.UsingHand)
                 IsCorrect = true;
             else
@@ -43,6 +47,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         public void InitBoolean()
         {
+            IsSelected = false;
             IsCorrect = false;
         }
     }

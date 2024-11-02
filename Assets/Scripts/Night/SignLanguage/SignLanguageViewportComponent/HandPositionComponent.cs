@@ -17,6 +17,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         public bool IsCorrect { get; private set; }
 
+        public bool IsSelected { get; private set; } = false;
+
         [SerializeField]
         private int ignoreLayoutNumber = 1;
         #endregion
@@ -56,6 +58,9 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             int clickObjectHierarchyIndex = clickObject.transform.GetSiblingIndex();
 
             playerAnswerPosition.HandPosition = (HandPosition) (clickObjectHierarchyIndex - ignoreLayoutNumber);
+
+            IsSelected = true;
+
             if(playerAnswerPosition.HandPosition == answerPosition.HandPosition)
                 IsCorrect = true;
             else
@@ -64,6 +69,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         public void InitBoolean()
         {
+            IsSelected = false;
             IsCorrect = false;
         }
     }

@@ -74,13 +74,13 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             else
             {
                 if (!handCountComponent.IsCorrect)
-                    signLanguageUIManager.CheckWrongAnswerButton(0);
+                    signLanguageUIManager.ChangeColorOfWrongAnswerButton(0);
                 if (!symbolAndDirectionComponent.IsCorrect)
-                    signLanguageUIManager.CheckWrongAnswerButton(1);
+                    signLanguageUIManager.ChangeColorOfWrongAnswerButton(1);
                 if (!handPositionComponent.IsCorrect)
-                    signLanguageUIManager.CheckWrongAnswerButton(2);
+                    signLanguageUIManager.ChangeColorOfWrongAnswerButton(2);
                 if (!particularComponent.IsCorrect)
-                    signLanguageUIManager.CheckWrongAnswerButton(3);
+                    signLanguageUIManager.ChangeColorOfWrongAnswerButton(3);
 
                 isSignLanguageCorrect = false;
             }
