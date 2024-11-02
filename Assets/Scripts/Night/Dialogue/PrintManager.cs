@@ -30,7 +30,7 @@ namespace HandByHand.NightSystem.DialogueSystem
         private GameObject dialogueCanvas;
 
         private GameObject instantiatePanel;
-        private GameObject dialoguePanel;
+        public GameObject dialoguePanel;
 
         public GameObject ScrollView;
         #endregion
@@ -58,7 +58,6 @@ namespace HandByHand.NightSystem.DialogueSystem
         {
             IsPrintEnd = false;
             instantiatePanel = dialogueCanvas.transform.Find("InstantiatePanel").gameObject;
-            dialoguePanel = dialogueCanvas.transform.Find("DialoguePanel").gameObject;
             dialogueChoiceSelectManager = transform.parent.Find("DialogueChoiceSelectManager").GetComponent<DialogueChoiceSelectManager>();
         }
 
