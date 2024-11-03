@@ -28,7 +28,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
             set
             {
                 currentMenu=value;
-                hintMessageOjbect.GetComponent<TMP_Text>().text = value.Vocabulary.Hint;
+                hintMessageOjbect.GetComponentInChildren<TMP_Text>().text = value.Vocabulary.Hint;
                 hintMessageOjbect.SetActive(false);
             }
         }
