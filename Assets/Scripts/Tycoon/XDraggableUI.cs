@@ -1,5 +1,6 @@
 namespace Assets.Scripts.Tycoon
 {
+    using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.EventSystems;
@@ -8,15 +9,15 @@ namespace Assets.Scripts.Tycoon
     public class XDraggableUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
     {
         [SerializeField]
-        private GameObject targetUI;
-        private GraphicRaycaster raycaster;
-        private RectTransform targetRectTransform;
-        private bool isDragging;
+        protected GameObject targetUI;
+        protected GraphicRaycaster raycaster;
+        protected RectTransform targetRectTransform;
+        protected bool isDragging;
         [SerializeField]
-        private float openPositionX;
+        protected float openPositionX;
         [SerializeField]
-        private float closePositionX;
-        private void Awake()
+        protected float closePositionX;
+        protected void Awake()
         {
             raycaster = GetComponentInParent<GraphicRaycaster>();
             targetRectTransform = targetUI.GetComponent<RectTransform>();
@@ -27,7 +28,7 @@ namespace Assets.Scripts.Tycoon
 
             isDragging = true;
         }
-        public void OnDrag(PointerEventData eventData)
+        public virtual void OnDrag(PointerEventData eventData)
         {
             if(!isDragging) return;
 
@@ -52,9 +53,30 @@ namespace Assets.Scripts.Tycoon
             float distanceToOpenPositionX = Mathf.Abs(currentPositionX - openPositionX);
             float distanceToClosePositionX = Mathf.Abs(currentPositionX - closePositionX);
 
-            targetRectTransform.anchoredPosition = new Vector2(
-                distanceToClosePositionX<distanceToOpenPositionX?closePositionX:openPositionX,
-                currentPositionY);
+            float targetX = distanceToClosePositionX < distanceToOpenPositionX ? closePositionX : openPositionX;
+            Vector2 targetPosition = new Vector2(targetX, currentPositionY);
+
+            float moveDistance = Mathf.Abs(currentPositionX - targetX);
+            float maxDistance = Mathf.Abs(openPositionX - closePositionX) / 2;
+            float maxTime = 0.2f;
+            float targetTime = (moveDistance / maxDistance) * maxTime;
+
+            StartCoroutine(SmoothMove(targetPosition, targetTime));
+        }
+
+        private IEnumerator SmoothMove(Vector2 targetPosition, float duration)
+        {
+            Vector2 startPosition = targetRectTransform.anchoredPosition;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < duration)
+            {
+                targetRectTransform.anchoredPosition = Vector2.Lerp(startPosition, targetPosition, elapsedTime / duration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            targetRectTransform.anchoredPosition = targetPosition;
         }
         private bool IsPointerOverUIObject(PointerEventData eventData)
         {
