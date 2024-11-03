@@ -9,7 +9,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
     {
         private Menu menu;
         [SerializeField]
-        private TMP_Text priceText;
+        private TMP_Text menuName;
         [SerializeField]
         private Image menuImage;
         public Menu Menu
@@ -19,7 +19,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
             {
                 menu = value;
                 menuImage.sprite = value.Sprite;
-                priceText.text = value.Price.ToString();
+                menuName.text = value.Name;
                 GetComponent<Button>().onClick.AddListener(()=>OrderManager.Instance.OrderCheck(Menu));
             }
         }

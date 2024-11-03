@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab78eecb4505a4c9ab4da1e0e9b860c6, type: 3}
+  m_Name: Noodle
+  m_EditorClassIdentifier: 
+  Name: "\uAD6D\uC218"
+  Hint: "\uC813\uAC00\uB77D\uC73C\uB85C \uB4E4\uC5B4\uC62C\uB9AC\uB294 \uAC83\uC744
+    \uD45C\uD604\uD558\uB294 \uB4EF\uD569\uB2C8\uB2E4."
+  RightHandshapes:
+  - HandshapeImage: {fileID: 21300000, guid: 6f0bd399d68554a78b18677b54905139, type: 3}
+    StartPosition: {x: -0.15, y: -0.2}
+    EndPosition: {x: -0.15, y: -0.075}
+    StartRotation: {x: 0, y: 0, z: 5}
+    EndRotation: {x: 0, y: 0, z: 5}
+    Duration: 0.7
+  - HandshapeImage: {fileID: 21300000, guid: 6f0bd399d68554a78b18677b54905139, type: 3}
+    StartPosition: {x: -0.15, y: -0.2}
+    EndPosition: {x: -0.15, y: -0.075}
+    StartRotation: {x: 0, y: 0, z: 5}
+    EndRotation: {x: 0, y: 0, z: 5}
+    Duration: 0.7
+  LeftHandshapes:
+  - HandshapeImage: {fileID: 21300000, guid: 6f0bd399d68554a78b18677b54905139, type: 3}
+    StartPosition: {x: 0.15, y: -0.2}
+    EndPosition: {x: 0.15, y: -0.075}
+    StartRotation: {x: 0, y: 180, z: 5}
+    EndRotation: {x: 0, y: 180, z: 5}
+    Duration: 0.7
+  - HandshapeImage: {fileID: 21300000, guid: 6f0bd399d68554a78b18677b54905139, type: 3}
+    StartPosition: {x: 0.15, y: -0.2}
+    EndPosition: {x: 0.15, y: -0.075}
+    StartRotation: {x: 0, y: 180, z: 5}
+    EndRotation: {x: 0, y: 180, z: 5}
+    Duration: 0.7
