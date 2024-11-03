@@ -9,13 +9,13 @@ namespace Assets.Scripts
     {
         [SerializeField]
         private GameObject _statusPanel;
-        [SerializeField]
-        private GameObject _dayCycleImage;
+        // [SerializeField]
+        // private GameObject _dayCycleImage;
         private UniversalTimer _dayTimer;
         [SerializeField]
         private int _dayTargetTime;
-        [SerializeField]
-        private TMP_Text _dailySales;
+        // [SerializeField]
+        // private TMP_Text _dailySales;
         private void Awake()
         {
             DontDestroyOnLoad(this);
@@ -30,7 +30,7 @@ namespace Assets.Scripts
         private IEnumerator StartGame()
         {
             GameManager.Instance.OnChangedDayCycle.AddListener(OnChangedDayCycle);
-            GameManager.Instance.OnChangedDailySales.AddListener((dailySales)=>_dailySales.text=dailySales.ToString());
+            // GameManager.Instance.OnChangedDailySales.AddListener((dailySales)=>_dailySales.text=dailySales.ToString());
             GameManager.Instance.DailySales=0;
             GameManager.Instance.CurrentDayCycle=DayCycle.Day;
             yield return null;
@@ -42,8 +42,8 @@ namespace Assets.Scripts
             switch(dayCycle)
             {
                 case DayCycle.Day:
-                    _dayCycleImage.GetComponent<RectTransform>().eulerAngles=Vector3.zero;
-                    _dayTimer.StartTimer(_dayTargetTime, OnDayTimerIntervalElapsed);
+                    // _dayCycleImage.GetComponent<RectTransform>().eulerAngles=Vector3.zero;
+                    // _dayTimer.StartTimer(_dayTargetTime, OnDayTimerIntervalElapsed);
                     GameManager.Instance.DailySales=0;
                     break;
                 case DayCycle.Night:
@@ -57,9 +57,9 @@ namespace Assets.Scripts
             //지금은 낮에서 밤으로, 밤에서 낮으로 변하는 화면이 없어서 enum 순서를 2씩 옮김
             GameManager.Instance.CurrentDayCycle=(DayCycle)(((int)GameManager.Instance.CurrentDayCycle + 1) % 4);
         }
-        private void OnDayTimerIntervalElapsed()
-        {
-            _dayCycleImage.GetComponent<RectTransform>().eulerAngles+=new Vector3(0, 0, 180f/_dayTargetTime);
-        }
+        // private void OnDayTimerIntervalElapsed()
+        // {
+        //     _dayCycleImage.GetComponent<RectTransform>().eulerAngles+=new Vector3(0, 0, 180f/_dayTargetTime);
+        // }
     }
 }
