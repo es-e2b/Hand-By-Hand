@@ -108,11 +108,16 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
             }
             print("Called Order Check Method");
             OnCorrectAnswer.Invoke(OrderIndex);
-            OrderChecks[OrderIndex]=true;
-            for(int i=0;i<OrderChecks.Length;i++)
-            {
-                if(!OrderChecks[i]) return;
-            }
+            // OrderChecks[OrderIndex]=true;
+            // for(int i=0;i<OrderChecks.Length;i++)
+            // {
+            //     if(!OrderChecks[i]) return;
+            // }
+            // StartCoroutine(StartEating(OrderingCustomer));
+            // OrderingCustomer = null;
+        }
+        public void OnAllCrrectAnswer()
+        {
             StartCoroutine(StartEating(OrderingCustomer));
             OrderingCustomer = null;
         }
