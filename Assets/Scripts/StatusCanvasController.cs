@@ -1,11 +1,10 @@
 namespace Assets.Scripts
 {
     using System.Collections;
-    using TMPro;
     using UnityEngine;
     using UnityEngine.SceneManagement;
 
-    public class StatusCanvasController : MonoBehaviour
+    public class StatusCanvasController : MonoBehaviour, ISafeAreaSetter
     {
         [SerializeField]
         private GameObject _statusPanel;
@@ -14,6 +13,9 @@ namespace Assets.Scripts
         private UniversalTimer _dayTimer;
         [SerializeField]
         private int _dayTargetTime;
+
+        public RectTransform PanelRectTransform => _statusPanel.GetComponent<RectTransform>();
+
         // [SerializeField]
         // private TMP_Text _dailySales;
         private void Awake()
@@ -26,6 +28,7 @@ namespace Assets.Scripts
         private void Start()
         {
             StartCoroutine(StartGame());
+            ApplySafeArea();
         }
         private IEnumerator StartGame()
         {
@@ -56,6 +59,16 @@ namespace Assets.Scripts
         {
             //지금은 낮에서 밤으로, 밤에서 낮으로 변하는 화면이 없어서 enum 순서를 2씩 옮김
             GameManager.Instance.CurrentDayCycle=(DayCycle)(((int)GameManager.Instance.CurrentDayCycle + 1) % 4);
+        }
+
+        public void ApplySafeArea()
+        {
+            Rect safeArea = Screen.safeArea;
+
+            PanelRectTransform.sizeDelta = safeArea.size*(1080/safeArea.width);
+            PanelRectTransform.anchoredPosition=safeArea.position;
+
+            print(safeArea);
         }
         // private void OnDayTimerIntervalElapsed()
         // {
