@@ -9,7 +9,8 @@ namespace Assets.Scripts.Tycoon
         {
             if(!isDragging) return;
 
-            targetRectTransform.anchoredPosition += new Vector2(eventData.delta.x, 0)/2;
+            float pixelRatio = Screen.width / 1080f;
+            targetRectTransform.anchoredPosition += new Vector2(eventData.delta.x / pixelRatio/2, 0);
 
             float currentPositionX=targetRectTransform.anchoredPosition.x;
             if(currentPositionX>openPositionX)
