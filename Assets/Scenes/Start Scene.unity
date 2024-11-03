@@ -340,7 +340,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1053155616
 RectTransform:
   m_ObjectHideFlags: 0
@@ -486,9 +486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _statusPanel: {fileID: 1803844023}
-  _dayCycleImage: {fileID: 1450983144}
   _dayTargetTime: 90
-  _dailySales: {fileID: 1728672657}
 --- !u!1 &1450983144
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,7 +579,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1596582214
 RectTransform:
   m_ObjectHideFlags: 0
