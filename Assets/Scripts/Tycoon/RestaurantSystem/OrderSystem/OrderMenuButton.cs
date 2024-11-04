@@ -29,7 +29,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
         }
         private void Start()
         {
-            GetComponent<Button>().onClick.AddListener(Invoke);
+            // GetComponent<Button>().onClick.AddListener(Invoke);
             orderIndex=transform.GetSiblingIndex();
             gameObject.SetActive(false);
         }
