@@ -92,7 +92,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
                 {
                     numberObjects[--SelectedIndex].InputValue=0;
                 }
-            }catch(IndexOutOfRangeException ex)
+            }catch (IndexOutOfRangeException)
             {
                 return;
             }
@@ -105,7 +105,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
                 {
                     numberObjects[--SelectedIndex].InputValue=0;
                 }
-            }catch(IndexOutOfRangeException ex)
+            }catch(IndexOutOfRangeException)
             {
                 return;
             }
