@@ -144,6 +144,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
             {
                 yield return SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(customerImage, vocabulary);
             }
+
+            yield return SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(customerImage, CommonSignLanguageDictionary.Instance[CommonSignLanguageDictionary.CommonSignLanguage.Thank]);
             ResetInput();
             
             PaymentManager.Instance.ReceivePayment();
