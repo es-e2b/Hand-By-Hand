@@ -31,7 +31,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
         {
             // GetComponent<Button>().onClick.AddListener(Invoke);
             orderIndex=transform.GetSiblingIndex();
-            gameObject.SetActive(false);
+            ToggleSelectedUI(OrderManager.Instance.OrderIndex);
         }
         private void Invoke()
         {

@@ -9,6 +9,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
 
     public class OrderingCustomerController : MonoBehaviour
     {
+        [SerializeField]
         private GameObject customerUI;
         [SerializeField]
         private GameObject[] orderMenuButtons;
@@ -43,7 +44,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
                     customerUI.SetActive(false);
                     return;
                 }
-                gameObject.SetActive(true);
+                customerUI.SetActive(true);
                 //위의 필드 다 적용하기
                 customerImage.GetComponent<Image>().sprite=value.CustomerCharacter.CharacterSprite;
                 CheckOrderMenu(value.OrderMenus[0], 0);
@@ -57,7 +58,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
         private IEnumerator Initailize()
         {
             yield return new WaitUntil(()=>OrderManager.Instance!=null);
-            customerUI=gameObject;
             OrderManager.Instance.OnChangedCustomer.AddListener((customer)=>Customer=customer);
             OrderManager.Instance.OnCorrectAnswer.AddListener((index)=>
             {
@@ -84,7 +84,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
                 hintMessageOjbect.SetActive(false);
                 hintMessageOjbect.SetActive(true);
             });
-            customerUI.SetActive(false);
         }
         private void CheckOrderMenu(Menu menu, int index)
         {
