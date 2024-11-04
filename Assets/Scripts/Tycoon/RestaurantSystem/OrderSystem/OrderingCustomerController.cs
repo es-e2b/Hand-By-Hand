@@ -1,5 +1,6 @@
 namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
 {
+    using System.Collections;
     using Assets.Scripts.SignLanguage;
     using Assets.Scripts.Tycoon.RestaurantSystem.MenuData;
     using TMPro;
@@ -27,7 +28,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
             set
             {
                 currentMenu=value;
-                hintMessageOjbect.GetComponent<TMP_Text>().text = value.Vocabulary.Hint;
+                hintMessageOjbect.GetComponentInChildren<TMP_Text>().text = value.Vocabulary.Hint;
                 hintMessageOjbect.SetActive(false);
             }
         }
@@ -51,15 +52,38 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
         }
         private void Start()
         {
+            StartCoroutine(Initailize());
+        }
+        private IEnumerator Initailize()
+        {
+            yield return new WaitUntil(()=>OrderManager.Instance!=null);
             customerUI=gameObject;
             OrderManager.Instance.OnChangedCustomer.AddListener((customer)=>Customer=customer);
-            OrderManager.Instance.OnCorrectAnswer.AddListener((index)=>orderMenuButtons[index].GetComponent<OrderMenuButton>().RemoveQuestionMark());
+            OrderManager.Instance.OnCorrectAnswer.AddListener((index)=>
+            {
+                orderMenuButtons[index].GetComponent<OrderMenuButton>().RemoveQuestionMark();
+                if(++index>=Customer.OrderMenus.Length)
+                {
+                    OrderManager.Instance.OnAllCrrectAnswer();
+                    return;
+                }
+                orderMenuButtons[index].GetComponent<OrderMenuButton>().CheckOrderMenuAction.Invoke(Customer.OrderMenus[index], index);
+            });
             foreach(GameObject orderMenuButton in orderMenuButtons)
             {
                 orderMenuButton.GetComponent<OrderMenuButton>().CheckOrderMenuAction=CheckOrderMenu;
             }
-            replayButton.GetComponent<Button>().onClick.AddListener(()=>StartCoroutine(SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(customerImage, currentMenu.Vocabulary)));
-            hintButton.GetComponent<Button>().onClick.AddListener(()=>hintMessageOjbect.SetActive(!hintMessageOjbect.activeSelf));
+            replayButton.GetComponent<Button>().onClick.AddListener(()=>
+            {
+                if(Customer==null)return;
+                StartCoroutine(SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(customerImage, currentMenu.Vocabulary));
+            });
+            hintButton.GetComponent<Button>().onClick.AddListener(()=>
+            {
+                if(CurrentMenu==null) return;
+                hintMessageOjbect.SetActive(false);
+                hintMessageOjbect.SetActive(true);
+            });
             customerUI.SetActive(false);
         }
         private void CheckOrderMenu(Menu menu, int index)

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Cider
   m_EditorClassIdentifier: 
   Name: "\uC0AC\uC774\uB2E4"
-  Hint: "\u3145, \uC774, \uCE94\uC744 \uB530\uB294 \uBAA8\uC591\uC744 \uD569\uCE5C
-    \uAC83 \uAC19\uC2B5\uB2C8\uB2E4. "
+  Hint: "\u3145, \uC774, \uCE94\uC744 \uB530\uB294 \uBAA8\uC591\uC744 \uD568\uAED8
+    \uD45C\uD604\uD558\uB294 \uB4EF\uD569\uB2C8\uB2E4. "
   RightHandshapes:
   - HandshapeImage: {fileID: 21300000, guid: cef6a375f767f4bf593cd4be119603cf, type: 3}
     StartPosition: {x: -0.05, y: 0.05}
