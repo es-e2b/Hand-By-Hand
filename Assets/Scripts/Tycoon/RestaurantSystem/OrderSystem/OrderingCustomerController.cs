@@ -64,9 +64,14 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
             {
                 orderMenuButton.GetComponent<OrderMenuButton>().CheckOrderMenuAction=CheckOrderMenu;
             }
-            replayButton.GetComponent<Button>().onClick.AddListener(()=>StartCoroutine(SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(customerImage, currentMenu.Vocabulary)));
+            replayButton.GetComponent<Button>().onClick.AddListener(()=>
+            {
+                if(Customer==null)return;
+                StartCoroutine(SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(customerImage, currentMenu.Vocabulary));
+            });
             hintButton.GetComponent<Button>().onClick.AddListener(()=>
             {
+                if(CurrentMenu==null) return;
                 hintMessageOjbect.SetActive(false);
                 hintMessageOjbect.SetActive(true);
             });
