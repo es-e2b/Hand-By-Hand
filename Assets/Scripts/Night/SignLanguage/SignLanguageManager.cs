@@ -84,15 +84,15 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             //틀린 정답만 버튼 상호작용을 킨다
             if (!handCountComponent.IsCorrect)
-                signLanguageUIManager.ChangeWrongAnswerButton(0);
+                signLanguageUIManager.CheckWrongAnswerButton(0);
             if (!symbolAndDirectionComponent.IsCorrect)
-                signLanguageUIManager.ChangeWrongAnswerButton(1);
+                signLanguageUIManager.CheckWrongAnswerButton(1);
             if (!handPositionComponent.IsCorrect)
-                signLanguageUIManager.ChangeWrongAnswerButton(2);
+                signLanguageUIManager.CheckWrongAnswerButton(2);
             if (!particularComponent.IsCorrect)
-                signLanguageUIManager.ChangeWrongAnswerButton(3);
+                signLanguageUIManager.CheckWrongAnswerButton(3);
 
-            signLanguageUIManager.ChangeToWrongAnswerUI();
+            signLanguageUIManager.ChangeToWrongAnswerTab();
             isSignLanguageCorrect = false;
         }
 

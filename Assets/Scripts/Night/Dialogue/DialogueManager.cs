@@ -4,13 +4,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using HandByHand.NightSystem.SignLanguageSystem;
 
-//��ȭ �ý����� �����ϴ� �Ŵ����Դϴ�.
 namespace HandByHand.NightSystem.DialogueSystem
 {
     public class DialogueManager : MonoBehaviour
     {
-        //���� �ΰ��ӿ��� ���� dialogueSO
         public DialogueFileSO dialogueFileSO;
+
+        public GameObject BlinkIcon;
+        private GetInput getInput;
 
         #region MANAGERCOMPONENT
         [SerializeField]
@@ -23,17 +24,20 @@ namespace HandByHand.NightSystem.DialogueSystem
         private DialogueChoiceSelectManager dialogueChoiceSelectManager;
         #endregion
 
+
         #region INIT
         void Awake()
         {
             printManager = gameObject.transform.Find("PrintManager").GetComponent<PrintManager>();
             signLanguageManager = gameObject.transform.Find("SignLanguageManager").GetComponent<SignLanguageManager>();
             dialogueChoiceSelectManager = gameObject.transform.Find("DialogueChoiceSelectManager").GetComponent<DialogueChoiceSelectManager>();
+            getInput = BlinkIcon.GetComponent<GetInput>();
         }
 
         void Start()
         {
             StartCoroutine(StartDialogue());
+            BlinkIcon.SetActive(false);
         }
         #endregion
 
@@ -44,23 +48,74 @@ namespace HandByHand.NightSystem.DialogueSystem
 
             while (true)
             {
-                //�������� ���� ����ߴٸ� �ݺ��� ����
-                if (itemCount >= dialogueFileSO.DialogueItemList.Count) break;
+                if (itemCount >= dialogueFileSO.DialogueItemList.Count)
+                {
+                    break;
+                }
 
-                Debug.Log("ItemPrint");
-                //��ȭ ���
+                //Print Item
                 printManager.StartPrint(itemList[itemCount]);
 
-                #region BUGFIXOFFSET
-                //������Ʈ ���� Print ���� fix���� (���� �ǰ� �׳� ���λ�)
-                float offsetTime = 0.3f;
-                yield return new WaitForSeconds(offsetTime);
-                #endregion
-                
-                //��ȭ�� ��µ� ������ ���
                 yield return new WaitUntil(() => printManager.IsPrintEnd == true);
+                yield return new WaitForEndOfFrame();
 
-                //�������� ��ȭ ������ �ƴ϶�� ����Ͽ� ��ȭ�� ���
+                //Act by type of item
+                switch (itemList[itemCount].itemType)
+                {
+                    case ItemType.NPCText:
+                        yield return new WaitForSeconds(0.5f);
+                        break;
+
+                    case ItemType.PlayerText:
+                        BlinkIcon.SetActive(true);
+
+                        yield return new WaitUntil(() => getInput.IsGetInput == true);
+                        BlinkIcon.SetActive(false);
+
+                        printManager.ReturnChoiceObject();
+
+                        yield return new WaitUntil(() => printManager.IsPrintEnd == true);
+                        break;
+
+                    case ItemType.PlayerChoice:
+
+                        dialogueChoiceSelectManager.WaitForSelectChoice();
+                        yield return new WaitUntil(() => dialogueChoiceSelectManager.IsChoiceSelected == true);
+
+                        printManager.ReturnChoiceObject();
+
+                        SignLanguageSO selectedSignLanguageSO = dialogueChoiceSelectManager.GetSelectedSignLanguageSO();
+
+                        //SO가 없다면 무시하고 넘어가기
+                        if (selectedSignLanguageSO == null)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            //Show SignLanguageUICanvas
+                            signLanguageUIManager.ActiveUIObject(selectedSignLanguageSO.Mean);
+
+                            signLanguageManager.MakeSignLanguage(selectedSignLanguageSO);
+
+                            float waitingTimeOffset = 1.5f;
+
+                            //ĵ������ �ö���� �ð��� offset���� ��ٷ���
+                            yield return new WaitForSeconds(waitingTimeOffset);
+
+                            yield return new WaitUntil(() => signLanguageManager.IsSignLanguageMade == true);
+
+                            signLanguageUIManager.InActiveUIObject();
+
+                            yield return new WaitForSeconds(waitingTimeOffset);
+                        }
+
+                        break;
+                }
+
+                itemCount++;
+
+                /*
                 if (itemList[itemCount].itemType != ItemType.PlayerChoice)
                 {
                     itemCount++;
@@ -74,7 +129,6 @@ namespace HandByHand.NightSystem.DialogueSystem
 
                     SignLanguageSO selectedSignLanguageSO = dialogueChoiceSelectManager.GetSelectedSignLanguageSO();
 
-                    //���� �� ��ȭ �����
                     //Show SignLanguageUICanvas
                     signLanguageUIManager.ActiveUIObject(selectedSignLanguageSO.Mean);
 
@@ -92,6 +146,7 @@ namespace HandByHand.NightSystem.DialogueSystem
 
                     itemCount++;
                 }
+                */
             }
 
             yield return null;

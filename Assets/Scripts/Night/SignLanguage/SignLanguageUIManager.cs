@@ -114,7 +114,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         private void InitButtonInteractable()
         {
-            SetButtonInteractable(false);
+            SetButtonInteractable(true);
         }
         #endregion
 
@@ -196,7 +196,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 buttonHadPushed[unselectedIndex] = true;
             }
 
-            CheckSignLanguageComplete();
+            CheckAndShowCompareButton();
         }
 
         /// <summary>
@@ -237,14 +237,14 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
 
         /// <summary>
-        /// 모든 버튼의 상호작용 불가능으로 변경
+        /// 모든 버튼의 상호작용 여부 변경
         /// </summary>
         /// <param name="interactable"></param>
         public void SetButtonInteractable(bool interactable)
         {
             for (int i = 0; i < buttonGameObjectList.Count; i++)
             {
-                buttonGameObjectList[i].GetComponent<Button>().interactable = false;
+                buttonGameObjectList[i].GetComponent<Button>().interactable = interactable;
             }
         }
 
@@ -252,7 +252,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// 틀린 정답을 고른 버튼의 색깔을 빨간색으로 변경
         /// </summary>
         /// <param name="hierarchyIndex"></param>
-        public void ChangeWrongAnswerButton(int hierarchyIndex)
+        public void CheckWrongAnswerButton(int hierarchyIndex)
         {
             buttonGameObjectList[hierarchyIndex].GetComponent<Button>().interactable = true;
 
@@ -265,7 +265,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// <summary>
         /// SignLanguage.cs, ComparingSignLanguage() 함수에서 수화 비교후 틀린 정답으로 패널을 바꾸도록 함.
         /// </summary>
-        public void ChangeToWrongAnswerUI()
+        public void ChangeToWrongAnswerTab()
         {
             this.incorrectAnswerIndexList = FindIncorrectNextUI();
 
@@ -278,12 +278,12 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// <summary>
         /// ChangeToNextUI() 함수 실행 후 아래 함수를 실행하여 수화 완성 여부 판단
         /// </summary>
-        private void CheckSignLanguageComplete()
+        private void CheckAndShowCompareButton()
         {
             if (FindUnselectedNextUI() == -1)
             {
                 Vector3 offsetPosition = new Vector3(250, -850, 0);
-                StartCoroutine(CompleteButtonVerticalSlideCoroutine(offsetPosition));
+                StartCoroutine(CompareButtonVerticalSlideCoroutine(offsetPosition));
                 completeButtonHadPushed = true;
             }
         }
@@ -354,6 +354,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             }
         }
         #endregion
+
         #endregion
 
         #region COROUTINE
@@ -488,7 +489,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             yield return null;
         }
 
-        IEnumerator CompleteButtonVerticalSlideCoroutine(Vector3 targetPosition)
+        IEnumerator CompareButtonVerticalSlideCoroutine(Vector3 targetPosition)
         {
             #region VARIABLEFIELD
             float UIObjectX = CompareEventButton.transform.localPosition.x;

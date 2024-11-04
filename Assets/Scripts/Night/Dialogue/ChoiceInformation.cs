@@ -39,6 +39,7 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         private void ResetVariable()
         {
+            IsSelected = false;
             HadSelected = false;
         }
     }
