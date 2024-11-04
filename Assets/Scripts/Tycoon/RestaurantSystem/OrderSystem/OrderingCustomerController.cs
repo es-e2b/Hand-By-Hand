@@ -21,6 +21,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
         private Button hintButton;
         [SerializeField]
         private GameObject hintMessageOjbect;
+        private Coroutine _answerProcessingCoroutine;
         private Customer customer;
         private Menu currentMenu;
         public Menu CurrentMenu
@@ -64,7 +65,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
                 orderMenuButtons[index].GetComponent<OrderMenuButton>().RemoveQuestionMark();
                 if(++index>=Customer.OrderMenus.Length)
                 {
-                    OrderManager.Instance.OnAllCrrectAnswer();
+                    _answerProcessingCoroutine??=StartCoroutine(OnAllCorrectAnswer());
                     return;
                 }
                 orderMenuButtons[index].GetComponent<OrderMenuButton>().CheckOrderMenuAction.Invoke(Customer.OrderMenus[index], index);
@@ -84,6 +85,16 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
                 hintMessageOjbect.SetActive(false);
                 hintMessageOjbect.SetActive(true);
             });
+        }
+        private IEnumerator OnAllCorrectAnswer()
+        {
+            foreach(GameObject orderMenuButton in orderMenuButtons)
+            {
+                orderMenuButton.GetComponent<OrderMenuButton>().ToggleSelectedUI(5);
+            }
+            yield return SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(customerImage, CommonSignLanguageDictionary.Instance[CommonSignLanguageDictionary.CommonSignLanguage.Thank]);
+            yield return OrderManager.Instance.OnAllCorrectAnswer();
+            _answerProcessingCoroutine=null;
         }
         private void CheckOrderMenu(Menu menu, int index)
         {
