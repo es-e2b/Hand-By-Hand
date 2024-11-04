@@ -32,6 +32,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
             get => selectedIndex;
             set
             {
+                if(value<0)
+                {
+                    value=0;
+                }
                 selectedIndex=value;
                 for(int i=0; i<numberObjects.Length; i++)
                 {
@@ -65,8 +69,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
                 int inputNumber=i;
                 numberInputButtons[i-1].InputAction=()=>InputInSelectedIndex(inputNumber);
             }
-            unitInputButtons[0].transform.Find("Image").GetComponent<Animator>().SetInteger("Input Number", 10000);
-            unitInputButtons[1].transform.Find("Image").GetComponent<Animator>().SetInteger("Input Number", 1000);
+            // unitInputButtons[0].transform.Find("Image").GetComponent<Animator>().SetInteger("Input Number", 10000);
+            // unitInputButtons[1].transform.Find("Image").GetComponent<Animator>().SetInteger("Input Number", 1000);
             unitInputButtons[0].InputAction=()=>InputInSelectedIndex(10000);
             unitInputButtons[1].InputAction=()=>InputInSelectedIndex(1000);
             deleteButton.InputAction=DeleteInput;
@@ -80,12 +84,29 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
         }
         private void ResetInput()
         {
-            Array.ForEach(numberObjects, numberObject=>numberObject.InputValue=0);
-            SelectedIndex=0;
+            try
+            {
+                while(numberObjects[SelectedIndex-1].gameObject.activeSelf)
+                {
+                    numberObjects[--SelectedIndex].InputValue=0;
+                }
+            }catch(IndexOutOfRangeException ex)
+            {
+                return;
+            }
         }
         private void DeleteInput()
         {
-            numberObjects[--SelectedIndex].InputValue=0;
+            try
+            {
+                if(numberObjects[SelectedIndex-1].gameObject.activeSelf)
+                {
+                    numberObjects[--SelectedIndex].InputValue=0;
+                }
+            }catch(IndexOutOfRangeException ex)
+            {
+                return;
+            }
         }
         private void CheckAnswer()
         {
