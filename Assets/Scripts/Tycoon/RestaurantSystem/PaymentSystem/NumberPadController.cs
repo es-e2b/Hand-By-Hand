@@ -2,7 +2,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
 {
     using System;
     using System.Collections;
-    using System.Linq;
     using Assets.Scripts.SignLanguage;
     using UnityEngine;
     using UnityEngine.UI;
@@ -41,7 +40,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
                 {
                     numberObjects[i].ToggleSelectedUI(i==value);
                 }
-                completeButton.GetComponent<Button>().interactable=value>3;
                 Array.ForEach(numberInputButtons, numberInputButton => numberInputButton.SetInteractable(value<4&&value%2==0));
                 Array.ForEach(unitInputButtons, unitInputButton => unitInputButton.SetInteractable(value<4&&value%2==1));
             }
@@ -80,6 +78,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
         }
         private void InputInSelectedIndex(int value)
         {
+            if(PaymentManager.Instance.PayingCustomer==null)
+            {
+                return;
+            }
             numberObjects[SelectedIndex++].InputValue=value;
         }
         private void ResetInput()
@@ -143,7 +145,9 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
                 yield return SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(customerImage, vocabulary);
             }
             ResetInput();
+            
             PaymentManager.Instance.ReceivePayment();
+            Array.ForEach(unitInputButtons, unitInputButton=>unitInputButton.SetInteractable(true));
         }
     }
 }
