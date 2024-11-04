@@ -12,7 +12,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
     public class SignLanguageUIManager : MonoBehaviour
     {
         #region VAIRABLE
-        #region UI_COMPONENTS
         [Header("UI Components")]
         public GameObject SignLanguageCanvas;
         public TMP_Text WordToMake;
@@ -41,7 +40,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         [HideInInspector]
         public List<int> incorrectAnswerIndexList = new List<int>() { -1 };
-        #endregion
         #endregion
 
         #region INIT
@@ -138,7 +136,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             this.ButtonListUIComponent.GetComponent<WhatIsSelectedComponent>().AdjustOpacityOfIndex(index);
 
             presentPanelIndex = index;
-            //buttonHadPushed[eventButtonSiblingIndex] = true;
         }
 
         #region CANVASACTIVATEFUNCTION
@@ -192,10 +189,11 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             int unselectedIndex = FindUnselectedNextUI();
 
-            //if (nextIndex != -1 && !buttonHadPushed[eventButtonSiblingIndex])
-            if (unselectedIndex != -1)
+            if (unselectedIndex != -1 && !buttonHadPushed[unselectedIndex])
+            //if (unselectedIndex != -1)
             {
                 ChangeUI(unselectedIndex);
+                buttonHadPushed[unselectedIndex] = true;
             }
 
             CheckSignLanguageComplete();

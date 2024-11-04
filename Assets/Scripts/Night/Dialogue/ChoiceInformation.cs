@@ -7,6 +7,7 @@ namespace HandByHand.NightSystem.DialogueSystem
 {
     public class ChoiceInformation : MonoBehaviour
     {
+        [HideInInspector]
         public SignLanguageSO signLanguageSO;
 
         public bool IsSelected { get; private set; }
@@ -20,7 +21,7 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         public void Select()
         {
-            //Áßº¹ ¼±ÅÃ ¹æÁö
+            //ï¿½ßºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if(HadSelected)
             {
                 return;

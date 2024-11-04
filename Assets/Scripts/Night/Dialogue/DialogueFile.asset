@@ -13,59 +13,21 @@ MonoBehaviour:
   m_Name: DialogueFile
   m_EditorClassIdentifier: 
   DialogueItemList:
-  - rid: 2568517060510351365
-  - rid: 2568517060510351364
-  - rid: 7494054188638011392
-  - rid: 7494054188638011393
-  - rid: 7494054188638011395
-  - rid: 2568517060510351360
-  - rid: 2568517060510351361
+  - rid: 8649954837793603584
+  - rid: 8649954837793603585
   references:
     version: 2
     RefIds:
-    - rid: 2568517060510351360
+    - rid: 8649954837793603584
       type: {class: NPCText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
       data:
         whoseItem: 0
         itemType: 0
-        Text: I wish you like it.
-    - rid: 2568517060510351361
+        Text: "\uC624\uB298 \uD558\uB8E8\uB294 \uC5B4\uB560\uC5B4?"
+    - rid: 8649954837793603585
       type: {class: PlayerChoice, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
       data:
         whoseItem: 1
         itemType: 2
         SignLanguageItem:
-        - {fileID: 11400000, guid: 95c1a715e6e3ecf4ea18ec6a8762e146, type: 2}
-        - {fileID: 11400000, guid: 77b17019441af96449746e63dccd1e75, type: 2}
-    - rid: 2568517060510351364
-      type: {class: PlayerChoice, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
-      data:
-        whoseItem: 1
-        itemType: 2
-        SignLanguageItem:
-        - {fileID: 11400000, guid: cd0d25f208a66674093b5adbb3127c08, type: 2}
-    - rid: 2568517060510351365
-      type: {class: NPCText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
-      data:
-        whoseItem: 0
-        itemType: 0
-        Text: Hi!
-    - rid: 7494054188638011392
-      type: {class: PlayerText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
-      data:
-        whoseItem: 1
-        itemType: 1
-        Text: What's matter?
-    - rid: 7494054188638011393
-      type: {class: NPCText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
-      data:
-        whoseItem: 0
-        itemType: 0
-        Text: I made cake for you!
-    - rid: 7494054188638011395
-      type: {class: PlayerChoice, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
-      data:
-        whoseItem: 1
-        itemType: 2
-        SignLanguageItem:
-        - {fileID: 11400000, guid: b6e7a840c17f73e4e934ec4c408889af, type: 2}
+        - {fileID: 0}

@@ -4,12 +4,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 using HandByHand.NightSystem.SignLanguageSystem;
 
-//´ëÈ­ ½Ã½ºÅÛÀ» °üÀåÇÏ´Â ¸Å´ÏÀúÀÔ´Ï´Ù.
+//ï¿½ï¿½È­ ï¿½Ã½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
 namespace HandByHand.NightSystem.DialogueSystem
 {
     public class DialogueManager : MonoBehaviour
     {
-        //ÇöÀç ÀÎ°ÔÀÓ¿¡¼­ »ç¿ëµÉ dialogueSO
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½Î°ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ dialogueSO
         public DialogueFileSO dialogueFileSO;
 
         #region MANAGERCOMPONENT
@@ -44,22 +44,23 @@ namespace HandByHand.NightSystem.DialogueSystem
 
             while (true)
             {
-                //¾ÆÀÌÅÛÀ» ÀüºÎ Ãâ·ÂÇß´Ù¸é ¹Ýº¹¹® ÁßÁö
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ß´Ù¸ï¿½ ï¿½Ýºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 if (itemCount >= dialogueFileSO.DialogueItemList.Count) break;
 
-                //´ëÈ­ Ãâ·Â
+                Debug.Log("ItemPrint");
+                //ï¿½ï¿½È­ ï¿½ï¿½ï¿½
                 printManager.StartPrint(itemList[itemCount]);
 
                 #region BUGFIXOFFSET
-                //¿ÀºêÁ§Æ® ¿¬¼Ó Print ¹ö±× fix±¸¹® (¸ô¶óµµ µÇ°í ±×³É ³ÀµÎ»ï)
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ Print ï¿½ï¿½ï¿½ï¿½ fixï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½Ç°ï¿½ ï¿½×³ï¿½ ï¿½ï¿½ï¿½Î»ï¿½)
                 float offsetTime = 0.3f;
                 yield return new WaitForSeconds(offsetTime);
                 #endregion
                 
-                //´ëÈ­°¡ Ãâ·ÂµÉ ¶§±îÁö ´ë±â
+                //ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½Âµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                 yield return new WaitUntil(() => printManager.IsPrintEnd == true);
 
-                //¾ÆÀÌÅÛÀÌ ¼öÈ­ ¼±ÅÃÀÌ ¾Æ´Ï¶ó¸é °è¼ÓÇÏ¿© ´ëÈ­¸¦ Ãâ·Â
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½
                 if (itemList[itemCount].itemType != ItemType.PlayerChoice)
                 {
                     itemCount++;
@@ -67,30 +68,26 @@ namespace HandByHand.NightSystem.DialogueSystem
                 }
                 else
                 {
-                    //¾ÆÀÌÅÛÀÌ playerChoice¶ó¸é ÇÃ·¹ÀÌ¾îÀÇ ¼±ÅÃÀ» ´ë±â
+                    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ playerChoiceï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                     dialogueChoiceSelectManager.WaitForSelectChoice();
                     yield return new WaitUntil(() => dialogueChoiceSelectManager.IsChoiceSelected == true);
 
                     SignLanguageSO selectedSignLanguageSO = dialogueChoiceSelectManager.GetSelectedSignLanguageSO();
 
-                    //¼±ÅÃ ÈÄ ¼öÈ­ ¸¸µé±â
+                    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ï¿½
                     //Show SignLanguageUICanvas
                     signLanguageUIManager.ActiveUIObject(selectedSignLanguageSO.Mean);
 
                     signLanguageManager.MakeSignLanguage(selectedSignLanguageSO);
 
                     float waitingTimeOffset = 1.5f;
-                    //Äµ¹ö½º°¡ ¿Ã¶ó¿À´Â ½Ã°£À» offsetÀ¸·Î ±â´Ù·ÁÁÜ
+                    //Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ offsetï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ù·ï¿½ï¿½ï¿½
                     yield return new WaitForSeconds(waitingTimeOffset);
-                    //¼±ÅÃÇÑ ¼±ÅÃÁö¸¦ ÅØ½ºÆ®·Î ¹Ù²Ù´Â ÇÔ¼ö ½ÇÇà
-                    printManager.AdjustPanelHeightAfterSelectChoice();
 
-                    //¼öÈ­¸¦ ¸¸µé¶§±îÁö ´ë±â
                     yield return new WaitUntil(() => signLanguageManager.IsSignLanguageMade == true);
 
                     signLanguageUIManager.InActiveUIObject();
 
-                    //Äµ¹ö½º°¡ ³»·Á°¡´Â ½Ã°£À» offsetÀ¸·Î ±â´Ù·ÁÁÜ
                     yield return new WaitForSeconds(waitingTimeOffset);
 
                     itemCount++;

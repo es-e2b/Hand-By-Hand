@@ -11,6 +11,8 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         private SignLanguageSO SelectedSignLanguageSO;
 
+        public PrintManager printManager;
+
         void Start()
         {
             IsChoiceSelected = false;
@@ -19,7 +21,7 @@ namespace HandByHand.NightSystem.DialogueSystem
         public void WaitForSelectChoice()
         {
             PrintManager printManager = gameObject.transform.parent.Find("PrintManager").GetComponent<PrintManager>();
-            List<GameObject> choiceObjectList = new List<GameObject>(printManager.ChoiceObjectList);
+            List<GameObject> choiceObjectList = new List<GameObject>(printManager.PooledChoiceObjectList);
 
             StartCoroutine(DetectingSelectChoice(choiceObjectList));
         }
@@ -41,6 +43,8 @@ namespace HandByHand.NightSystem.DialogueSystem
                 }
                 yield return null;
             }
+
+            printManager.ReturnChoiceObject();
 
             yield return StartCoroutine(AnnounceChoiceSelected());
         }
