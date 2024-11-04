@@ -116,10 +116,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
             // StartCoroutine(StartEating(OrderingCustomer));
             // OrderingCustomer = null;
         }
-        public void OnAllCrrectAnswer()
+        public IEnumerator OnAllCorrectAnswer()
         {
             StartCoroutine(StartEating(OrderingCustomer));
-            OrderingCustomer = null;
+            yield return null;
         }
         private IEnumerator SpawnCustomer()
         {
