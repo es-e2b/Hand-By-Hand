@@ -5,6 +5,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
     using System.Linq;
     using Assets.Scripts.SignLanguage;
     using UnityEngine;
+    using UnityEngine.UI;
 
     public class NumberPadController : MonoBehaviour
     {
@@ -36,8 +37,9 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
                 {
                     numberObjects[i].ToggleSelectedUI(i==value);
                 }
-                Array.ForEach(numberInputButtons, numberInputButton => numberInputButton.SetInteractable(value%2==0));
-                Array.ForEach(unitInputButtons, unitInputButton => unitInputButton.SetInteractable(value%2==1));
+                completeButton.GetComponent<Button>().interactable=value>3;
+                Array.ForEach(numberInputButtons, numberInputButton => numberInputButton.SetInteractable(value<4&&value%2==0));
+                Array.ForEach(unitInputButtons, unitInputButton => unitInputButton.SetInteractable(value<4&&value%2==1));
             }
         }
         private void Start()
@@ -67,18 +69,23 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
             unitInputButtons[1].transform.Find("Image").GetComponent<Animator>().SetInteger("Input Number", 1000);
             unitInputButtons[0].InputAction=()=>InputInSelectedIndex(10000);
             unitInputButtons[1].InputAction=()=>InputInSelectedIndex(1000);
-            deleteButton.InputAction=ResetInput;
+            deleteButton.InputAction=DeleteInput;
             completeButton.InputAction=CheckAnswer;
 
             Array.ForEach(numberObjects, numberObject=>numberObject.SeletIndex=(index)=>SelectedIndex=index);
         }
         private void InputInSelectedIndex(int value)
         {
-            numberObjects[SelectedIndex].InputValue=value;
+            numberObjects[SelectedIndex++].InputValue=value;
         }
         private void ResetInput()
         {
             Array.ForEach(numberObjects, numberObject=>numberObject.InputValue=0);
+            SelectedIndex=0;
+        }
+        private void DeleteInput()
+        {
+            numberObjects[--SelectedIndex].InputValue=0;
         }
         private void CheckAnswer()
         {
