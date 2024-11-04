@@ -2,7 +2,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
 {
     using System;
     using System.Collections;
-    using System.Linq;
     using Assets.Scripts.SignLanguage;
     using UnityEngine;
     using UnityEngine.UI;
@@ -44,6 +43,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
                 completeButton.GetComponent<Button>().interactable=value>3;
                 Array.ForEach(numberInputButtons, numberInputButton => numberInputButton.SetInteractable(value<4&&value%2==0));
                 Array.ForEach(unitInputButtons, unitInputButton => unitInputButton.SetInteractable(value<4&&value%2==1));
+                deleteButton.SetInteractable(value!=0);
             }
         }
         private void Start()
