@@ -144,16 +144,16 @@ MonoBehaviour:
   answerImage: {fileID: 8731709674691582415}
   inputImage: {fileID: 9009299685768326315}
   numberSigns:
-  - {fileID: 21300000, guid: f382b1c9f9a5746e383ee5e93e86f9ef, type: 3}
-  - {fileID: 21300000, guid: f382b1c9f9a5746e383ee5e93e86f9ef, type: 3}
-  - {fileID: 21300000, guid: a6ec345056b1d4eaa950cf0f0e46316f, type: 3}
-  - {fileID: 21300000, guid: 3e1217c9082aa43d2be1acde644f6a1f, type: 3}
-  - {fileID: 21300000, guid: c60ff468ea1954a77b572bba74869bcf, type: 3}
-  - {fileID: 21300000, guid: 1e7b388282a2840419b232f97536f8d7, type: 3}
-  - {fileID: 21300000, guid: 3db6363d6699746eaa70c8e449ae7a04, type: 3}
+  - {fileID: -891861770, guid: f382b1c9f9a5746e383ee5e93e86f9ef, type: 3}
+  - {fileID: -891861770, guid: f382b1c9f9a5746e383ee5e93e86f9ef, type: 3}
+  - {fileID: 1915562679, guid: a6ec345056b1d4eaa950cf0f0e46316f, type: 3}
+  - {fileID: -1540853872, guid: 3e1217c9082aa43d2be1acde644f6a1f, type: 3}
+  - {fileID: 942811191, guid: c60ff468ea1954a77b572bba74869bcf, type: 3}
+  - {fileID: 1941221873, guid: 1e7b388282a2840419b232f97536f8d7, type: 3}
+  - {fileID: 1793708943, guid: 3db6363d6699746eaa70c8e449ae7a04, type: 3}
   - {fileID: 21300000, guid: dd2d8e9548c9f418c9d6bc3ef9426867, type: 3}
   - {fileID: 21300000, guid: 25fc002ac619a437f99295a9b37504dc, type: 3}
-  - {fileID: 21300000, guid: d652f2cff765a4ba392fa420d9dcf57c, type: 3}
+  - {fileID: -313630992, guid: d652f2cff765a4ba392fa420d9dcf57c, type: 3}
 --- !u!114 &5790335164382775762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4482368348877473468}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
