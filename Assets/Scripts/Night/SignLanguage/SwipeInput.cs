@@ -62,7 +62,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                     {
                         if (signLanguageUIManager.incorrectAnswerIndexList[0] == -1)
                         {
-                            signLanguageUIManager.ChangeUI(signLanguageUIManager.presentPanelIndex + 1);
+                            signLanguageUIManager.ChangeUITab(signLanguageUIManager.presentPanelIndex + 1);
                         }
                         else
                         {
@@ -70,7 +70,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                             {
                                 if (i == (signLanguageUIManager.presentPanelIndex + 1))
                                 {
-                                    signLanguageUIManager.ChangeUI(signLanguageUIManager.presentPanelIndex + 1);
+                                    signLanguageUIManager.ChangeUITab(signLanguageUIManager.presentPanelIndex + 1);
                                 }
                             }
                         }
@@ -83,7 +83,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                     {
                         if (signLanguageUIManager.incorrectAnswerIndexList[0] != -1)
                         {
-                            signLanguageUIManager.ChangeUI(signLanguageUIManager.presentPanelIndex - 1);
+                            signLanguageUIManager.ChangeUITab(signLanguageUIManager.presentPanelIndex - 1);
                         }
                         else
                         {
@@ -91,7 +91,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                             {
                                 if (i == (signLanguageUIManager.presentPanelIndex - 1))
                                 {
-                                    signLanguageUIManager.ChangeUI(signLanguageUIManager.presentPanelIndex - 1);
+                                    signLanguageUIManager.ChangeUITab(signLanguageUIManager.presentPanelIndex - 1);
                                 }
                             }
                         }

@@ -12,6 +12,9 @@ namespace HandByHand.NightSystem.SignLanguageSystem
     public class SignLanguageUIManager : MonoBehaviour
     {
         #region VAIRABLE
+
+        #region UI_VARIABLE
+
         [Header("UI Components")]
         public GameObject SignLanguageCanvas;
         public TMP_Text WordToMake;
@@ -24,14 +27,19 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         private List<TMP_Text> buttonTextList;
         private List<GameObject> buttonGameObjectList;
         private List<GameObject> viewportObjectList;
-        private bool[] buttonHadPushed = new bool[4] { false, false, false, false };
-        private bool completeButtonHadPushed { get; set; } = false;
-        private ScrollRect scrollViewScrollRectComponent;
-
+        
         private GameObject UIObjectInSignLanguageCanvas;
         private Vector3 originalUIObjectPosition;
         private float screenHeight = Screen.height;
         private Vector3 originalCompareEventButtonPosition;
+        
+        #endregion
+
+
+        #region BE_VARIABLE
+
+        private bool[] buttonHadPushed = new bool[4] { false, false, false, false };
+        private bool completeButtonHadPushed { get; set; } = false;
         public int presentPanelIndex { get; private set; } = 0;
 
         Coroutine horizontalSlideCoroutine;
@@ -40,6 +48,9 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         [HideInInspector]
         public List<int> incorrectAnswerIndexList = new List<int>() { -1 };
+
+        #endregion
+
         #endregion
 
         #region INIT
@@ -51,19 +62,18 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             UIObjectInSignLanguageCanvas = SignLanguageCanvas.transform.Find("UIObject").gameObject;
             originalUIObjectPosition = UIObjectInSignLanguageCanvas.transform.localPosition;
             originalCompareEventButtonPosition = CompareEventButton.GetComponent<RectTransform>().anchoredPosition;
-            scrollViewScrollRectComponent = ViewportListUIComponent.gameObject.transform.parent.GetComponent<ScrollRect>();
 
             IsVerticalAnimationDone = true;
         }
 
         private void Start()
         {
-            //InitViewportObject();
-            UIObjectInSignLanguageCanvas.transform.position -= new Vector3(0, screenHeight, 0);
+            if (UIObjectInSignLanguageCanvas.GetComponent<RectTransform>().anchoredPosition != new Vector2(0, -1 * screenHeight))
+                UIObjectInSignLanguageCanvas.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -1 * screenHeight);
         }
 
         /// <summary>
-        /// UI 재정렬 함수
+        /// UI 재정렬 함수 - Non-using
         /// </summary>
         private void InitViewportObject()
         {
@@ -119,10 +129,10 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         #endregion
 
         /// <summary>
-        /// viewportObjectList[index]로 패널을 부드럽게 슬라이드 이동, 상단 버튼 투명도 변경까지
+        /// viewportObjectList[index]로 패널을 부드럽게 슬라이드 이동, 상단 탭의 투명도 변경까지
         /// </summary>
         /// <param name="index"></param>
-        public void ChangeUI(int index)
+        public void ChangeUITab(int index, float animationWaitingTime = 0)
         {
             Vector2 targetPosition = viewportObjectList[index].GetComponent<RectTransform>().anchoredPosition;
 
@@ -130,7 +140,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             {
                 StopCoroutine(horizontalSlideCoroutine);
             }
-            horizontalSlideCoroutine = StartCoroutine(ViewportHorizontalSlideCoroutine(targetPosition));
+            horizontalSlideCoroutine = StartCoroutine(ViewportHorizontalSlideCoroutine(targetPosition, animationWaitingTime));
 
             //상단 버튼 오브젝트 투명도 변경
             this.ButtonListUIComponent.GetComponent<WhatIsSelectedComponent>().AdjustOpacityOfIndex(index);
@@ -165,9 +175,9 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         #region BUTTONEVENTFUNCTION
         /// <summary>
-        /// ?? 이 함수는 무슨 언제 만든건지 모르겠다
+        /// 상단 버튼 눌렀을시 호출하는 함수
         /// </summary>
-        public void ChangeUIObject()
+        public void ChangeUITab()
         {
             //함수를 부른 버튼 오브젝트의 hierarchy상 인덱스 받기
             int eventButtonSiblingIndex = EventSystem.current.currentSelectedGameObject.transform.GetSiblingIndex();
@@ -182,17 +192,17 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             horizontalSlideCoroutine = StartCoroutine(ViewportHorizontalSlideCoroutine(targetPosition));
         }
 
-        public void ChangeToNextUI()
+        /// <summary>
+        /// 버튼이 선택되지 않았을 때 눌렀을 시 다음 UI탭으로 이동
+        /// 처음 한번만 작동
+        /// </summary>
+        public void ChangeToNextUITab()
         {
-            //함수를 부른 버튼 오브젝트의 hierarchy상 인덱스 받기
-            //int eventButtonSiblingIndex = EventSystem.current.currentSelectedGameObject.transform.parent.GetSiblingIndex();
-
             int unselectedIndex = FindUnselectedNextUI();
 
             if (unselectedIndex != -1 && !buttonHadPushed[unselectedIndex])
-            //if (unselectedIndex != -1)
             {
-                ChangeUI(unselectedIndex);
+                ChangeUITab(unselectedIndex);
                 buttonHadPushed[unselectedIndex] = true;
             }
 
@@ -271,12 +281,13 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             if (incorrectAnswerIndexList[0] != -1)
             {
-                ChangeUI(incorrectAnswerIndexList[0]);
+                ChangeUITab(incorrectAnswerIndexList[0]);
             }
         }
 
         /// <summary>
         /// ChangeToNextUI() 함수 실행 후 아래 함수를 실행하여 수화 완성 여부 판단
+        /// 정답이 선택 되지 않은 것이 있는지 체크 후 없다면 compare 버튼을 등장시킴
         /// </summary>
         private void CheckAndShowCompareButton()
         {
@@ -412,12 +423,14 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// Viewport를 현재 위치에서 targetPosition으로 좌우 이동
         /// </summary>
         /// <returns></returns>
-        IEnumerator ViewportHorizontalSlideCoroutine(Vector2 viewportObjectRectPosition)
+        IEnumerator ViewportHorizontalSlideCoroutine(Vector2 viewportObjectRectPosition, float animationWaitingTime = 0)
         {
             if (!IsVerticalAnimationDone)
             {
                 yield return new WaitUntil(() => IsVerticalAnimationDone == true);
             }
+
+            yield return new WaitForSeconds(animationWaitingTime);
 
             //변수 선언
             #region VARIABLEFIELD

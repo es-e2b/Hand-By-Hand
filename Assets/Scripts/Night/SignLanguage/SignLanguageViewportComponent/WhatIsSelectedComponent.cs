@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,40 +9,58 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 {
     public class WhatIsSelectedComponent : MonoBehaviour
     {
-        private List<Image> imageComponentList = new List<Image>();
-        private List<Button> buttonComponentList = new List<Button>();
+        #region VARIABLE
 
-        private int formerSelectedButtonIndex = -1;
         [SerializeField]
         private int ignoreLayoutIndex = 0;
 
-        public float unselectImageOpacity = 100f;
+        public float adjustScaleOffset = 0.05f;
+
+        public float unselectImageOpacity = 150f;
         //선택한 이미지가 얻을 투명도값
         public float selectImageOpacity = 255f;
 
+        public float unselectOutlineImageOpacity = 150f;
+
+
+        private List<Image> imageComponentList = new List<Image>();
+        private List<Button> buttonComponentList = new List<Button>();
+        private List<GameObject> buttonGameObject = new List<GameObject>();
+
+
         //오브젝트를 초기화 할 경우에 할당할 오브젝트의 기존 투명도
         private float originalImageOpacity;
+        private float originalOutlineImageOpacity;
+        private Vector3 originalObjectScale;
+
+        private int formerSelectedButtonIndex = -1;
+
+        Coroutine AdjustButtonImageOpacityCoroutine = null;
+        Coroutine AdjustObjectScaleCoroutine = null;
+
+        #endregion
 
         #region INIT
-        void Start()
+        void Awake()
         {
+            //리스트에 오브젝트 할당
             for (int i = ignoreLayoutIndex; i < transform.childCount; i++)
             {
                 buttonComponentList.Add(transform.GetChild(i).GetComponent<Button>());
+                imageComponentList.Add(transform.GetChild(i).GetComponent<Image>());
 
-                try
-                {
-                    imageComponentList.Add(transform.GetChild(i).GetComponent<Image>());
-                }
-                catch { continue; }
+                buttonGameObject.Add(transform.GetChild(i).gameObject);
             }
 
+            //버튼 오브젝트에 리스너 추가
             for (int i = 0; i < buttonComponentList.Count; i++)
             {
                 buttonComponentList[i].onClick.AddListener(AdjustOpacityExceptSelectedButton);
             }
 
+            //초기화시 사용할 오브젝트 기존 투명도
             originalImageOpacity = ((Color32)imageComponentList[0].color).a;
+            originalObjectScale = imageComponentList[0].gameObject.transform.localScale;
         }
 
         public void Init()
@@ -50,17 +69,27 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             for (int i = 0; i < imageComponentList.Count; i++)
             {
+                //이미지 투명도 조정
                 imageComponentList[i].color = new Color32(255, 255, 255, (byte)originalImageOpacity);
+                //크기 조정
+                imageComponentList[i].gameObject.transform.localScale = originalObjectScale;
             }
         }
         #endregion
 
-        //SignLanguageUIManager에서 ChangeToTextUI()함수 실행시 상단 버튼 오브젝트의 Opacity값 변경을 위해 별도로 만든 함수
+        /// <summary>
+        /// SignLanguageUIManager에서 ChangeToTextUI()함수 실행시 상단 버튼 오브젝트의 Opacity값 변경을 위해 별도로 만든 함수
+        /// 버튼 클릭시 불러오는 것이 아니고 스크립트 내 메소드로 사용하기 위한 함수
+        /// </summary>
+        /// <param name="index"></param>
         public void AdjustOpacityOfIndex(int index)
         {
-            StartCoroutine(AdjustOpacity(index));
+            StartCoroutine(AdjustButtonImageOpacity(index));
         }
 
+        /// <summary>
+        /// 버튼 클릭시 해당 함수를 불러옴
+        /// </summary>
         private void AdjustOpacityExceptSelectedButton()
         {
             //오브젝트의 hierarchy에서의 인덱스 받아오기
@@ -73,13 +102,27 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 return;
             }
 
-            StartCoroutine(AdjustOpacity(clickObjectHierarchyIndex));
+            if (AdjustButtonImageOpacityCoroutine != null)
+                StopCoroutine(AdjustButtonImageOpacityCoroutine);
+            
+            AdjustButtonImageOpacityCoroutine = StartCoroutine(AdjustButtonImageOpacity(clickObjectHierarchyIndex));
+            
+            if (AdjustObjectScaleCoroutine != null)
+                StopCoroutine(AdjustObjectScaleCoroutine);
+
+            AdjustObjectScaleCoroutine = StartCoroutine(AdjustObjectSize(clickObjectHierarchyIndex));
         }
 
-        IEnumerator AdjustOpacity(int selectedButtonIndex)
+        #region COROUTINE
+        /// <summary>
+        /// selectedButton은 투명도를 올리고 나머지 Button은 투명도를 낮추는 코루틴
+        /// </summary>
+        /// <param name="selectedButtonIndex">list index</param>
+        /// <returns></returns>
+        IEnumerator AdjustButtonImageOpacity(int selectedButtonIndex)
         {
             #region OFFSETVARIABLE
-            float duringTime = 0.5f;
+            float duringTime = 0.25f;
             #endregion
 
             #region STATICVARIABLE
@@ -179,5 +222,57 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             yield return null;
         }
+
+        /// <summary>
+        /// 버튼 클릭시 오브젝트 크기 조정
+        /// </summary>
+        /// <param name="selectedButtonIndex"></param>
+        /// <returns></returns>
+        IEnumerator AdjustObjectSize(int selectedButtonIndex)
+        {
+            float maxSize = originalObjectScale.x + adjustScaleOffset;
+            float minSize = originalObjectScale.x - adjustScaleOffset;
+
+            float offset = 0.005f;
+
+            float velocityY = 0;
+            float smoothTime = 0.02f;
+
+            float selectedObjectScale;
+
+            while (buttonGameObject[selectedButtonIndex].transform.localScale.x < maxSize - offset)
+            {
+                for (int i = 0; i < buttonComponentList.Count; i++)
+                {
+                    if (i == selectedButtonIndex)
+                    {
+                        selectedObjectScale = Mathf.SmoothDamp(buttonGameObject[i].transform.localScale.x, maxSize, ref velocityY, smoothTime);
+                        buttonGameObject[i].transform.localScale = new Vector3(selectedObjectScale, selectedObjectScale, 0);
+                    }
+                    else
+                    {
+                        selectedObjectScale = Mathf.SmoothDamp(buttonGameObject[i].transform.localScale.x, minSize, ref velocityY, smoothTime);
+                        buttonGameObject[i].transform.localScale = new Vector3(selectedObjectScale, selectedObjectScale, 0);
+                    }
+                }
+
+                yield return null;
+            }
+
+            for (int i = 0; i < buttonComponentList.Count; i++)
+            {
+                if (i == selectedButtonIndex)
+                {
+                    buttonGameObject[i].transform.localScale = new Vector3(maxSize, maxSize, 0);
+                }
+                else
+                {
+                    buttonGameObject[i].transform.localScale = new Vector3(minSize, minSize, 0);
+                }
+            }
+
+            yield return null;
+        }
+        #endregion
     }
 }
