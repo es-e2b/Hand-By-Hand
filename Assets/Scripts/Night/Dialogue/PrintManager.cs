@@ -197,6 +197,17 @@ namespace HandByHand.NightSystem.DialogueSystem
             while (count != textLength)
             {
                 NPCText.text += text[count].ToString();
+
+                //색상 추가
+                if (text[count].ToString() == "<")
+                {
+                    while (text[count].ToString() != ">")
+                    {
+                        count++;
+                        NPCText.text += text[count].ToString();
+                    }
+                }
+
                 count++;
                 yield return new WaitForSeconds(textPrintDelay);
             }

@@ -44,5 +44,11 @@ namespace HandByHand.NightSystem.DialogueSystem
         {
             DialogueItemList.Add(new PlayerChoice());
         }
+
+        [ContextMenu("AddTutorial")]
+        public void AddTutorial()
+        {
+            DialogueItemList.Add(new Tutorial());
+        }
     }
 }

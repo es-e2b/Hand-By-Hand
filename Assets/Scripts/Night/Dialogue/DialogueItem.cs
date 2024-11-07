@@ -11,7 +11,8 @@ namespace HandByHand.NightSystem.DialogueSystem
     public enum WhoseItem
     {
         NPC,
-        Player
+        Player,
+        None
     }
 
     public enum ItemType
@@ -20,6 +21,7 @@ namespace HandByHand.NightSystem.DialogueSystem
         PlayerText,
         PlayerChoice,
         DialogueSO,
+        Tutorial
     }
 
     [System.Serializable]
@@ -106,6 +108,17 @@ namespace HandByHand.NightSystem.DialogueSystem
         public PlayerChoice() : base(WhoseItem.Player, ItemType.PlayerChoice) 
         { 
             ChoiceContentList = new List<ChoiceContent>();
+        }
+    }
+
+    [System.Serializable]
+    public class Tutorial : DialogueItem
+    {
+        public GameObject TutorialAsset;
+
+        public Tutorial() : base(WhoseItem.None, ItemType.Tutorial)
+        {
+
         }
     }
 }

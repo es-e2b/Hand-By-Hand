@@ -167,6 +167,10 @@ namespace HandByHand.NightSystem.DialogueSystem
 
                         }
                         break;
+                    case ItemType.Tutorial:
+                        //Tutorial 시작 코루틴
+                        yield return StartCoroutine(((Tutorial)itemList[itemCount]).TutorialAsset.transform.Find("TutorialManager").GetComponent<TutorialManager>().StartTutorial());
+                        break;
                 }
 
                 itemCount++;

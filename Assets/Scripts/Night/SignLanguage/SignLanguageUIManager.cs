@@ -293,7 +293,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         {
             if (FindUnselectedNextUI() == -1)
             {
-                Vector3 offsetPosition = new Vector3(250, -950, 0);
+                Vector3 offsetPosition = new Vector3(0, -1065, 0);
                 StartCoroutine(CompareButtonVerticalSlideCoroutine(offsetPosition));
                 completeButtonHadPushed = true;
             }
