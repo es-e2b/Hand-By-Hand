@@ -3,14 +3,13 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
     using System.Collections;
     using UnityEngine;
 
-    [RequireComponent(typeof(CanvasGroup))]
     public class HintMessageDisplayer : TimedDisable
     {
         private RectTransform _rectTransform;
         private Vector2 _currentPosition;
         private CanvasGroup _canvasGroup;
         [SerializeField] private float animationDuration = 0.5f;
-        [SerializeField] private Vector2 startPositionOffset = new Vector2(-50, -50); // 좌측 하단 시작 위치 오프셋
+        [SerializeField] private Vector2 startPositionOffset = new Vector2(0, -15); //하단 시작 위치 오프셋
         private Coroutine _ShowAnimationCoroutine;
         private Coroutine _HideAnimationCoroutine;
         protected override void Awake()
@@ -18,7 +17,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
             _timer=new UniversalTimer(_targetTime, ()=>{_HideAnimationCoroutine=StartCoroutine(HideMessageAnimation());}, StartCoroutine, StopCoroutine);
             _rectTransform=GetComponent<RectTransform>();
             _currentPosition=_rectTransform.anchoredPosition;
-            _canvasGroup = GetComponent<CanvasGroup>();
+            if(!TryGetComponent<CanvasGroup>(out _canvasGroup))
+            {
+                _canvasGroup = gameObject.AddComponent<CanvasGroup>();
+            }
         }
         protected override void OnEnable()
         {
@@ -29,7 +31,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
         {
             base.OnDisable();
             StopCoroutine(_ShowAnimationCoroutine);
-            StopCoroutine(_HideAnimationCoroutine);
+            if(_HideAnimationCoroutine==null)
+            {
+                StopCoroutine(_HideAnimationCoroutine);
+            }
         }
 
         private IEnumerator ShowMessageAnimation()

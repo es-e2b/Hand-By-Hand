@@ -7,6 +7,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
     using MenuData;
     using PaymentSystem;
     using UnityEngine.UI;
+    using Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem;
 
     public class OrderManager : MonoBehaviour
     {
@@ -26,6 +27,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
         private Slider timerSlider;
         private Coroutine timerCoroutine;
         private Coroutine spawnCoroutine;
+        public Coroutine SpawnCoroutine { get=>spawnCoroutine; }
         private Customer orderingCustomer;
         public Customer OrderingCustomer
         {
@@ -37,6 +39,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
                 OnChangedCustomer.Invoke(value);
                 if(value == null)
                 {
+                    print("XZXZXZXZXZXXXZXZXZX");
                     OnCustomerExit();
                     return;
                 }
@@ -54,15 +57,25 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
         }
         private void Start()
         {
-            spawnCoroutine=StartCoroutine(SpawnCustomer());
             orderTimer=new SliderTimer(timerSlider, 1, OnTimerEnded);
             EatingCustomer=new();
+            StartCoroutine(Initailize());
+        }
+        private IEnumerator Initailize()
+        {
+            yield return new WaitUntil(()=>GameManager.Instance!=null);
+            if(!GameManager.Instance.hasCompletedTutorial)
+            {
+                yield return new WaitUntil(()=>TutorialManager.Instance!=null);
+                yield break;
+            }
+            spawnCoroutine=StartCoroutine(SpawnCustomer());
         }
         private void OnTimerEnded()
         {
             OrderingCustomer=null;
         }
-        private void StopTimer()
+        public void StopTimer()
         {
             StopCoroutine(timerCoroutine);
             timerSlider.gameObject.SetActive(false);
@@ -70,10 +83,14 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
         /// <summary>
         /// 타이머 시작
         /// </summary>
+        public void StartTimer(int time)
+        {
+            timerCoroutine=StartCoroutine(orderTimer.TimerStart(time));
+        }
         public void OnCustomerEnter(Customer customer)
         {
             OrderChecks=new bool[OrderingCustomer.OrderMenus.Length];
-            timerCoroutine=StartCoroutine(orderTimer.TimerStart(60));
+            StartTimer(60);
         }
         /// <summary>
         /// 손님 퇴장(식사 시작, 퇴장) 시 사용하는 함수.
@@ -83,10 +100,15 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
         {
             OrderIndex=-1;
             StopTimer();
-            StopCoroutine(spawnCoroutine);
-            spawnCoroutine=null;
-
-            spawnCoroutine=StartCoroutine(SpawnCustomer());
+            if(spawnCoroutine!=null)
+            {
+                StopCoroutine(spawnCoroutine);
+                spawnCoroutine=null;
+            }
+            if(!TutorialManager.Instance.IsTutorialMode)
+            {
+                spawnCoroutine=StartCoroutine(SpawnCustomer());
+            }
         }
         private IEnumerator StartEating(Customer customer)
         {
@@ -108,16 +130,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
             }
             print("Called Order Check Method");
             OnCorrectAnswer.Invoke(OrderIndex);
-            // OrderChecks[OrderIndex]=true;
-            // for(int i=0;i<OrderChecks.Length;i++)
-            // {
-            //     if(!OrderChecks[i]) return;
-            // }
-            // StartCoroutine(StartEating(OrderingCustomer));
-            // OrderingCustomer = null;
         }
         public IEnumerator OnAllCorrectAnswer()
         {
+            Debug.Log("OnAllCorrectAnswerOnAllCorrectAnswerOnAllCorrectAnswerOnAllCorrectAnswerOnAllCorrectAnswerOnAllCorrectAnswer");
             StartCoroutine(StartEating(OrderingCustomer));
             yield return null;
         }

@@ -28,6 +28,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem
         }
         public IEnumerator Eat()
         {
+            Debug.Log("EatEatEatEatEatEatEatEatEatEatEatEatEatEatEatEatEatEatEatEat");
             float totalEatingDuration = 0;
 
             for (int i = 0; i < OrderMenus.Length; i++)
