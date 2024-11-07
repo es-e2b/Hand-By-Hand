@@ -32,6 +32,7 @@ namespace Assets.Scripts
         }
         private IEnumerator StartGame()
         {
+            yield return new WaitUntil(()=>GameManager.Instance!=null);
             GameManager.Instance.OnChangedDayCycle.AddListener(OnChangedDayCycle);
             // GameManager.Instance.OnChangedDailySales.AddListener((dailySales)=>_dailySales.text=dailySales.ToString());
             GameManager.Instance.DailySales=0;
