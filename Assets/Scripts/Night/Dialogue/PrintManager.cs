@@ -26,6 +26,7 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         public PlayerChoiceButtonComponentList PlayerChoiceButtonComponentList;
         private List<Button> playerChoiceButtonComponentList;
+        private List<Image> playerChoiceImageComponentList = new List<Image>();
         private List<TMP_Text> playerChoiceTextComponentList;
         #endregion
 
@@ -60,6 +61,12 @@ namespace HandByHand.NightSystem.DialogueSystem
         void Start()
         {
             playerChoiceButtonComponentList = PlayerChoiceButtonComponentList.ButtonComponentList;
+
+            for(int i = 0; i < playerChoiceButtonComponentList.Count; i++)
+            {
+                playerChoiceImageComponentList.Add(playerChoiceButtonComponentList[i].GetComponent<Image>());
+            }
+
             playerChoiceTextComponentList = PlayerChoiceButtonComponentList.TextComponentList;
         }
         #endregion
@@ -208,8 +215,7 @@ namespace HandByHand.NightSystem.DialogueSystem
             float time = 0;
             float alpha = 0;
 
-            ColorBlock colorBlock = playerChoiceButtonComponentList[0].colors;
-            float previewAlpha = colorBlock.normalColor.a;
+            float previewAlpha = playerChoiceImageComponentList[0].color.a;
 
             bool condition = true;
 
@@ -230,9 +236,7 @@ namespace HandByHand.NightSystem.DialogueSystem
 
                 for (int i = 0; i < poolingCount; i++)
                 {
-                    colorBlock = playerChoiceButtonComponentList[i].colors;
-                    colorBlock.normalColor = new Color(1f, 1f, 1f, alpha);
-                    playerChoiceButtonComponentList[i].colors = colorBlock;
+                    playerChoiceImageComponentList[i].color = new Color(1, 1, 1, alpha);
                 }
                 time += Time.deltaTime;
 
@@ -244,18 +248,14 @@ namespace HandByHand.NightSystem.DialogueSystem
                 case "on":
                     for (int i = 0; i < poolingCount; i++)
                     {
-                        colorBlock = playerChoiceButtonComponentList[i].colors;
-                        colorBlock.normalColor = new Color(1f, 1f, 1f, 1f);
-                        playerChoiceButtonComponentList[i].colors = colorBlock;
+                        playerChoiceImageComponentList[i].color = new Color(1, 1, 1, 1);
                     }
                     break;
 
                 case "off":
                     for (int i = 0; i < poolingCount; i++)
                     {
-                        colorBlock = playerChoiceButtonComponentList[i].colors;
-                        colorBlock.normalColor = new Color(1f, 1f, 1f, 0);
-                        playerChoiceButtonComponentList[i].colors = colorBlock;
+                        playerChoiceImageComponentList[i].color = new Color(1, 1, 1, 0);
                     }
 
                     //Object Reset

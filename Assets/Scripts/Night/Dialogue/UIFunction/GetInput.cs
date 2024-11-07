@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace HandByHand.NightSystem.DialogueSystem
@@ -8,7 +9,7 @@ namespace HandByHand.NightSystem.DialogueSystem
     {
         public bool IsGetInput { get; private set; } = false;
 
-        private void Start()
+        void OnEnable()
         {
             IsGetInput = false;
         }

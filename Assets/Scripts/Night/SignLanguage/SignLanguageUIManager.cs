@@ -154,7 +154,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             if (SignLanguageCanvas.activeSelf)
             {
                 Vector3 targetPosition = new Vector3(0, 0, 0);
-                WordToMake.SetText("수화로 표현해보자! : \n\"" + SignLanguageMean + "\"");
+                WordToMake.SetText("수화로 표현해보자!\n\"" + SignLanguageMean + "\"");
                 SignLanguageUIActiveSelf = true;
 
                 StartCoroutine(UICanvasVerticalSlideCoroutine(targetPosition, false));
@@ -293,7 +293,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         {
             if (FindUnselectedNextUI() == -1)
             {
-                Vector3 offsetPosition = new Vector3(250, -850, 0);
+                Vector3 offsetPosition = new Vector3(250, -950, 0);
                 StartCoroutine(CompareButtonVerticalSlideCoroutine(offsetPosition));
                 completeButtonHadPushed = true;
             }

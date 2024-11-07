@@ -457,7 +457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speaker: {fileID: 275354411}
-  vocabulary: {fileID: 0}
+  vocabulary: {fileID: 11400000, guid: f59b5f19b13968e448a147692d0c2233, type: 2}
 --- !u!4 &741189820
 Transform:
   m_ObjectHideFlags: 0

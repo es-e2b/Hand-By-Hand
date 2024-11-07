@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab78eecb4505a4c9ab4da1e0e9b860c6, type: 3}
-  m_Name: dislike
+  m_Name: good
   m_EditorClassIdentifier: 
-  Name: "\uB124"
+  Name: "\uC88B\uB2E4"
   Hint: 
   RightHandshapes:
-  - HandshapeImage: {fileID: 21300000, guid: f00c72e3f135663448dcda3f52655a80, type: 3}
-    StartPosition: {x: 0, y: 0}
-    EndPosition: {x: 0, y: 0}
+  - HandshapeImage: {fileID: 21300000, guid: acde7531806e50041ba8186dc1494bbd, type: 3}
+    StartPosition: {x: -0.2, y: 0.15}
+    EndPosition: {x: -0.2, y: 0.15}
     StartRotation: {x: 0, y: 0, z: 0}
     EndRotation: {x: 0, y: 0, z: 0}
-    Duration: 0
+    Duration: 1.5
   LeftHandshapes:
   - HandshapeImage: {fileID: 0}
     StartPosition: {x: 0, y: 0}

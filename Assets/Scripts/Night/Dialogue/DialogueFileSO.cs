@@ -18,6 +18,19 @@ namespace HandByHand.NightSystem.DialogueSystem
         public void AddNPCText()
         {
             DialogueItemList.Add(new NPCText());
+
+            InitName();
+        }
+
+        private void InitName()
+        {
+            for (int i = DialogueItemList.Count - 2; i >= 0; i--)
+            {
+                if (DialogueItemList[i].itemType == ItemType.NPCText)
+                {
+                    ((NPCText)DialogueItemList[DialogueItemList.Count - 1]).Name = ((NPCText)DialogueItemList[i]).Name;
+                }
+            }
         }
 
         [ContextMenu("AddPlayerText")]

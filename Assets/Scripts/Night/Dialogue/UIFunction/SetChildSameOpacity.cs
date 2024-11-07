@@ -8,14 +8,14 @@ namespace HandByHand.NightSystem.DialogueSystem
 {
     public class SetTextSameOpacity : MonoBehaviour
     {
-        private Button buttonComponent;
+        private Image imageComponent;
         private TMP_Text childText;
         private float R;
         private float G;
         private float B;
 
-        void Start() {
-            buttonComponent = gameObject.GetComponent<Button>();
+        void Awake() {
+            imageComponent = gameObject.GetComponent<Image>();
             childText = transform.GetChild(0).GetComponent<TMP_Text>();
 
             R = childText.color.r;
@@ -24,7 +24,7 @@ namespace HandByHand.NightSystem.DialogueSystem
         }
 
         void Update() {
-            childText.color = new Color(R, G, B, (buttonComponent.colors).normalColor.a);
+            childText.color = new Color(R, G, B, imageComponent.color.a);
         }
     }
 }

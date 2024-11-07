@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using HandByHand.NightSystem.SignLanguageSystem;
 using Assets.Scripts.SignLanguage;
+using static HandByHand.NightSystem.DialogueSystem.PlayerChoice;
 
 namespace HandByHand.NightSystem.DialogueSystem
 {
@@ -17,7 +18,8 @@ namespace HandByHand.NightSystem.DialogueSystem
     {
         NPCText,
         PlayerText,
-        PlayerChoice
+        PlayerChoice,
+        DialogueSO,
     }
 
     [System.Serializable]
@@ -52,7 +54,9 @@ namespace HandByHand.NightSystem.DialogueSystem
         [TextArea(3, 6)]
         public string Text;
 
-        public NPCText() : base(WhoseItem.NPC, ItemType.NPCText) { }
+        public NPCText() : base(WhoseItem.NPC, ItemType.NPCText)
+        { 
+        }
 
         public string text
         {
@@ -81,6 +85,20 @@ namespace HandByHand.NightSystem.DialogueSystem
             public SignLanguageSO SignLanguageItem;
             public string ChoiceText;
             public Vocabulary Vocabulary;
+            public AdditionalSetting AdditionalSetting;
+
+            public ChoiceContent()
+            {
+                AdditionalSetting = new AdditionalSetting();
+            }
+        }
+
+        [System.Serializable]
+        public class AdditionalSetting
+        {
+            public DialogueFileSO DialogueSO = null;
+            public bool ShowVocabularyFirst;
+            public bool ShowVocabularyLast;
         }
 
         public List<ChoiceContent> ChoiceContentList;
