@@ -5,7 +5,7 @@ namespace Assets.Scripts
     public class TimedDisable : MonoBehaviour
     {
         [SerializeField]
-        protected float _targetTime;
+        protected float _targetTime=1.5f;
         protected UniversalTimer _timer;
         protected virtual void Awake()
         {
