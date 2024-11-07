@@ -68,7 +68,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
         {
             StartCoroutine(WaitPayingCustomer());
         }
-            public void AddWaitingCustomer(Customer customer)
+        public void AddWaitingCustomer(Customer customer)
         {
             WaitingCustomer.Enqueue(customer);
         }

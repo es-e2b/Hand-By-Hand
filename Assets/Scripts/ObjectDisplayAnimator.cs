@@ -3,7 +3,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
     using System.Collections;
     using UnityEngine;
 
-    public class HintMessageDisplayer : TimedDisable
+    public class ObjectDisplayAnimator : MonoBehaviour
     {
         private RectTransform _rectTransform;
         private Vector2 _currentPosition;
@@ -12,9 +12,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
         [SerializeField] private Vector2 startPositionOffset = new Vector2(0, -15); //하단 시작 위치 오프셋
         private Coroutine _ShowAnimationCoroutine;
         private Coroutine _HideAnimationCoroutine;
-        protected override void Awake()
+        private void Awake()
         {
-            _timer=new UniversalTimer(_targetTime, ()=>{_HideAnimationCoroutine=StartCoroutine(HideMessageAnimation());}, StartCoroutine, StopCoroutine);
             _rectTransform=GetComponent<RectTransform>();
             _currentPosition=_rectTransform.anchoredPosition;
             if(!TryGetComponent<CanvasGroup>(out _canvasGroup))
@@ -22,14 +21,12 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
                 _canvasGroup = gameObject.AddComponent<CanvasGroup>();
             }
         }
-        protected override void OnEnable()
+        private void OnEnable()
         {
-            base.OnEnable();
             _ShowAnimationCoroutine=StartCoroutine(ShowMessageAnimation());
         }
-        protected override void OnDisable()
+        private void OnDisable()
         {
-            base.OnDisable();
             StopCoroutine(_ShowAnimationCoroutine);
             if(_HideAnimationCoroutine==null)
             {

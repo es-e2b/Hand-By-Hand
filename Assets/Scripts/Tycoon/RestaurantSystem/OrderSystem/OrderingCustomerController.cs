@@ -6,6 +6,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
     using TMPro;
     using UnityEngine;
     using UnityEngine.UI;
+    using TutorialSystem;
 
     public class OrderingCustomerController : MonoBehaviour
     {
@@ -48,7 +49,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
                 customerUI.SetActive(true);
                 //위의 필드 다 적용하기
                 customerImage.GetComponent<Image>().sprite=value.CustomerCharacter.CharacterSprite;
-                CheckOrderMenu(value.OrderMenus[0], 0);
+                if(!TutorialManager.Instance.IsTutorialMode)
+                {
+                    CheckOrderMenu(value.OrderMenus[0], 0);
+                }
                 ActivateOrderMenu(value);
             }
         }
@@ -65,6 +69,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
                 orderMenuButtons[index].GetComponent<OrderMenuButton>().RemoveQuestionMark();
                 if(++index>=Customer.OrderMenus.Length)
                 {
+                    Debug.Log("AASBBbbszdsxcv");
                     _answerProcessingCoroutine??=StartCoroutine(OnAllCorrectAnswer());
                     return;
                 }
@@ -81,7 +86,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
             });
             hintButton.GetComponent<Button>().onClick.AddListener(()=>
             {
-                if(CurrentMenu==null) return;
+                if(Customer==null) return;
                 hintMessageOjbect.SetActive(false);
                 hintMessageOjbect.SetActive(true);
             });
@@ -96,7 +101,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
             yield return OrderManager.Instance.OnAllCorrectAnswer();
             _answerProcessingCoroutine=null;
         }
-        private void CheckOrderMenu(Menu menu, int index)
+        public void CheckOrderMenu(Menu menu, int index)
         {
             StartCoroutine(SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(customerImage, menu.Vocabulary));
             OrderManager.Instance.OrderIndex=index;
