@@ -182,41 +182,6 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         #region COROUTINE
 
-        /* IEnumerator DialoguePanelUpperSlidingAnimationCoroutine(float VerticalMovingHeight)
-        {
-            //���� ����
-            #region VARIABLEFIELD
-            //float dialoguePanelHeight = dialoguePanel.GetComponent<RectTransform>().rect.height;
-            Vector3 targetPosition = dialoguePanel.transform.position + new Vector3(0, VerticalMovingHeight, 0);
-
-            float dialoguePanelX = dialoguePanel.transform.position.x;
-            float dialoguePanelZ = dialoguePanel.transform.position.z;
-
-            float velocityY = 0f;
-            float smoothTime = 0.3f;
-
-            float offset = 0.1f;
-            #endregion
-
-            //�г��� ���� �ε巴�� �ø���
-            while (targetPosition.y - offset > dialoguePanel.transform.position.y)
-            {
-                float positionY = Mathf.SmoothDamp(dialoguePanel.transform.position.y, targetPosition.y, ref velocityY, smoothTime);
-                dialoguePanel.transform.position = new Vector3(dialoguePanelX, positionY, dialoguePanelZ);
-
-                yield return null;
-            }
-
-            dialoguePanel.transform.position = targetPosition;
-
-            //��ȭ�� �б� ���� �ణ�� �ð��� ��ٷ��ش�
-            float playerReadWaitingTime = 1.0f;
-            yield return new WaitForSeconds(playerReadWaitingTime);
-
-            //�ִϸ��̼� �ϷḦ �˸�
-            yield return StartCoroutine(AnnouncePrintDone());
-        } */
-
         IEnumerator TextPrintAnimation(string text)
         {
             int count = 0;

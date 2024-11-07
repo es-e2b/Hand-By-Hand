@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using HandByHand.NightSystem.SignLanguageSystem;
+using Assets.Scripts.SignLanguage;
 
 namespace HandByHand.NightSystem.DialogueSystem
 {
@@ -22,8 +23,9 @@ namespace HandByHand.NightSystem.DialogueSystem
         private SignLanguageManager signLanguageManager;
 
         private DialogueChoiceSelectManager dialogueChoiceSelectManager;
-        #endregion
 
+        private SignAnimationRendererManager signAnimationRendererManager;
+        #endregion
 
         #region INIT
         void Awake()
@@ -31,6 +33,7 @@ namespace HandByHand.NightSystem.DialogueSystem
             printManager = gameObject.transform.Find("PrintManager").GetComponent<PrintManager>();
             signLanguageManager = gameObject.transform.Find("SignLanguageManager").GetComponent<SignLanguageManager>();
             dialogueChoiceSelectManager = gameObject.transform.Find("DialogueChoiceSelectManager").GetComponent<DialogueChoiceSelectManager>();
+            signAnimationRendererManager = gameObject.transform.Find("SignAnimationRendererManager").GetComponent<SignAnimationRendererManager>();
             getInput = BlinkIcon.GetComponent<GetInput>();
         }
 
@@ -86,6 +89,8 @@ namespace HandByHand.NightSystem.DialogueSystem
 
                         SignLanguageSO selectedSignLanguageSO = dialogueChoiceSelectManager.GetSelectedSignLanguageSO();
 
+                        int selectedChoiceNumber = dialogueChoiceSelectManager.SelectedChoiceNumber;
+
                         //SO가 없다면 무시하고 넘어가기
                         if (selectedSignLanguageSO == null)
                         {
@@ -108,6 +113,10 @@ namespace HandByHand.NightSystem.DialogueSystem
                             signLanguageUIManager.InActiveUIObject();
 
                             yield return new WaitForSeconds(waitingTimeOffset);
+
+                            signAnimationRendererManager.StartVocabulary(((PlayerChoice)itemList[itemCount]).ChoiceContentList[selectedChoiceNumber].Vocabulary);
+
+                            yield return new WaitUntil(() => signAnimationRendererManager.IsVocabularyEnd == true);
                         }
 
                         break;

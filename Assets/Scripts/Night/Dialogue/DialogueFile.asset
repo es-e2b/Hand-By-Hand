@@ -38,6 +38,7 @@ MonoBehaviour:
         ChoiceContentList:
         - SignLanguageItem: {fileID: 11400000, guid: b6e7a840c17f73e4e934ec4c408889af, type: 2}
           ChoiceText: "\uACE0\uB9C8\uC6CC"
+          Vocabulary: {fileID: 0}
     - rid: 7424402894350450690
       type: {class: PlayerText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
       data:
@@ -67,3 +68,4 @@ MonoBehaviour:
         ChoiceContentList:
         - SignLanguageItem: {fileID: 11400000, guid: 95c1a715e6e3ecf4ea18ec6a8762e146, type: 2}
           ChoiceText: "\uD589\uBCF5\uD588\uC5B4"
+          Vocabulary: {fileID: 11400000, guid: dfae5674bcb21924aa2720bcc49c11b2, type: 2}

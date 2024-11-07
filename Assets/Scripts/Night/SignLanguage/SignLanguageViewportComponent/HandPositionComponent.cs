@@ -41,7 +41,26 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
                 int index = i - ignoreLayoutNumber;
                 //≈ÿΩ∫∆Æ «“¥Á
-                textObject[index].text = ( (HandPosition) (index)).ToString();
+                string buttonText = "";
+                switch(index)
+                {
+                    case 0:
+                        buttonText = "∏”∏Æ ¿ß";
+                        break;
+                    case 1:
+                        buttonText = "æÛ±º";
+                            break;
+                    case 2:
+                        buttonText = "≈Œ";
+                        break;
+                    case 3:
+                        buttonText = "∞°Ωø";
+                        break;
+                    case 4:
+                        buttonText = "πË";
+                        break;
+                }
+                textObject[index].text = buttonText;
             }
         }
         #endregion

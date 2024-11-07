@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using HandByHand.NightSystem.SignLanguageSystem;
+using Assets.Scripts.SignLanguage;
 
 namespace HandByHand.NightSystem.DialogueSystem
 {
@@ -79,6 +80,7 @@ namespace HandByHand.NightSystem.DialogueSystem
         {
             public SignLanguageSO SignLanguageItem;
             public string ChoiceText;
+            public Vocabulary Vocabulary;
         }
 
         public List<ChoiceContent> ChoiceContentList;
