@@ -8,6 +8,7 @@ namespace Assets.Scripts
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
+        public bool hasCompletedTutorial;
         [SerializeField]
         private Object[] DayCycleScenes;
         private DayCycle _currentDayCycle;
