@@ -19,7 +19,7 @@ namespace HandByHand.NightSystem.DialogueSystem
         public void WaitForSelectChoice()
         {
             PrintManager printManager = gameObject.transform.parent.Find("PrintManager").GetComponent<PrintManager>();
-            List<GameObject> choiceObjectList = new List<GameObject>(printManager.ChoiceObjectList);
+            List<GameObject> choiceObjectList = new List<GameObject>(printManager.PooledChoiceObjectList);
 
             StartCoroutine(DetectingSelectChoice(choiceObjectList));
         }

@@ -4,13 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using System;
+using System.Reflection;
 
 namespace HandByHand.NightSystem.SignLanguageSystem
 {
     public class SignLanguageUIManager : MonoBehaviour
     {
         #region VAIRABLE
-        #region UI_COMPONENTS
+
+        #region UI_VARIABLE
+
         [Header("UI Components")]
         public GameObject SignLanguageCanvas;
         public TMP_Text WordToMake;
@@ -23,16 +27,30 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         private List<TMP_Text> buttonTextList;
         private List<GameObject> buttonGameObjectList;
         private List<GameObject> viewportObjectList;
-        private bool[] buttonHadPushed = new bool[3] {false, false , false }; 
-        private ScrollRect scrollViewScrollRectComponent;
-
+        
         private GameObject UIObjectInSignLanguageCanvas;
         private Vector3 originalUIObjectPosition;
         private float screenHeight = Screen.height;
+        private Vector3 originalCompareEventButtonPosition;
+        
+        #endregion
+
+
+        #region BE_VARIABLE
+
+        private bool[] buttonHadPushed = new bool[4] { false, false, false, false };
+        private bool completeButtonHadPushed { get; set; } = false;
+        public int presentPanelIndex { get; private set; } = 0;
 
         Coroutine horizontalSlideCoroutine;
-        public bool isVerticalAnimationDone { get; private set; }
+        public bool IsVerticalAnimationDone { get; private set; }
+        public bool SignLanguageUIActiveSelf { get; private set; } = false;
+
+        [HideInInspector]
+        public List<int> incorrectAnswerIndexList = new List<int>() { -1 };
+
         #endregion
+
         #endregion
 
         #region INIT
@@ -43,18 +61,19 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             viewportObjectList = ViewportListUIComponent.UIObject;
             UIObjectInSignLanguageCanvas = SignLanguageCanvas.transform.Find("UIObject").gameObject;
             originalUIObjectPosition = UIObjectInSignLanguageCanvas.transform.localPosition;
-            scrollViewScrollRectComponent = ViewportListUIComponent.gameObject.transform.parent.GetComponent<ScrollRect>();
+            originalCompareEventButtonPosition = CompareEventButton.GetComponent<RectTransform>().anchoredPosition;
 
-            isVerticalAnimationDone = true;
+            IsVerticalAnimationDone = true;
         }
 
         private void Start()
         {
-            //InitViewportObject();
+            if (UIObjectInSignLanguageCanvas.GetComponent<RectTransform>().anchoredPosition != new Vector2(0, -1 * screenHeight))
+                UIObjectInSignLanguageCanvas.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -1 * screenHeight);
         }
 
         /// <summary>
-        /// UI 재정렬 함수
+        /// UI 재정렬 함수 - Non-using
         /// </summary>
         private void InitViewportObject()
         {
@@ -82,18 +101,61 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// </summary>
         private void InitHadPushedArray()
         {
-            for(int i = 0; i < buttonHadPushed.Length; i++)
+            for (int i = 0; i < buttonHadPushed.Length; i++)
                 buttonHadPushed[i] = false;
         }
+
+        /// <summary>
+        /// CompareEventButton의 위치를 원래대로 재조정
+        /// </summary>
+        private void InitCompareEventButtonPosition()
+        {
+            CompareEventButton.transform.localPosition = originalCompareEventButtonPosition;
+        }
+
+        private void InitViewportAndButtonOpacity()
+        {
+            for(int i = 0; i < viewportObjectList.Count; i++)
+            {
+                viewportObjectList[i].GetComponent<WhatIsSelectedComponent>().Init();
+            }
+            this.ButtonListUIComponent.GetComponent<WhatIsSelectedComponent>().AdjustOpacityOfIndex(0);
+        }
+
+        private void InitButtonInteractable()
+        {
+            SetButtonInteractable(true);
+        }
         #endregion
+
+        /// <summary>
+        /// viewportObjectList[index]로 패널을 부드럽게 슬라이드 이동, 상단 탭의 투명도 변경까지
+        /// </summary>
+        /// <param name="index"></param>
+        public void ChangeUITab(int index, float animationWaitingTime = 0)
+        {
+            Vector2 targetPosition = viewportObjectList[index].GetComponent<RectTransform>().anchoredPosition;
+
+            if (horizontalSlideCoroutine != null)
+            {
+                StopCoroutine(horizontalSlideCoroutine);
+            }
+            horizontalSlideCoroutine = StartCoroutine(ViewportHorizontalSlideCoroutine(targetPosition, animationWaitingTime));
+
+            //상단 버튼 오브젝트 투명도 변경
+            this.ButtonListUIComponent.GetComponent<WhatIsSelectedComponent>().AdjustOpacityOfIndex(index);
+
+            presentPanelIndex = index;
+        }
 
         #region CANVASACTIVATEFUNCTION
         public void ActiveUIObject(string SignLanguageMean)
         {
             if (SignLanguageCanvas.activeSelf)
             {
-                Vector3 targetPosition = originalUIObjectPosition + new Vector3(0, screenHeight, 0);
-                WordToMake.SetText("Make The Word : " + SignLanguageMean);
+                Vector3 targetPosition = new Vector3(0, 0, 0);
+                WordToMake.SetText("수화로 표현해보자! : \n\"" + SignLanguageMean + "\"");
+                SignLanguageUIActiveSelf = true;
 
                 StartCoroutine(UICanvasVerticalSlideCoroutine(targetPosition, false));
             }
@@ -103,7 +165,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         {
             if (SignLanguageCanvas.activeSelf)
             {
-                Vector3 targetPosition = originalUIObjectPosition;
+                Vector3 targetPosition = new Vector3(0, -1 * screenHeight, 0);
+                SignLanguageUIActiveSelf = false;
 
                 StartCoroutine(UICanvasVerticalSlideCoroutine(targetPosition, true));
             }
@@ -111,7 +174,10 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         #endregion
 
         #region BUTTONEVENTFUNCTION
-        public void ChangeUIObject()
+        /// <summary>
+        /// 상단 버튼 눌렀을시 호출하는 함수
+        /// </summary>
+        public void ChangeUITab()
         {
             //함수를 부른 버튼 오브젝트의 hierarchy상 인덱스 받기
             int eventButtonSiblingIndex = EventSystem.current.currentSelectedGameObject.transform.GetSiblingIndex();
@@ -126,23 +192,21 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             horizontalSlideCoroutine = StartCoroutine(ViewportHorizontalSlideCoroutine(targetPosition));
         }
 
-        public void ChangeToNextUI()
+        /// <summary>
+        /// 버튼이 선택되지 않았을 때 눌렀을 시 다음 UI탭으로 이동
+        /// 처음 한번만 작동
+        /// </summary>
+        public void ChangeToNextUITab()
         {
-            //함수를 부른 버튼 오브젝트의 hierarchy상 인덱스 받기
-            int eventButtonSiblingIndex = EventSystem.current.currentSelectedGameObject.transform.parent.GetSiblingIndex();
+            int unselectedIndex = FindUnselectedNextUI();
 
-            if (eventButtonSiblingIndex != 3 && !buttonHadPushed[eventButtonSiblingIndex])
+            if (unselectedIndex != -1 && !buttonHadPushed[unselectedIndex])
             {
-                Vector2 targetPosition = viewportObjectList[eventButtonSiblingIndex + 1].GetComponent<RectTransform>().anchoredPosition;
-
-                if (horizontalSlideCoroutine != null)
-                {
-                    StopCoroutine(horizontalSlideCoroutine);
-                }
-                horizontalSlideCoroutine = StartCoroutine(ViewportHorizontalSlideCoroutine(targetPosition));
-
-                buttonHadPushed[eventButtonSiblingIndex] = true;
+                ChangeUITab(unselectedIndex);
+                buttonHadPushed[unselectedIndex] = true;
             }
+
+            CheckAndShowCompareButton();
         }
 
         /// <summary>
@@ -171,18 +235,138 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             Image image = buttonGameObjectList[eventButtonIndex].GetComponent<Image>();
 
+            float A = image.color.a;
+
             //R0 G255 B0 A255
-            image.color = new Color(0, 1, 0, 1);
+            image.color = new Color(0, 1, 0, A);
         }
         #endregion
 
+        #region COMPAREANSWER
+        //SignLanguage.cs에서 수화 정답 비교 후 UI변경을 위해 불러오는 함수
+
+
+        /// <summary>
+        /// 모든 버튼의 상호작용 여부 변경
+        /// </summary>
+        /// <param name="interactable"></param>
+        public void SetButtonInteractable(bool interactable)
+        {
+            for (int i = 0; i < buttonGameObjectList.Count; i++)
+            {
+                buttonGameObjectList[i].GetComponent<Button>().interactable = interactable;
+            }
+        }
+
+        /// <summary>
+        /// 틀린 정답을 고른 버튼의 색깔을 빨간색으로 변경
+        /// </summary>
+        /// <param name="hierarchyIndex"></param>
         public void CheckWrongAnswerButton(int hierarchyIndex)
         {
+            buttonGameObjectList[hierarchyIndex].GetComponent<Button>().interactable = true;
+
             Image image = buttonGameObjectList[hierarchyIndex].GetComponent<Image>();
 
             //R255 G0 B0 A255
             image.color = new Color(1, 0, 0, 1);
         }
+
+        /// <summary>
+        /// SignLanguage.cs, ComparingSignLanguage() 함수에서 수화 비교후 틀린 정답으로 패널을 바꾸도록 함.
+        /// </summary>
+        public void ChangeToWrongAnswerTab()
+        {
+            this.incorrectAnswerIndexList = FindIncorrectNextUI();
+
+            if (incorrectAnswerIndexList[0] != -1)
+            {
+                ChangeUITab(incorrectAnswerIndexList[0]);
+            }
+        }
+
+        /// <summary>
+        /// ChangeToNextUI() 함수 실행 후 아래 함수를 실행하여 수화 완성 여부 판단
+        /// 정답이 선택 되지 않은 것이 있는지 체크 후 없다면 compare 버튼을 등장시킴
+        /// </summary>
+        private void CheckAndShowCompareButton()
+        {
+            if (FindUnselectedNextUI() == -1)
+            {
+                Vector3 offsetPosition = new Vector3(250, -850, 0);
+                StartCoroutine(CompareButtonVerticalSlideCoroutine(offsetPosition));
+                completeButtonHadPushed = true;
+            }
+        }
+
+        #region FINDFUNCTION
+        /// <summary>
+        /// 선택되지 않은 UI의 인덱스를 반환
+        /// </summary>
+        /// <returns></returns>
+        private int FindUnselectedNextUI()
+        {
+            if (viewportObjectList[0].GetComponent<HandCountComponent>().IsSelected == false)
+            {
+                return 0;
+            }
+            else if (viewportObjectList[1].GetComponent<SymbolAndDirectionComponent>().IsSelected == false)
+            {
+                return 1;
+            }
+            else if (viewportObjectList[2].GetComponent<HandPositionComponent>().IsSelected == false)
+            {
+                return 2;
+            }
+            else if (viewportObjectList[3].GetComponent<ParticularComponent>().IsSelected == false)
+            {
+                return 3;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>
+        /// 틀린 정답인 인덱스들의 리스트를 반환
+        /// </summary>
+        /// <returns></returns>
+        private List<int> FindIncorrectNextUI()
+        {
+            List<int> incorrectIndexList = new List<int>();
+
+            if (viewportObjectList[0].GetComponent<HandCountComponent>().IsCorrect == false)
+            {
+                incorrectIndexList.Add(0);
+            }
+            if (viewportObjectList[1].GetComponent<SymbolAndDirectionComponent>().IsCorrect == false)
+            {
+                incorrectIndexList.Add(1);
+            }
+            if (viewportObjectList[2].GetComponent<HandPositionComponent>().IsCorrect == false)
+            {
+                incorrectIndexList.Add(2);
+            }
+            if (viewportObjectList[3].GetComponent<ParticularComponent>().IsCorrect == false)
+            {
+                incorrectIndexList.Add(3);
+            }
+
+
+            if(incorrectIndexList.Count > 0)
+            {
+                return incorrectIndexList;
+            }
+            else
+            {
+                incorrectIndexList.Add(-1);
+                return incorrectIndexList;
+            }
+        }
+        #endregion
+
+        #endregion
 
         #region COROUTINE
         /// <summary>
@@ -204,7 +388,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             float offset = 0.1f;
             #endregion
 
-            isVerticalAnimationDone = false;
+            IsVerticalAnimationDone = false;
             //패널을 위로 부드럽게 올린다
             //목표 지점이 패널의 현재 위치보다 위에 있을 경우
             if (targetPosition.y - offset > UIObjectInSignLanguageCanvas.transform.localPosition.y)
@@ -239,12 +423,14 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// Viewport를 현재 위치에서 targetPosition으로 좌우 이동
         /// </summary>
         /// <returns></returns>
-        IEnumerator ViewportHorizontalSlideCoroutine(Vector2 viewportObjectRectPosition)
+        IEnumerator ViewportHorizontalSlideCoroutine(Vector2 viewportObjectRectPosition, float animationWaitingTime = 0)
         {
-            if (!isVerticalAnimationDone)
+            if (!IsVerticalAnimationDone)
             {
-                yield return new WaitUntil(() => isVerticalAnimationDone == true);
+                yield return new WaitUntil(() => IsVerticalAnimationDone == true);
             }
+
+            yield return new WaitForSeconds(animationWaitingTime);
 
             //변수 선언
             #region VARIABLEFIELD
@@ -302,9 +488,58 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 InitViewportObject();
                 InitButtonColor();
                 InitHadPushedArray();
+                InitCompareEventButtonPosition();
+                InitViewportAndButtonOpacity();
+                InitButtonInteractable();
+                completeButtonHadPushed = false;
+
+                SignLanguageUIActiveSelf = false;
+                incorrectAnswerIndexList = new List<int>() { -1 };
+                presentPanelIndex = 0;
             }
 
-            isVerticalAnimationDone = true;
+            IsVerticalAnimationDone = true;
+            yield return null;
+        }
+
+        IEnumerator CompareButtonVerticalSlideCoroutine(Vector3 targetPosition)
+        {
+            #region VARIABLEFIELD
+            float UIObjectX = CompareEventButton.transform.localPosition.x;
+            float UIObjectZ = CompareEventButton.transform.localPosition.z;
+
+            float velocityY = 0f;
+            float smoothTime = 0.3f;
+
+            float offset = 0.1f;
+            #endregion
+
+            //패널을 위로 부드럽게 올린다
+            //목표 지점이 패널의 현재 위치보다 위에 있을 경우
+            if (targetPosition.y - offset > CompareEventButton.transform.localPosition.y)
+            {
+                while (targetPosition.y - offset > CompareEventButton.transform.localPosition.y)
+                {
+                    float positionY = Mathf.SmoothDamp(CompareEventButton.transform.localPosition.y, targetPosition.y, ref velocityY, smoothTime);
+                    CompareEventButton.transform.localPosition = new Vector3(UIObjectX, positionY, UIObjectZ);
+
+                    yield return null;
+                }
+            }
+            //목표 지점이 아래 있을 경우
+            else
+            {
+                while (targetPosition.y + offset < CompareEventButton.transform.localPosition.y)
+                {
+                    float positionY = Mathf.SmoothDamp(CompareEventButton.transform.localPosition.y, targetPosition.y, ref velocityY, smoothTime);
+                    CompareEventButton.transform.localPosition = new Vector3(UIObjectX, positionY, UIObjectZ);
+
+                    yield return null;
+                }
+            }
+
+            CompareEventButton.transform.localPosition = targetPosition;
+
             yield return null;
         }
         #endregion

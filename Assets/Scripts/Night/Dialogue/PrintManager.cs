@@ -4,237 +4,185 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using HandByHand.NightSystem.SignLanguageSystem;
+using UnityEngine.UI;
 
 
-//��ȭ�� ����ϴ� �Ŵ����Դϴ�.
 namespace HandByHand.NightSystem.DialogueSystem
 {
     public class PrintManager : MonoBehaviour
     {
-        #region PREFABFIELD
-
-        [Header("PrefabField")]
-        public GameObject PlayerDialoguePrefab;
-        public GameObject NPCDialoguePrefab;
-        public GameObject PlayerChoicePrefab;
-
-        private GameObject instancePrefab;
-
-        private List<GameObject> instantiatedPrefab = new List<GameObject>();
-        #endregion
-
         #region UICOMPONENTS
         [Header("UIComponentField")]
 
         [SerializeField]
+        private GameObject signLanguageCanvas;
+
+        [SerializeField]
         private GameObject dialogueCanvas;
 
-        private GameObject instantiatePanel;
-        private GameObject dialoguePanel;
+        public TMP_Text NPCText;
 
-        public GameObject ScrollView;
+        public TMP_Text NPCName;
+
+        public PlayerChoiceButtonComponentList PlayerChoiceButtonComponentList;
+        private List<Button> playerChoiceButtonComponentList;
+        private List<TMP_Text> playerChoiceTextComponentList;
         #endregion
 
         #region VARIABLE
         [Header("VariableField")]
 
-        public float PanelUpperMovingOffset;
+        public float ChoiceObjectAnimationTime = 1f;
 
-        public bool IsPrintEnd { get; private set; }
+        private int poolingCount;
 
-        //DialogueChoiceSelectManager���� ������ ������Ʈ�� �޾ƿ��� ���� ����
+        public float textPrintDelay = 0.1f;
+
+        public bool IsPrintEnd { get; private set; } = false;
+
         [HideInInspector]
-        public List<GameObject> ChoiceObjectList;
+        public List<GameObject> PooledChoiceObjectList;
 
-        //�������� ��� ���� �� �г��� �ø� ���̸� ��Ƶ� ��
-        private float movedPanelHeightOfChoice = 0;
-
-        DialogueChoiceSelectManager dialogueChoiceSelectManager;
+        private DialogueChoiceSelectManager dialogueChoiceSelectManager;
         #endregion
 
         #region INIT
 
         private void Awake()
         {
+            if (!signLanguageCanvas.activeSelf)
+                signLanguageCanvas.SetActive(true);
+
             IsPrintEnd = false;
-            instantiatePanel = dialogueCanvas.transform.Find("InstantiatePanel").gameObject;
-            dialoguePanel = dialogueCanvas.transform.Find("DialoguePanel").gameObject;
             dialogueChoiceSelectManager = transform.parent.Find("DialogueChoiceSelectManager").GetComponent<DialogueChoiceSelectManager>();
         }
 
         void Start()
         {
-            float panelHeight = instantiatePanel.GetComponent<RectTransform>().rect.height;
-            instantiatePanel.transform.position -= new Vector3(0, panelHeight, 0);
+            playerChoiceButtonComponentList = PlayerChoiceButtonComponentList.ButtonComponentList;
+            playerChoiceTextComponentList = PlayerChoiceButtonComponentList.TextComponentList;
         }
-
         #endregion
+
 
         public void StartPrint(DialogueItem dialogueItem)
         {
-            //�ؽ�Ʈ�� �ö���� ���
-            if (dialogueItem.itemType != ItemType.PlayerChoice)
+            switch (dialogueItem.itemType)
             {
-                //������Ʈ ������ Instantiate
-                GameObject instance = InstantiateDialogueObject(dialogueItem.whoseItem);
+                case ItemType.NPCText:
+                    NPCText.text = "";
 
-                //Text ����
-                SetTextContent(instance, dialogueItem);
-
-                //�г��� �о�ø��� �ִϸ��̼�
-                float movingHeightOfDialoguePanel = PanelUpperMovingOffset + instance.GetComponent<RectTransform>().rect.height;
-                StartCoroutine(DialoguePanelUpperSlidingAnimationCoroutine(movingHeightOfDialoguePanel));
-            }
-
-            //�÷��̾� �������� �ö���� ���
-            //else if(dialogueItem.itemType == ItemType.PlayerChoice)
-            else
-            {
-                //������ ����Ʈ�� �޾ƿ���
-                List<SignLanguageSO> choiceList = new List<SignLanguageSO>(((PlayerChoice)dialogueItem).SignLanguageItem);
-
-                //������Ʈ ������ Instantiate
-                float objectIntervalOffset = 25f;
-                List<GameObject> choiceObjectList = InstantiateChoiceObject(choiceList.Count, objectIntervalOffset, out float movedPanelHeightOfChoice);
-                ChoiceObjectList = new List<GameObject>(choiceObjectList);
-                this.movedPanelHeightOfChoice = movedPanelHeightOfChoice;
-
-                //��ư�� ������ ����
-                SetChoiceContent(ref choiceObjectList, ref choiceList);
-
-                //�������� ������ŭ �ø�
-                StartCoroutine(DialoguePanelUpperSlidingAnimationCoroutine(movedPanelHeightOfChoice));
-            }
-        }
-
-        public void AdjustPanelHeightAfterSelectChoice()
-        {
-            PlayerText playerText = new PlayerText();
-
-            playerText.Text = dialogueChoiceSelectManager.GetSelectedSignLanguageSO().Mean;
-
-            //������ ������Ʈ ����
-            for (int i = 0; i < ChoiceObjectList.Count; i++)
-            {
-                Destroy(ChoiceObjectList[i]);
-            }
-            //����Ʈ �ʱ�ȭ
-            ChoiceObjectList.Clear();
-
-            //�г� �Ʒ��� ������
-            dialoguePanel.transform.position -= new Vector3(0, movedPanelHeightOfChoice, 0);
-            //reset variable
-            movedPanelHeightOfChoice = 0;
-
-
-            //�ؽ�Ʈ ����
-            //������Ʈ ������ Instantiate
-            GameObject instance = InstantiateDialogueObject(playerText.whoseItem);
-
-            //Text ����
-            SetTextContent(instance, playerText);
-
-            float movingHeightOfDialoguePanel = PanelUpperMovingOffset + instance.GetComponent<RectTransform>().rect.height;
-            dialoguePanel.transform.position += new Vector3(0, movingHeightOfDialoguePanel, 0);
-        }
-
-        #region DIALOGUEPRINTFUNCTION
-        private GameObject InstantiateDialogueObject(WhoseItem whoseItem)
-        {
-            switch (whoseItem)
-            {
-                case WhoseItem.NPC:
-                    instancePrefab = NPCDialoguePrefab;
+                    InitNPCName( ( ( NPCText ) dialogueItem ).Name );
+                    StartCoroutine(TextPrintAnimation(((NPCText)dialogueItem).Text));
                     break;
-                case WhoseItem.Player:
-                    instancePrefab = PlayerDialoguePrefab;
+
+                case ItemType.PlayerChoice:
+                    poolingCount = ((PlayerChoice)dialogueItem).ChoiceContentList.Count;
+                    PoolingChoiceObject();
+
+                    InitContentOnChoiceObject( ( ( PlayerChoice ) dialogueItem) );
+                    StartCoroutine(ChoiceObjectFadeAnimation("on"));
+                    break;
+
+                case ItemType.PlayerText:
+                    poolingCount = ((PlayerText)dialogueItem).Text.Count;
+                    PoolingChoiceObject();
+
+                    SetButtonInteractable(false);
+
+                    InitContentOnChoiceObject( ( ( PlayerText ) dialogueItem ) );
+                    StartCoroutine(ChoiceObjectFadeAnimation("on"));
                     break;
             }
-
-            //������Ʈ ������ Instantiate
-            GameObject instance = Instantiate(instancePrefab, instantiatePanel.transform);
-            instantiatedPrefab.Add(instance);
-            instance.transform.SetParent(dialoguePanel.transform, true);
-
-            return instance;
         }
 
-        private void SetTextContent(GameObject instance, DialogueItem dialogueItem)
+        #region NPCTEXTFUNCTION
+
+        private void InitNPCName(string name)
         {
-            TMP_Text textComponent = instance.transform.GetChild(0).GetComponent<TMP_Text>();
-
-            //������ Ÿ�Կ� ���� �ٿ�ĳ�����Ͽ� �ؽ�Ʈ ����
-            if (dialogueItem.itemType == ItemType.PlayerText)
-            {
-                textComponent.SetText(((PlayerText)dialogueItem).Text);
-            }
-            else if (dialogueItem.itemType == ItemType.NPCText)
-            {
-                textComponent.SetText(((NPCText)dialogueItem).Text);
-            }
-
+            NPCName.SetText(name);
         }
 
         #endregion
 
-        #region CHOICEPRINTFUNCTION
-        private List<GameObject> InstantiateChoiceObject(int objectCount, float objectIntervalOffset, out float movedPanelHeightOfChoice)
+        #region PLAYERCHOICEFUNCTION
+        private void PoolingChoiceObject()
         {
-            #region VARIABLEFIELD
-            instancePrefab = PlayerChoicePrefab;
+            List<GameObject> objectList = new List<GameObject>();
 
-            List<GameObject> choiceObjectList = new List<GameObject>();
-
-            float movingHeightOfInstantiatePanel = objectIntervalOffset + PlayerChoicePrefab.GetComponent<RectTransform>().rect.height;
-
-            movedPanelHeightOfChoice = 0;
-
-            Vector3 originalPositionOfinstantiatePanel = instantiatePanel.transform.position;
-            #endregion
-
-            for (int i = 0; i < objectCount; i++)
+            //Object pooling
+            for (int i = 0; i < poolingCount; i++)
             {
-                //������Ʈ ������ Instantiate
-                GameObject instance = Instantiate(instancePrefab, instantiatePanel.transform);
-                instantiatedPrefab.Add(instance);
-                choiceObjectList.Add(instance);
-                instance.transform.SetParent(dialoguePanel.transform, true);
-
-                instantiatePanel.transform.localPosition -= new Vector3(0, movingHeightOfInstantiatePanel, 0);
-                movedPanelHeightOfChoice += movingHeightOfInstantiatePanel;
+                playerChoiceButtonComponentList[i].gameObject.SetActive(true);
+                objectList.Add(playerChoiceButtonComponentList[i].gameObject);
             }
 
-            movedPanelHeightOfChoice += PanelUpperMovingOffset;
-            instantiatePanel.transform.position = originalPositionOfinstantiatePanel;
-
-            return choiceObjectList;
+            PooledChoiceObjectList = objectList;
         }
 
-        private void SetChoiceContent(ref List<GameObject> choiceObjectList, ref List<SignLanguageSO> choiceList)
+        #region RETURNFUNCTION
+        public void ReturnChoiceObject()
         {
-            #region ERRORCHECK
-            if (choiceObjectList.Count != choiceList.Count)
-            {
-                Debug.LogError("��ũ��Ʈ ���� in PrintManager.cs");
-            }
-            #endregion
+            StartCoroutine(ChoiceObjectFadeAnimation("off"));
+        }
 
-            for (int i = 0; i < choiceObjectList.Count; i++)
+        void ObjectSetActiveFalse()
+        {
+            for (int i = 0; i < PooledChoiceObjectList.Count; i++)
+            {
+                PooledChoiceObjectList[i].gameObject.SetActive(false);
+            }
+        }
+        #endregion
+
+        private void InitContentOnChoiceObject(PlayerChoice playerChoiceItem)
+        {
+            for (int i = 0; i < PooledChoiceObjectList.Count; i++)
             {
                 //choice ������Ʈ�� SO�Ҵ�
-                choiceObjectList[i].GetComponent<ChoiceInformation>().signLanguageSO = choiceList[i];
+                PooledChoiceObjectList[i].GetComponent<ChoiceInformation>().signLanguageSO = playerChoiceItem.ChoiceContentList[i].SignLanguageItem;
 
-                //�ؽ�Ʈ �Ҵ�
-                TMP_Text textComponent = choiceObjectList[i].transform.GetChild(0).GetComponent<TMP_Text>();
+                TMP_Text textComponent = PooledChoiceObjectList[i].transform.GetChild(0).GetComponent<TMP_Text>();
 
-                textComponent.SetText(choiceList[i].Mean);
+                textComponent.SetText(playerChoiceItem.ChoiceContentList[i].ChoiceText);
             }
         }
+        #endregion
+
+        #region PLAYERTEXTFUNCTION
+
+        private void SetButtonInteractable(bool type)
+        {
+            for (int i = 0; i < PooledChoiceObjectList.Count; i++)
+            {
+                PooledChoiceObjectList[i].GetComponent<Button>().interactable = type;
+            }
+        }
+
+        private void InitContentOnChoiceObject(PlayerText playerTextItem)
+        {
+            for (int i = 0; i < PooledChoiceObjectList.Count; i++)
+            {
+                TMP_Text textComponent = PooledChoiceObjectList[i].transform.GetChild(0).GetComponent<TMP_Text>();
+
+                textComponent.SetText(playerTextItem.Text[i]);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="offsetTime">텍스트를 띄워놓는 시간</param>
+        private void ReturnChoiceObject(float offsetTime)
+        {
+            Invoke("ObjectSetActiveFalse", offsetTime);
+        }
+
         #endregion
 
         #region COROUTINE
 
-        IEnumerator DialoguePanelUpperSlidingAnimationCoroutine(float VerticalMovingHeight)
+        /* IEnumerator DialoguePanelUpperSlidingAnimationCoroutine(float VerticalMovingHeight)
         {
             //���� ����
             #region VARIABLEFIELD
@@ -266,6 +214,97 @@ namespace HandByHand.NightSystem.DialogueSystem
             yield return new WaitForSeconds(playerReadWaitingTime);
 
             //�ִϸ��̼� �ϷḦ �˸�
+            yield return StartCoroutine(AnnouncePrintDone());
+        } */
+
+        IEnumerator TextPrintAnimation(string text)
+        {
+            int count = 0;
+            int textLength = text.Length;
+
+            while (count != textLength)
+            {
+                NPCText.text += text[count].ToString();
+                count++;
+                yield return new WaitForSeconds(textPrintDelay);
+            }
+
+            yield return StartCoroutine(AnnouncePrintDone());
+        }
+
+        /// <summary>
+        /// 플레이어 선택지 오브젝트 풀링시 애니메이션
+        /// </summary>
+        /// <param name="poolingCount">buttonComponentList의 오브젝트 풀링 수</param>
+        /// <param name="type">오브젝트 풀링시 : on, 반환시 : off</param>
+        /// <returns>yield return StartCoroutine(AnnouncePrintDone());</returns>
+        IEnumerator ChoiceObjectFadeAnimation(string type)
+        {
+            float time = 0;
+            float alpha = 0;
+
+            ColorBlock colorBlock = playerChoiceButtonComponentList[0].colors;
+            float previewAlpha = colorBlock.normalColor.a;
+
+            bool condition = true;
+
+            while (condition)
+            {
+                switch (type)
+                {
+                    case "on":
+                        alpha = time / ChoiceObjectAnimationTime + previewAlpha;
+                        condition = alpha < 1;
+                        break;
+
+                    case "off":
+                        alpha = previewAlpha - ( time / ChoiceObjectAnimationTime );
+                        condition = alpha > 0;
+                        break;
+                }
+
+                for (int i = 0; i < poolingCount; i++)
+                {
+                    colorBlock = playerChoiceButtonComponentList[i].colors;
+                    colorBlock.normalColor = new Color(1f, 1f, 1f, alpha);
+                    playerChoiceButtonComponentList[i].colors = colorBlock;
+                }
+                time += Time.deltaTime;
+
+                yield return null;
+            }
+
+            switch (type)
+            {
+                case "on":
+                    for (int i = 0; i < poolingCount; i++)
+                    {
+                        colorBlock = playerChoiceButtonComponentList[i].colors;
+                        colorBlock.normalColor = new Color(1f, 1f, 1f, 1f);
+                        playerChoiceButtonComponentList[i].colors = colorBlock;
+                    }
+                    break;
+
+                case "off":
+                    for (int i = 0; i < poolingCount; i++)
+                    {
+                        colorBlock = playerChoiceButtonComponentList[i].colors;
+                        colorBlock.normalColor = new Color(1f, 1f, 1f, 0);
+                        playerChoiceButtonComponentList[i].colors = colorBlock;
+                    }
+
+                    //Object Reset
+                    poolingCount = 0;
+
+                    SetButtonInteractable(true);
+
+                    for (int i = 0; i < PooledChoiceObjectList.Count; i++)
+                    {
+                        PooledChoiceObjectList[i].gameObject.SetActive(false);
+                    }
+                    break;
+            }
+
             yield return StartCoroutine(AnnouncePrintDone());
         }
 
