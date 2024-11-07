@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using HandByHand.NightSystem.SignLanguageSystem;
+using Assets.Scripts.SignLanguage;
 
 namespace HandByHand.NightSystem.DialogueSystem
 {
     public class DialogueChoiceSelectManager : MonoBehaviour
     {
         public bool IsChoiceSelected { get; private set; }
+
+        public int SelectedChoiceNumber { get; private set; }
+
+        public Vocabulary selectedChoiceVocabulary;
 
         private SignLanguageSO SelectedSignLanguageSO;
 
@@ -19,7 +24,7 @@ namespace HandByHand.NightSystem.DialogueSystem
         public void WaitForSelectChoice()
         {
             PrintManager printManager = gameObject.transform.parent.Find("PrintManager").GetComponent<PrintManager>();
-            List<GameObject> choiceObjectList = new List<GameObject>(printManager.ChoiceObjectList);
+            List<GameObject> choiceObjectList = new List<GameObject>(printManager.PooledChoiceObjectList);
 
             StartCoroutine(DetectingSelectChoice(choiceObjectList));
         }
@@ -36,6 +41,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                     {
                         isChoiceSelected = true;
                         SelectedSignLanguageSO = choiceObjectList[i].GetComponent<ChoiceInformation>().GetSignLanguageSO();
+                        SelectedChoiceNumber = i;
                         break;
                     }
                 }

@@ -19,6 +19,10 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         int answerChoiceGameObjectIndex;
 
+        public int IgnoreLayoutIndex = 0;
+
+        public bool IsSelected { get; private set; } = false;
+
         public bool IsCorrect { get; private set; }
         #endregion
 
@@ -31,7 +35,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         void Start()
         {
-            for (int i = 0; i < transform.childCount; i++)
+            for (int i = IgnoreLayoutIndex; i < transform.childCount; i++)
             {
                 Image imageComponent = transform.GetChild(i).GetComponent<Image>();
                 choiceGameObjectImageComponentList.Add(imageComponent);
@@ -49,7 +53,9 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         public void GetPlayerAnswer()
         {
             GameObject clickObject = EventSystem.current.currentSelectedGameObject;
-            int clickObjectHierarchyIndex = clickObject.transform.GetSiblingIndex();
+            int clickObjectHierarchyIndex = clickObject.transform.GetSiblingIndex() - IgnoreLayoutIndex;
+
+            IsSelected = true;
 
             if(clickObjectHierarchyIndex == answerChoiceGameObjectIndex)
             {
@@ -104,6 +110,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         public void InitBoolean()
         {
+            IsSelected = false;
             IsCorrect = false;
         }
     }

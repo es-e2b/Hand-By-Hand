@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56e3cfb14d113449b924edeb519b6eb, type: 3}
+  m_Name: Day1-good
+  m_EditorClassIdentifier: 
+  DialogueItemList:
+  - rid: 7424402959524429838
+  - rid: 7424402959524429844
+  - rid: 7424402959524429845
+  references:
+    version: 2
+    RefIds:
+    - rid: 7424402959524429838
+      type: {class: NPCText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 0
+        itemType: 0
+        Name: "\uB2E4\uB8E8"
+        Text: "\uC5ED\uC2DC \uADF8\uB807\uC9C0? \uB098\uB3C4 \uCC98\uC74C\uC5D0\uB294
+          \uBB34\uC11C\uC6E0\uB294\uB370, \uB2E4\uB4E4 \uCE5C\uC808\uD558\uAC8C \uB300\uD574\uC8FC\uB354\uB77C\uAD6C!
+          \uB108\uB3C4 \uB9D8\uC5D0 \uB4E4\uC5B4\uD588\uC73C\uBA74 \uC88B\uACA0\uB2E4\uACE0
+          \uC0DD\uAC01\uD588\uC5B4."
+    - rid: 7424402959524429844
+      type: {class: NPCText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 0
+        itemType: 0
+        Name: "\uB2E4\uB8E8"
+        Text: "\uB0B4\uC77C\uB3C4 \uC798 \uC9C0\uB0B4\uBCF4\uC790! \uC218\uACE0\uD588\uC5B4,
+          \uCE5C\uAD6C! \uC624\uB79C\uB9CC\uC5D0 \uBC18\uAC00\uC6E0\uC5B4."
+    - rid: 7424402959524429845
+      type: {class: NPCText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 0
+        itemType: 0
+        Name: "\uB2E4\uB8E8"
+        Text: "\uC798\uC790!"

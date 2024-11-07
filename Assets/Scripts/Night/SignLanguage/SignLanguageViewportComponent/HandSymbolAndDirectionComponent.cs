@@ -16,11 +16,14 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         int playerAnswerChoiceGameObjectIndex;
 
         List<Image> choiceGameObjectImageComponentList = new List<Image>();
+        public bool IsSelected { get; private set; } = false;
 
         public bool IsCorrect { get; private set; }
 
         //무작위 이미지를 삽입하기 위해 받아올 이미지 배열
         Sprite[] choiceSprite;
+
+        public int IgnoreLayoutIndex = 0;
         #endregion
 
         #region INIT
@@ -33,7 +36,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             Image childGameObjectImageComponent;
 
-            for (int i = 0; i < transform.childCount; i++)
+            for (int i = IgnoreLayoutIndex; i < transform.childCount; i++)
             {
                 childGameObjectImageComponent = transform.GetChild(i).gameObject.GetComponent<Image>();
                 choiceGameObjectImageComponentList.Add(childGameObjectImageComponent);
@@ -56,12 +59,14 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         {
             //오브젝트의 hierarchy에서의 sprite 받아오기
             GameObject clickObject = EventSystem.current.currentSelectedGameObject;
-            int clickObjectHierarchyIndex = clickObject.transform.GetSiblingIndex();
+            int clickObjectHierarchyIndex = clickObject.transform.GetSiblingIndex() - IgnoreLayoutIndex;
             Sprite clickObjectSprite = clickObject.GetComponent<Image>().sprite;
 
 
             playerAnswerSymbolAndDirection.Sprite = clickObjectSprite;
             playerAnswerChoiceGameObjectIndex = clickObjectHierarchyIndex;
+
+            IsSelected = true;
 
             if (answerChoiceGameObjectIndex == playerAnswerChoiceGameObjectIndex)
                 IsCorrect = true;
@@ -113,6 +118,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         public void InitBoolean()
         {
+            IsSelected = false;
             IsCorrect = false;
         }
     }

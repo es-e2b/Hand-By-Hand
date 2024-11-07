@@ -12,7 +12,11 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         private HandCount playerAnswerHandCount = new HandCount();
 
+        public int ignoreLayoutIndex = 0;
+
         public bool IsCorrect { get; private set; }
+
+        public bool IsSelected { get; private set; } = false;
 
         void Awake()
         {
@@ -32,8 +36,10 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             GameObject clickObject = EventSystem.current.currentSelectedGameObject;
             int clickObjectHierarchyIndex = clickObject.transform.GetSiblingIndex();
 
-            UsingHand usingHand = (UsingHand)clickObjectHierarchyIndex;
+            UsingHand usingHand = (UsingHand)(clickObjectHierarchyIndex - ignoreLayoutIndex);
             playerAnswerHandCount.UsingHand = usingHand;
+
+            IsSelected = true;
 
             if(playerAnswerHandCount.UsingHand == answerHandCount.UsingHand)
                 IsCorrect = true;
@@ -43,6 +49,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         public void InitBoolean()
         {
+            IsSelected = false;
             IsCorrect = false;
         }
     }

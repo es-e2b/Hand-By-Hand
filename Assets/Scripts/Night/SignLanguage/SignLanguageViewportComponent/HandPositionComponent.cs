@@ -17,6 +17,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         public bool IsCorrect { get; private set; }
 
+        public bool IsSelected { get; private set; } = false;
+
         [SerializeField]
         private int ignoreLayoutNumber = 1;
         #endregion
@@ -39,7 +41,26 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
                 int index = i - ignoreLayoutNumber;
                 //≈ÿΩ∫∆Æ «“¥Á
-                textObject[index].text = ( (HandPosition) (index)).ToString();
+                string buttonText = "";
+                switch(index)
+                {
+                    case 0:
+                        buttonText = "∏”∏Æ ¿ß";
+                        break;
+                    case 1:
+                        buttonText = "æÛ±º";
+                            break;
+                    case 2:
+                        buttonText = "≈Œ";
+                        break;
+                    case 3:
+                        buttonText = "∞°Ωø";
+                        break;
+                    case 4:
+                        buttonText = "πË";
+                        break;
+                }
+                textObject[index].text = buttonText;
             }
         }
         #endregion
@@ -56,6 +77,9 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             int clickObjectHierarchyIndex = clickObject.transform.GetSiblingIndex();
 
             playerAnswerPosition.HandPosition = (HandPosition) (clickObjectHierarchyIndex - ignoreLayoutNumber);
+
+            IsSelected = true;
+
             if(playerAnswerPosition.HandPosition == answerPosition.HandPosition)
                 IsCorrect = true;
             else
@@ -64,6 +88,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         public void InitBoolean()
         {
+            IsSelected = false;
             IsCorrect = false;
         }
     }

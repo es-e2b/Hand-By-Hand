@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using HandByHand.NightSystem.SignLanguageSystem;
+using Assets.Scripts.SignLanguage;
 
-//´ëÈ­ ½Ã½ºÅÛÀ» °üÀåÇÏ´Â ¸Å´ÏÀúÀÔ´Ï´Ù.
 namespace HandByHand.NightSystem.DialogueSystem
 {
     public class DialogueManager : MonoBehaviour
     {
-        //ÇöÀç ÀÎ°ÔÀÓ¿¡¼­ »ç¿ëµÉ dialogueSO
         public DialogueFileSO dialogueFileSO;
+
+        public GameObject Speaker;
+
+        public GameObject BlinkIcon;
+        private GetInput getInput;
 
         #region MANAGERCOMPONENT
         [SerializeField]
@@ -29,37 +33,149 @@ namespace HandByHand.NightSystem.DialogueSystem
             printManager = gameObject.transform.Find("PrintManager").GetComponent<PrintManager>();
             signLanguageManager = gameObject.transform.Find("SignLanguageManager").GetComponent<SignLanguageManager>();
             dialogueChoiceSelectManager = gameObject.transform.Find("DialogueChoiceSelectManager").GetComponent<DialogueChoiceSelectManager>();
+            getInput = BlinkIcon.GetComponent<GetInput>();
         }
 
         void Start()
         {
             StartCoroutine(StartDialogue());
+            BlinkIcon.SetActive(false);
         }
         #endregion
 
-        IEnumerator StartDialogue()
+        public IEnumerator StartDialogue()
         {
             int itemCount = 0;
             List<DialogueItem> itemList = new List<DialogueItem>(dialogueFileSO.DialogueItemList);
 
             while (true)
             {
-                //¾ÆÀÌÅÛÀ» ÀüºÎ Ãâ·ÂÇß´Ù¸é ¹Ýº¹¹® ÁßÁö
-                if (itemCount >= dialogueFileSO.DialogueItemList.Count) break;
+                if (itemCount >= dialogueFileSO.DialogueItemList.Count)
+                {
+                    break;
+                }
 
-                //´ëÈ­ Ãâ·Â
+                yield return null;
+
+                //Print Item
                 printManager.StartPrint(itemList[itemCount]);
 
-                #region BUGFIXOFFSET
-                //¿ÀºêÁ§Æ® ¿¬¼Ó Print ¹ö±× fix±¸¹® (¸ô¶óµµ µÇ°í ±×³É ³ÀµÎ»ï)
-                float offsetTime = 0.3f;
-                yield return new WaitForSeconds(offsetTime);
-                #endregion
-                
-                //´ëÈ­°¡ Ãâ·ÂµÉ ¶§±îÁö ´ë±â
                 yield return new WaitUntil(() => printManager.IsPrintEnd == true);
+                yield return new WaitForEndOfFrame();
 
-                //¾ÆÀÌÅÛÀÌ ¼öÈ­ ¼±ÅÃÀÌ ¾Æ´Ï¶ó¸é °è¼ÓÇÏ¿© ´ëÈ­¸¦ Ãâ·Â
+                //Act by type of item
+                switch (itemList[itemCount].itemType)
+                {
+                    case ItemType.NPCText:
+
+                        //itemCount + 1ì— ëŒ€í•œ indexOutOfRange ì²´í¬
+                        try
+                        {
+                            if (itemList[itemCount + 1].itemType == ItemType.NPCText)
+                            {
+                            }
+                        }
+                        catch
+                        {
+                            break;
+                        }
+
+                        if (itemList[itemCount + 1].itemType == ItemType.NPCText)
+                        {
+                            BlinkIcon.SetActive(true);
+                            yield return new WaitUntil(() => getInput.IsGetInput == true);
+                            BlinkIcon.SetActive(false);
+                        }
+                        else
+                        {
+                            yield return new WaitForSeconds(0.5f);
+                        }
+
+
+                        break;
+
+                    case ItemType.PlayerText:
+                        BlinkIcon.SetActive(true);
+
+                        yield return new WaitUntil(() => getInput.IsGetInput == true);
+                        BlinkIcon.SetActive(false);
+
+                        printManager.ReturnChoiceObject();
+
+                        yield return new WaitUntil(() => printManager.IsPrintEnd == true);
+                        break;
+
+                    case ItemType.PlayerChoice:
+
+                        dialogueChoiceSelectManager.WaitForSelectChoice();
+                        yield return new WaitUntil(() => dialogueChoiceSelectManager.IsChoiceSelected == true);
+
+                        printManager.ReturnChoiceObject();
+
+                        yield return new WaitUntil(() => printManager.IsPrintEnd == true);
+
+                        SignLanguageSO selectedSignLanguageSO = dialogueChoiceSelectManager.GetSelectedSignLanguageSO();
+
+                        int selectedChoiceNumber = dialogueChoiceSelectManager.SelectedChoiceNumber;
+
+                        //SOê°€ ì—†ë‹¤ë©´ ë¬´ì‹œí•˜ê³  ë„˜ì–´ê°€ê¸°
+                        //if it doesn't have SO, break.
+                        if (selectedSignLanguageSO == null)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            //Show SignLanguageVocabulary
+                            if (((PlayerChoice)itemList[itemCount]).ChoiceContentList[selectedChoiceNumber].AdditionalSetting.ShowVocabularyFirst)
+                            {
+                                Vocabulary vocabulary = ((PlayerChoice)itemList[itemCount]).ChoiceContentList[selectedChoiceNumber].Vocabulary;
+                                yield return StartCoroutine(SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(Speaker, vocabulary));
+                            }
+
+                            //Show SignLanguageUICanvas (Make SignLanguage)
+                            signLanguageUIManager.ActiveUIObject(selectedSignLanguageSO.Mean);
+
+                            signLanguageManager.MakeSignLanguage(selectedSignLanguageSO);
+
+                            float waitingTimeOffset = 1.5f;
+
+                            //waiting offset
+                            yield return new WaitForSeconds(waitingTimeOffset);
+
+                            yield return new WaitUntil(() => signLanguageManager.IsSignLanguageMade == true);
+
+                            //Close SignLanguageUICanvas
+                            signLanguageUIManager.InActiveUIObject();
+
+                            yield return new WaitForSeconds(waitingTimeOffset);
+
+                            //Show SignLanguageVocabulary
+                            if (((PlayerChoice)itemList[itemCount]).ChoiceContentList[selectedChoiceNumber].AdditionalSetting.ShowVocabularyLast)
+                            {
+                                Vocabulary vocabulary = ((PlayerChoice)itemList[itemCount]).ChoiceContentList[selectedChoiceNumber].Vocabulary;
+                                yield return StartCoroutine(SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(Speaker, vocabulary));
+                            }
+
+                            //if it have DialogueFileSO, load to it
+                            if (((PlayerChoice)itemList[itemCount]).ChoiceContentList[selectedChoiceNumber].AdditionalSetting.DialogueSO != null)
+                            {
+                                dialogueFileSO = ((PlayerChoice)itemList[itemCount]).ChoiceContentList[selectedChoiceNumber].AdditionalSetting.DialogueSO;
+                                StartCoroutine(StartDialogue());
+                                yield return null;
+                            }
+
+                        }
+                        break;
+                    case ItemType.Tutorial:
+                        //Tutorial ì‹œìž‘ ì½”ë£¨í‹´
+                        yield return StartCoroutine(((Tutorial)itemList[itemCount]).TutorialAsset.transform.Find("TutorialManager").GetComponent<TutorialManager>().StartTutorial());
+                        break;
+                }
+
+                itemCount++;
+
+                /*
                 if (itemList[itemCount].itemType != ItemType.PlayerChoice)
                 {
                     itemCount++;
@@ -67,34 +183,30 @@ namespace HandByHand.NightSystem.DialogueSystem
                 }
                 else
                 {
-                    //¾ÆÀÌÅÛÀÌ playerChoice¶ó¸é ÇÃ·¹ÀÌ¾îÀÇ ¼±ÅÃÀ» ´ë±â
+                    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ playerChoiceï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                     dialogueChoiceSelectManager.WaitForSelectChoice();
                     yield return new WaitUntil(() => dialogueChoiceSelectManager.IsChoiceSelected == true);
 
                     SignLanguageSO selectedSignLanguageSO = dialogueChoiceSelectManager.GetSelectedSignLanguageSO();
 
-                    //¼±ÅÃ ÈÄ ¼öÈ­ ¸¸µé±â
                     //Show SignLanguageUICanvas
                     signLanguageUIManager.ActiveUIObject(selectedSignLanguageSO.Mean);
 
                     signLanguageManager.MakeSignLanguage(selectedSignLanguageSO);
 
                     float waitingTimeOffset = 1.5f;
-                    //Äµ¹ö½º°¡ ¿Ã¶ó¿À´Â ½Ã°£À» offsetÀ¸·Î ±â´Ù·ÁÁÜ
+                    //Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ offsetï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ù·ï¿½ï¿½ï¿½
                     yield return new WaitForSeconds(waitingTimeOffset);
-                    //¼±ÅÃÇÑ ¼±ÅÃÁö¸¦ ÅØ½ºÆ®·Î ¹Ù²Ù´Â ÇÔ¼ö ½ÇÇà
-                    printManager.AdjustPanelHeightAfterSelectChoice();
 
-                    //¼öÈ­¸¦ ¸¸µé¶§±îÁö ´ë±â
                     yield return new WaitUntil(() => signLanguageManager.IsSignLanguageMade == true);
 
                     signLanguageUIManager.InActiveUIObject();
 
-                    //Äµ¹ö½º°¡ ³»·Á°¡´Â ½Ã°£À» offsetÀ¸·Î ±â´Ù·ÁÁÜ
                     yield return new WaitForSeconds(waitingTimeOffset);
 
                     itemCount++;
                 }
+                */
             }
 
             yield return null;

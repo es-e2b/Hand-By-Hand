@@ -3,20 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using HandByHand.NightSystem.SignLanguageSystem;
+using Assets.Scripts.SignLanguage;
+using static HandByHand.NightSystem.DialogueSystem.PlayerChoice;
 
 namespace HandByHand.NightSystem.DialogueSystem
 {
     public enum WhoseItem
     {
         NPC,
-        Player
+        Player,
+        None
     }
 
     public enum ItemType
     {
         NPCText,
         PlayerText,
-        PlayerChoice
+        PlayerChoice,
+        DialogueSO,
+        Tutorial
     }
 
     [System.Serializable]
@@ -46,10 +51,14 @@ namespace HandByHand.NightSystem.DialogueSystem
     [System.Serializable]
     public class NPCText : DialogueItem
     {
-        [TextArea(3, 8)]
+        public string Name;
+
+        [TextArea(3, 6)]
         public string Text;
 
-        public NPCText() : base(WhoseItem.NPC, ItemType.NPCText) { }
+        public NPCText() : base(WhoseItem.NPC, ItemType.NPCText)
+        { 
+        }
 
         public string text
         {
@@ -61,22 +70,55 @@ namespace HandByHand.NightSystem.DialogueSystem
     public class PlayerText : DialogueItem
     {
         [TextArea(3, 8)]
-        public string Text;
+        public List<string> Text;
 
-        public PlayerText() : base(WhoseItem.Player, ItemType.PlayerText) { }
-
-        public string text
+        public PlayerText() : base(WhoseItem.Player, ItemType.PlayerText)
         {
-            get => Text;
+            Text = new List<string>();
         }
     }
 
     [System.Serializable]
     public class PlayerChoice : DialogueItem
     {
-        public List<SignLanguageSO> SignLanguageItem;
+        [System.Serializable]
+        public class ChoiceContent
+        {
+            public SignLanguageSO SignLanguageItem;
+            public string ChoiceText;
+            public Vocabulary Vocabulary;
+            public AdditionalSetting AdditionalSetting;
+
+            public ChoiceContent()
+            {
+                AdditionalSetting = new AdditionalSetting();
+            }
+        }
+
+        [System.Serializable]
+        public class AdditionalSetting
+        {
+            public DialogueFileSO DialogueSO = null;
+            public bool ShowVocabularyFirst;
+            public bool ShowVocabularyLast;
+        }
+
+        public List<ChoiceContent> ChoiceContentList;
 
         public PlayerChoice() : base(WhoseItem.Player, ItemType.PlayerChoice) 
-        { SignLanguageItem = new List<SignLanguageSO>(); }
+        { 
+            ChoiceContentList = new List<ChoiceContent>();
+        }
+    }
+
+    [System.Serializable]
+    public class Tutorial : DialogueItem
+    {
+        public GameObject TutorialAsset;
+
+        public Tutorial() : base(WhoseItem.None, ItemType.Tutorial)
+        {
+
+        }
     }
 }
