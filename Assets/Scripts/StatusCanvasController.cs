@@ -36,7 +36,7 @@ namespace Assets.Scripts
             GameManager.Instance.OnChangedDayCycle.AddListener(OnChangedDayCycle);
             // GameManager.Instance.OnChangedDailySales.AddListener((dailySales)=>_dailySales.text=dailySales.ToString());
             GameManager.Instance.DailySales=0;
-            GameManager.Instance.CurrentDayCycle=DayCycle.Day;
+            // GameManager.Instance.CurrentDayCycle=DayCycle.Day;
             yield return null;
             _statusPanel.SetActive(true);
 
