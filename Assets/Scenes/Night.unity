@@ -6861,13 +6861,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97e4b3752e3475441938758b92faccc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DialogueFileSO: {fileID: 11400000, guid: ca14fb505f000454d8b62bbbbaf6b3e2, type: 2}
+  DialogueFileSO: {fileID: 0}
   DialogueSpeaker: {fileID: 2049130707}
   PopupSpeaker: {fileID: 1265079805}
   PopupObject: {fileID: 14128839}
   BlinkIcon: {fileID: 228201657}
   signLanguageUIManager: {fileID: 626890649}
-  swipeInputManager: {fileID: 0}
+  swipeInputManager: {fileID: 543195607}
 --- !u!1 &1566461715
 GameObject:
   m_ObjectHideFlags: 0

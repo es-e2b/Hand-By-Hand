@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+///심각하게 하드코딩이 되어있음.
 namespace HandByHand.NightSystem.DialogueSystem
 {
     public class TutorialManager : MonoBehaviour
