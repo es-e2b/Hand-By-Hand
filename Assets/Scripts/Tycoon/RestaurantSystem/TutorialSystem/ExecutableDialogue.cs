@@ -74,6 +74,18 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 for(;currentIndex<=nextIndex&&currentIndex<_currentString.Length;currentIndex++)
                 {
                     stringBuilder.Append(_currentString[currentIndex]);
+                    if(_currentString[currentIndex]=='<')
+                    {
+                        while (true)
+                        {
+                            currentIndex++;
+                            stringBuilder.Append(_currentString[currentIndex]);
+                            if(_currentString[currentIndex]=='>')
+                            {
+                                break;
+                            }   
+                        }
+                    }
                 }
                 _text.text=stringBuilder.ToString();
             }
