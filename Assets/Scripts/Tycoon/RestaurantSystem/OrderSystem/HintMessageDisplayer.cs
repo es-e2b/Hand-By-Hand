@@ -30,11 +30,11 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
         protected override void OnDisable()
         {
             base.OnDisable();
-            StopCoroutine(_ShowAnimationCoroutine);
-            if(_HideAnimationCoroutine==null)
-            {
-                StopCoroutine(_HideAnimationCoroutine);
-            }
+            // StopCoroutine(_ShowAnimationCoroutine);
+            // if(_HideAnimationCoroutine==null)
+            // {
+            //     StopCoroutine(_HideAnimationCoroutine);
+            // }
         }
 
         private IEnumerator ShowMessageAnimation()
