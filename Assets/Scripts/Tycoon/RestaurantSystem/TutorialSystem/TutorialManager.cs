@@ -16,6 +16,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         private GameObject _skipButton;
         [SerializeField]
         private GameObject _skipPromptPanel;
+        [SerializeField]
+        private GameObject _draggableUIObject;
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -107,6 +109,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         public void StopTime(bool stop)
         {
             Time.timeScale=stop?0:1;
+        }
+        public void SetActiveDraggableUIObject(bool onOff)
+        {
+            _draggableUIObject.SetActive(onOff);
         }
     }
 }
