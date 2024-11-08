@@ -71,20 +71,25 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 yield return null;
                 elapseTime+=Time.deltaTime;
                 int nextIndex=(int)(elapseTime*_charactersPerSecond);
+                bool onTag=false;
+                int tagNumber=0;
                 for(;currentIndex<=nextIndex&&currentIndex<_currentString.Length;currentIndex++)
                 {
                     stringBuilder.Append(_currentString[currentIndex]);
                     if(_currentString[currentIndex]=='<')
                     {
-                        while (true)
-                        {
-                            currentIndex++;
-                            stringBuilder.Append(_currentString[currentIndex]);
-                            if(_currentString[currentIndex]=='>')
-                            {
-                                break;
-                            }   
-                        }
+                        onTag=true;
+                    }
+                    else if(_currentString[currentIndex]=='>')
+                    {
+                        onTag=false;
+                        elapseTime+=(float)tagNumber/_charactersPerSecond;
+                        tagNumber=0;
+                    }
+                    if(onTag)
+                    {
+                        nextIndex++;
+                        tagNumber++;
                     }
                 }
                 _text.text=stringBuilder.ToString();
