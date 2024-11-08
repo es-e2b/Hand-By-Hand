@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2840708891873437657
 RectTransform:
   m_ObjectHideFlags: 0
@@ -174,3 +174,5 @@ MonoBehaviour:
   _skipButton: {fileID: 8241051184431469102}
   _animationDuration: 2
   _puaseDuration: 2
+  _staringAlpha: 0
+  _startingOffset: {x: 0, y: 0}
