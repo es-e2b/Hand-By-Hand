@@ -123,14 +123,14 @@ namespace Assets.Scripts.SignLanguage
                 rectTransform.eulerAngles = currentRotation;
 
                 currentScale = (handshape.EndScale-handshape.StartScale)*elapsedTime/handshape.Duration+handshape.StartScale;
-                rectTransform.localScale = new Vector2(currentScale,currentScale);
+                rectTransform.localScale = new Vector3(currentScale,currentScale,currentScale);
 
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
             rectTransform.anchorMin = rectTransform.anchorMax = handshape.EndPosition;
             rectTransform.eulerAngles = handshape.EndRotation;
-            rectTransform.localScale = new Vector2(handshape.EndScale, handshape.EndScale);
+            rectTransform.localScale = new Vector3(handshape.EndScale, handshape.EndScale, handshape.EndScale);
         }
         #endregion
     }
