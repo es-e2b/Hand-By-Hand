@@ -290,8 +290,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC548\uB155\uD558\uC138\uC694 \uC911\uAC04\uC815\uB82C\uB85C\uD558\uBA74
-    \uC774\uB7F0\uB290\uB08C\uC77C\uAC83\uAC19\uC740\uB370 \u3147\uB108\uB9C8\uC5B4\u314F\u3163\u3141\u3134\uC544\uBBF8\uB11D\u3141\uB108\u314F\u3163\uC5C4\uB098\u3163\uC5B4\u314F\u3141\uB2C8\u3153\uC544\u3163\u3141\uB108\uC544\uC774\u314F\u3141\uB108\uC544\u3163\u3141\uB108\uC544\uBBFC"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5b4fd6b43cad654d9c53e2d399c6b2c, type: 2}
   m_sharedMaterial: {fileID: 7428397927792526593, guid: f5b4fd6b43cad654d9c53e2d399c6b2c, type: 2}
@@ -2720,6 +2719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   signLanguageUIManager: {fileID: 626890649}
+  dialogueManager: {fileID: 0}
   swipeThreshold: 50
 --- !u!1 &548422514
 GameObject:
@@ -5112,107 +5112,6 @@ MonoBehaviour:
   ChoiceObjectAnimationTime: 1
   textPrintDelay: 0.05
   PooledChoiceObjectList: []
---- !u!1001 &1113987315
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 413047923219894158, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_Name
-      value: TutorialCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 413047923219894158, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4025457989243721788, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
 --- !u!1 &1134275730
 GameObject:
   m_ObjectHideFlags: 0
@@ -6968,6 +6867,7 @@ MonoBehaviour:
   PopupObject: {fileID: 14128839}
   BlinkIcon: {fileID: 228201657}
   signLanguageUIManager: {fileID: 626890649}
+  swipeInputManager: {fileID: 0}
 --- !u!1 &1566461715
 GameObject:
   m_ObjectHideFlags: 0
@@ -7297,7 +7197,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC218\uD615\uACFC \uC218\uD5A5"
+  m_text: "\uC218\uD5A5\uACFC \uC218\uB3D9"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5b4fd6b43cad654d9c53e2d399c6b2c, type: 2}
   m_sharedMaterial: {fileID: 7428397927792526593, guid: f5b4fd6b43cad654d9c53e2d399c6b2c, type: 2}
@@ -9466,4 +9366,3 @@ SceneRoots:
   - {fileID: 1508803796}
   - {fileID: 1521832668}
   - {fileID: 277384927}
-  - {fileID: 1113987315}

@@ -129,6 +129,10 @@ namespace HandByHand.NightSystem.DialogueSystem
     {
         public GameObject TutorialAsset;
 
+        public SignLanguageSO SignLanguageSO;
+
+        public Vocabulary Vocabulary;
+
         public Tutorial() : base(WhoseItem.None, ItemType.Tutorial)
         {
 

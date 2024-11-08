@@ -16,6 +16,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         private GameObject _skipButton;
         [SerializeField]
         private GameObject _skipPromptPanel;
+        [SerializeField]
+        private GameObject _draggableUIObject;
+        [SerializeField]
+        private GameObject _menuButtonBlock;
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -49,6 +53,19 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         }
         public void Restart()
         {
+            ObjectDisplayAnimator objectDisplayAnimator=FindObjectOfType<ObjectDisplayAnimator>();
+            if(objectDisplayAnimator!=null)
+            {
+                StartCoroutine(HidePanelAndRestart(objectDisplayAnimator));
+            }
+            else
+            {
+                GameManager.Instance.CurrentDayCycle=DayCycle.Day;
+            }
+        }
+        private IEnumerator HidePanelAndRestart(ObjectDisplayAnimator objectDisplayAnimator)
+        {
+            yield return objectDisplayAnimator.HideMessageAnimation();
             GameManager.Instance.CurrentDayCycle=DayCycle.Day;
         }
         public void GenerateTutorialCustomer()
@@ -68,11 +85,40 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         }
         public void ToggleSkipPrompt(bool showPrompt)
         {
-            _skipPromptPanel.SetActive(showPrompt);
+            if(showPrompt)
+            {
+                _skipPromptPanel.SetActive(showPrompt);
+            }
+            else
+            {
+                ObjectDisplayAnimator objectDisplayAnimator=_skipPromptPanel.GetComponentInChildren<ObjectDisplayAnimator>();
+                if(objectDisplayAnimator!=null)
+                {
+                    StartCoroutine(HideSkipPanel(objectDisplayAnimator));
+                }
+                else
+                {
+                    _skipPromptPanel.SetActive(false);
+                }
+            }
+        }
+        public IEnumerator HideSkipPanel(ObjectDisplayAnimator objectDisplayAnimator)
+        {
+            yield return objectDisplayAnimator.HideMessageAnimation();
+            objectDisplayAnimator.gameObject.SetActive(true);
+            _skipPromptPanel.SetActive(false);
         }
         public void StopTime(bool stop)
         {
             Time.timeScale=stop?0:1;
+        }
+        public void SetActiveDraggableUIObject(bool onOff)
+        {
+            _draggableUIObject.SetActive(onOff);
+        }
+        public void SetActiveMenuButtonBlock(bool onOff)
+        {
+            _menuButtonBlock.SetActive(onOff);
         }
     }
 }

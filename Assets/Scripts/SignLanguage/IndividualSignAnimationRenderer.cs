@@ -60,8 +60,8 @@ namespace Assets.Scripts.SignLanguage
             {
                 Vocabulary now = renderingQueue.Dequeue();
                 RectTransform speakerRectTransform=GetComponent<RectTransform>();
-                rightHandObject.GetComponent<RectTransform>().localScale=speakerRectTransform.localScale;
-                leftHandObject.GetComponent<RectTransform>().localScale=speakerRectTransform.localScale;
+                // rightHandObject.GetComponent<RectTransform>().localScale=speakerRectTransform.localScale;
+                // leftHandObject.GetComponent<RectTransform>().localScale=speakerRectTransform.localScale;
 
                 rightHandRenderingCoroutine = StartCoroutine(AnimateHandshape(now.RightHandshapes, rightHandObject));
                 leftHandRenderingCoroutine = StartCoroutine(AnimateHandshape(now.LeftHandshapes, leftHandObject));
@@ -110,6 +110,8 @@ namespace Assets.Scripts.SignLanguage
             float elapsedTime = 0;
             Vector2 currentPosition;
             Vector3 currentRotation;
+            float currentScale;
+            
 
             while (elapsedTime < handshape.Duration)
             {
@@ -120,11 +122,15 @@ namespace Assets.Scripts.SignLanguage
                 currentRotation = Vector3.Lerp(handshape.StartRotation, handshape.EndRotation, elapsedTime/handshape.Duration);
                 rectTransform.eulerAngles = currentRotation;
 
+                currentScale = (handshape.EndScale-handshape.StartScale)*elapsedTime/handshape.Duration+handshape.StartScale;
+                rectTransform.localScale = new Vector3(currentScale,currentScale,currentScale);
+
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
             rectTransform.anchorMin = rectTransform.anchorMax = handshape.EndPosition;
             rectTransform.eulerAngles = handshape.EndRotation;
+            rectTransform.localScale = new Vector3(handshape.EndScale, handshape.EndScale, handshape.EndScale);
         }
         #endregion
     }

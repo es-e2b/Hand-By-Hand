@@ -25,13 +25,9 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
         {
             _ShowAnimationCoroutine=StartCoroutine(ShowMessageAnimation());
         }
-        private void OnDisable()
+        public void HideAndDisable()
         {
-            StopCoroutine(_ShowAnimationCoroutine);
-            if(_HideAnimationCoroutine==null)
-            {
-                StopCoroutine(_HideAnimationCoroutine);
-            }
+            _HideAnimationCoroutine=StartCoroutine(HideMessageAnimation());
         }
 
         private IEnumerator ShowMessageAnimation()
@@ -57,7 +53,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
             _canvasGroup.alpha = 1f;
             _rectTransform.anchoredPosition = _currentPosition;
         }
-        private IEnumerator HideMessageAnimation()
+        public IEnumerator HideMessageAnimation()
         {
             _canvasGroup.alpha = 1f;
             _rectTransform.anchoredPosition = _currentPosition + startPositionOffset;

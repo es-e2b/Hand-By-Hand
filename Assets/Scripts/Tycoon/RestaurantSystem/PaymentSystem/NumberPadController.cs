@@ -20,6 +20,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
         private InputButton completeButton;
         [SerializeField]
         private GameObject customerImage;
+        [SerializeField]
+        private GameObject _incorrectAnswerObejct;
         private UniversalTimer hintTimer;
         [SerializeField]
         private SignLanguageDictionary numberSignDictionary;
@@ -117,6 +119,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
                 if(numberObject.AnswerValue!=numberObject.InputValue)
                 {
                     //아니다 애니메이션
+                    _incorrectAnswerObejct.SetActive(false);
+                    _incorrectAnswerObejct.SetActive(true);
                     ResetInput();
                     return;
                 }

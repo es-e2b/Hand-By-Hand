@@ -15,6 +15,12 @@ namespace Assets.Scripts
             set
             {
                 _targetRectTransform=value;
+
+                _topPanel.gameObject.SetActive(true);
+                _leftPanel.gameObject.SetActive(true);
+                _rightPanel.gameObject.SetActive(true);
+                _bottomPanel.gameObject.SetActive(true);
+
                 // 타겟 오브젝트의 월드 좌표 가져오기
                 Vector3 worldPosition = value.position;
 
@@ -49,6 +55,10 @@ namespace Assets.Scripts
         private void Start()
         {
             _parentCanvas=transform.root.GetComponent<RectTransform>();
+            _topPanel.gameObject.SetActive(false);
+            _leftPanel.gameObject.SetActive(false);
+            _rightPanel.gameObject.SetActive(false);
+            _bottomPanel.gameObject.SetActive(false);
         }
         private IEnumerator Initialize()
         {

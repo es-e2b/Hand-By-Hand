@@ -100,22 +100,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                     }
                 }
             }
-            // 상하 스와이프 확인
-            /*
-            else if (isSwiping && swipeDistanceY > swipeThreshold && swipeDistanceY > swipeDistanceX)
-            {
-                if (fingerDownPosition.y - fingerUpPosition.y > 0)
-                {
-                    // 아래로 스와이프한 경우
-                    Debug.Log("아래로 스와이프");
-                }
-                else
-                {
-                    // 위로 스와이프한 경우
-                    Debug.Log("위로 스와이프");
-                }
-            }
-            */
         }
     }
 }

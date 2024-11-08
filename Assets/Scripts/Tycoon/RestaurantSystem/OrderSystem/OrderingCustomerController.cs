@@ -22,6 +22,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
         private Button hintButton;
         [SerializeField]
         private GameObject hintMessageOjbect;
+        [SerializeField]
+        private GameObject _incorrectAnswerOjbect;
         private Coroutine _answerProcessingCoroutine;
         private Customer customer;
         private Menu currentMenu;
@@ -64,12 +66,16 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
         {
             yield return new WaitUntil(()=>OrderManager.Instance!=null);
             OrderManager.Instance.OnChangedCustomer.AddListener((customer)=>Customer=customer);
+            OrderManager.Instance.OnIncorrectAnswer.AddListener(()=>
+            {
+                _incorrectAnswerOjbect.SetActive(false);
+                _incorrectAnswerOjbect.SetActive(true);
+            });
             OrderManager.Instance.OnCorrectAnswer.AddListener((index)=>
             {
                 orderMenuButtons[index].GetComponent<OrderMenuButton>().RemoveQuestionMark();
                 if(++index>=Customer.OrderMenus.Length)
                 {
-                    Debug.Log("AASBBbbszdsxcv");
                     _answerProcessingCoroutine??=StartCoroutine(OnAllCorrectAnswer());
                     return;
                 }

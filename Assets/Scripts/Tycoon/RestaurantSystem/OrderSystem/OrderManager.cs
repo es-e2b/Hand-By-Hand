@@ -126,6 +126,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
             }
             if(OrderingCustomer.OrderMenus[OrderIndex]!=menu)
             {
+                OnIncorrectAnswer.Invoke();
                 return;
             }
             print("Called Order Check Method");
@@ -161,5 +162,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
 
         public UnityEvent<Customer> OnChangedCustomer;
         public UnityEvent<int> OnCorrectAnswer;
+        public UnityEvent OnIncorrectAnswer;
     }
 }

@@ -23,7 +23,6 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         public GameObject BlinkIcon;
 
-
         private GetInput getInput;
 
         float waitingTimeOffset = 1.5f;
@@ -33,6 +32,9 @@ namespace HandByHand.NightSystem.DialogueSystem
         #region MANAGERCOMPONENT
         [SerializeField]
         private SignLanguageUIManager signLanguageUIManager;
+
+        [SerializeField]
+        private SwipeInput swipeInputManager;
 
         private PrintManager printManager;
 
@@ -176,6 +178,8 @@ namespace HandByHand.NightSystem.DialogueSystem
                             //waiting offset
                             yield return new WaitForSeconds(waitingTimeOffset);
 
+                            swipeInputManager.gameObject.SetActive(true);
+
                             //Show SignLanguageVocabulary while it's closing
                             if (((PlayerChoice)itemList[itemCount]).ChoiceContentList[selectedChoiceNumber].AdditionalSetting.ShowVocabularyFirst)
                             {
@@ -190,6 +194,8 @@ namespace HandByHand.NightSystem.DialogueSystem
                             }
 
                             yield return new WaitUntil(() => signLanguageManager.IsSignLanguageMade == true);
+
+                            swipeInputManager.gameObject.SetActive(false);
 
                             //Close SignLanguageUICanvas
                             signLanguageUIManager.InActiveUIObject();
@@ -225,6 +231,8 @@ namespace HandByHand.NightSystem.DialogueSystem
                         //waiting offset
                         yield return new WaitForSeconds(waitingTimeOffset);
 
+                        swipeInputManager.gameObject.SetActive(true);
+
                         PopupObject.SetActive(true);
                         PopupClose = false;
 
@@ -242,6 +250,8 @@ namespace HandByHand.NightSystem.DialogueSystem
                         }
 
                         yield return new WaitUntil(() => signLanguageManager.IsSignLanguageMade == true);
+
+                        swipeInputManager.gameObject.SetActive(false);
 
                         //Close SignLanguageUICanvas
                         signLanguageUIManager.InActiveUIObject();
@@ -265,6 +275,24 @@ namespace HandByHand.NightSystem.DialogueSystem
                         break;
 
                     case ItemType.Tutorial:
+                        //Show SignLanguageUICanvas (Make SignLanguage)
+                        signLanguageUIManager.ActiveUIObject(((Tutorial)itemList[itemCount]).SignLanguageSO.Mean);
+
+                        //waiting offset
+                        yield return new WaitForSeconds(waitingTimeOffset);
+
+                        GameObject tutorialAsset = Instantiate(((Tutorial)itemList[itemCount]).TutorialAsset, null) as GameObject;
+
+                        yield return StartCoroutine(tutorialAsset.transform.GetChild(0).GetComponent<TutorialManager>().StartTutorial(((Tutorial)itemList[itemCount])));
+
+                        Destroy(tutorialAsset);
+
+                        yield return new WaitForSeconds(0.3f);
+
+                        signLanguageUIManager.InActiveUIObject();
+
+                        //waiting offset
+                        yield return new WaitForSeconds(waitingTimeOffset);
 
                         break;
                 }
