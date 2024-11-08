@@ -100,6 +100,11 @@ namespace HandByHand.NightSystem.DialogueSystem
                     InitContentOnChoiceObject( ( ( PlayerText ) dialogueItem ) );
                     StartCoroutine(ChoiceObjectFadeAnimation("on"));
                     break;
+
+                case ItemType.MakeSignLanguage:
+                case ItemType.Tutorial:
+                    StartCoroutine(AnnouncePrintDone());
+                    break;
             }
         }
 

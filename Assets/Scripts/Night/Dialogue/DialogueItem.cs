@@ -20,8 +20,8 @@ namespace HandByHand.NightSystem.DialogueSystem
         NPCText,
         PlayerText,
         PlayerChoice,
-        DialogueSO,
-        Tutorial
+        Tutorial,
+        MakeSignLanguage
     }
 
     [System.Serializable]
@@ -79,6 +79,14 @@ namespace HandByHand.NightSystem.DialogueSystem
     }
 
     [System.Serializable]
+    public class AdditionalSetting
+    {
+        public DialogueFileSO DialogueSO = null;
+        public bool ShowVocabularyFirst = true;
+        public bool ShowVocabularyLast = true;
+    }
+
+    [System.Serializable]
     public class PlayerChoice : DialogueItem
     {
         [System.Serializable]
@@ -95,19 +103,24 @@ namespace HandByHand.NightSystem.DialogueSystem
             }
         }
 
-        [System.Serializable]
-        public class AdditionalSetting
-        {
-            public DialogueFileSO DialogueSO = null;
-            public bool ShowVocabularyFirst;
-            public bool ShowVocabularyLast;
-        }
-
         public List<ChoiceContent> ChoiceContentList;
 
         public PlayerChoice() : base(WhoseItem.Player, ItemType.PlayerChoice) 
         { 
             ChoiceContentList = new List<ChoiceContent>();
+        }
+    }
+
+    [System.Serializable]
+    public class MakeSignLanguage : DialogueItem
+    {
+        public SignLanguageSO SignLanguageSO;
+        public Vocabulary Vocabulary;
+        public AdditionalSetting AdditionalSetting;
+
+        public MakeSignLanguage() : base(WhoseItem.Player, ItemType.MakeSignLanguage)
+        { 
+            AdditionalSetting = new AdditionalSetting();
         }
     }
 

@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab78eecb4505a4c9ab4da1e0e9b860c6, type: 3}
+  m_Name: Learn
+  m_EditorClassIdentifier: 
+  Name: "\uBC30\uC6B0\uB2E4"
+  Hint: 
+  RightHandshapes:
+  - HandshapeImage: {fileID: 21300000, guid: a8b1d22b1416af64591b158064cebe68, type: 3}
+    StartPosition: {x: -0.17, y: 0.1}
+    EndPosition: {x: -0.19, y: 0.11}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.7
+  - HandshapeImage: {fileID: 21300000, guid: a8b1d22b1416af64591b158064cebe68, type: 3}
+    StartPosition: {x: -0.19, y: 0.11}
+    EndPosition: {x: -0.17, y: 0.1}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.7
+  - HandshapeImage: {fileID: 21300000, guid: a8b1d22b1416af64591b158064cebe68, type: 3}
+    StartPosition: {x: -0.17, y: 0.1}
+    EndPosition: {x: -0.19, y: 0.11}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.7
+  - HandshapeImage: {fileID: 21300000, guid: a8b1d22b1416af64591b158064cebe68, type: 3}
+    StartPosition: {x: -0.19, y: 0.11}
+    EndPosition: {x: -0.17, y: 0.1}
+    StartRotation: {x: 0, y: 0, z: 0}
+    EndRotation: {x: 0, y: 0, z: 0}
+    Duration: 0.7
+  LeftHandshapes: []

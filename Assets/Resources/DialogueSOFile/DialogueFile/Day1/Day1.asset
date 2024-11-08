@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56e3cfb14d113449b924edeb519b6eb, type: 3}
+  m_Name: Day1
+  m_EditorClassIdentifier: 
+  DialogueItemList:
+  - rid: 7424402959524429824
+  - rid: 7424402959524429825
+  - rid: 7424402959524429826
+  - rid: 7424402959524429828
+  - rid: 7424402959524429829
+  - rid: 8649954912755515445
+  - rid: 7424402959524429830
+  - rid: 7424402959524429831
+  - rid: 7424402959524429832
+  references:
+    version: 2
+    RefIds:
+    - rid: 7424402959524429824
+      type: {class: NPCText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 0
+        itemType: 0
+        Name: "\uB2E4\uB8E8"
+        Text: "\uC544, \uC218\uACE0\uD588\uC5B4! \uC624\uB298 \uD558\uB8E8\uB294
+          \uC880 \uC5B4\uB560\uC5B4? \uB9CE\uC774 \uD798\uB4E4\uC5C8\uC9C0? "
+    - rid: 7424402959524429825
+      type: {class: PlayerText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 1
+        itemType: 1
+        Text:
+        - "\uAD1C\uCC2E\uC558\uC5B4."
+        - "\uC870\uAE08 \uD798\uB4E4\uC5C8\uC5B4."
+    - rid: 7424402959524429826
+      type: {class: NPCText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 0
+        itemType: 0
+        Name: "\uB2E4\uB8E8"
+        Text: "\uC7A0\uAE50\uB9CC! \uB9D0\uD558\uAE30 \uC804\uC5D0, <#FA5858>\uC6B0\uB9AC
+          \uC774\uC81C\uBD80\uD130 \uC218\uC5B4\uB85C \uC598\uAE30\uD574\uBCF4\uB294
+          \uAC74 \uC5B4\uB54C?</color>"
+    - rid: 7424402959524429828
+      type: {class: PlayerChoice, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 1
+        itemType: 2
+        ChoiceContentList:
+        - SignLanguageItem: {fileID: 0}
+          ChoiceText: "\uC88B\uC544"
+          Vocabulary: {fileID: 0}
+          AdditionalSetting:
+            DialogueSO: {fileID: 0}
+            ShowVocabularyFirst: 0
+            ShowVocabularyLast: 0
+    - rid: 7424402959524429829
+      type: {class: NPCText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 0
+        itemType: 0
+        Name: "\uB2E4\uB8E8"
+        Text: "\uD558\uD558, \uB098\uD55C\uD14C \uB9E1\uACA8\uB450\uB77C\uACE0! \uB0B4\uAC00
+          \uCC98\uC74C\uBD80\uD130 \uCC28\uADFC\uCC28\uADFC \uC54C\uB824\uC904\uAC8C"
+    - rid: 7424402959524429830
+      type: {class: NPCText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 0
+        itemType: 0
+        Name: "\uB2E4\uB8E8"
+        Text: "\uC6B0\uC120\uC740 \uC9C8\uBB38\uC5D0 \uB300\uB2F5\uD558\uB294 \uAC83\uBD80\uD130
+          \uBC30\uC6CC\uBCF4\uC790. \uCC98\uC74C \uBC30\uC6B8 \uAC74 '\uB124'\uC640
+          '\uC544\uB2C8\uC624'\uC57C!"
+    - rid: 7424402959524429831
+      type: {class: NPCText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 0
+        itemType: 0
+        Name: "\uB2E4\uB8E8"
+        Text: "\uC544\uAE4C \uC9C8\uBB38\uC744 \uB2E4\uC2DC \uD574\uBCFC\uAC8C. \uC624\uB298
+          \uD558\uB8E8, \uB9CE\uC774 \uD798\uB4E4\uC5C8\uC9C0?"
+    - rid: 7424402959524429832
+      type: {class: PlayerChoice, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 1
+        itemType: 2
+        ChoiceContentList:
+        - SignLanguageItem: {fileID: 11400000, guid: 67809fe5176387d4881cc07147cce96e, type: 2}
+          ChoiceText: "\uC751"
+          Vocabulary: {fileID: 11400000, guid: e4df699a109aaf949bbf653de836c264, type: 2}
+          AdditionalSetting:
+            DialogueSO: {fileID: 11400000, guid: c3468daf9b359014494102ef0f978bc1, type: 2}
+            ShowVocabularyFirst: 1
+            ShowVocabularyLast: 1
+        - SignLanguageItem: {fileID: 11400000, guid: a9041ef7900f7d44281dae9ccf91636f, type: 2}
+          ChoiceText: "\uC544\uB2C8"
+          Vocabulary: {fileID: 11400000, guid: d3ff9c5cbd8712c4e82de9e482dfbd77, type: 2}
+          AdditionalSetting:
+            DialogueSO: {fileID: 11400000, guid: cc85e80b33cfffe458355bc531719e3e, type: 2}
+            ShowVocabularyFirst: 1
+            ShowVocabularyLast: 1
+    - rid: 8649954912755515445
+      type: {class: Tutorial, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 2
+        itemType: 3
+        TutorialAsset: {fileID: 413047923219894158, guid: 909021bb4ab10414ab0d2815a7bc649c, type: 3}
