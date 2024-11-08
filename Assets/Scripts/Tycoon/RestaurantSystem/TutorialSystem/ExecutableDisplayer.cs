@@ -17,6 +17,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         [SerializeField]
         private float _puaseDuration;
         private CanvasGroup[] _canvasGroups;
+        [SerializeField]
+        private float _staringAlpha;
         private bool _isSkipping;
         [SerializeField]
         private Vector2 _startingOffset;
@@ -37,7 +39,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 {
                     canvasGroup=_displayObjects[i].AddComponent<CanvasGroup>();
                 }
-                canvasGroup.alpha=0f;
+                canvasGroup.alpha=_staringAlpha;
                 _canvasGroups[i]=canvasGroup;
                 _displayObjectRectTransform[i]=_displayObjects[i].GetComponent<RectTransform>();
                 _displayObjects[i].GetComponent<RectTransform>().anchoredPosition+=_startingOffset;
@@ -64,7 +66,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             {
                 float t = elapsedTime / _animationDuration;
 
-                Array.ForEach(_canvasGroups, canvasGroup=>canvasGroup.alpha = Mathf.Lerp(0f, 1f, t));
+                Array.ForEach(_canvasGroups, canvasGroup=>canvasGroup.alpha = Mathf.Lerp(_staringAlpha, 1f, t));
                 for(int i=0;i<_displayObjects.Length;i++)
                 {
                     _displayObjectRectTransform[i].anchoredPosition=_initialPosition[i]+Vector2.Lerp(_startingOffset, Vector2.zero, t);
@@ -78,7 +80,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             {
                 yield return Skip();
             }
-            
             yield return Pause();
         }
         public override IEnumerator Pause()
@@ -99,7 +100,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             {
                 _displayObjectRectTransform[i].anchoredPosition=_initialPosition[i];
             }
-            yield return null;
+            yield break;
         }
         public override IEnumerator Complete()
         {

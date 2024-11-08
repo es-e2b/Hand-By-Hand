@@ -17,6 +17,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         [SerializeField]
         private float _puaseDuration;
         private CanvasGroup[] _canvasGroups;
+        [SerializeField]
+        private float _endingAlpha;
         private bool _isSkipping;
         [SerializeField]
         private Vector2 _endingOffset;
@@ -62,7 +64,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             {
                 float t = elapsedTime / _animationDuration;
 
-                Array.ForEach(_canvasGroups, canvasGroup=>canvasGroup.alpha = Mathf.Lerp(1f, 0f, t));
+                Array.ForEach(_canvasGroups, canvasGroup=>canvasGroup.alpha = Mathf.Lerp(1f, _endingAlpha, t));
                 for(int i=0;i<_concealObjects.Length;i++)
                 {
                     _displayObjectRectTransform[i].anchoredPosition=_initialPosition[i]+Vector2.Lerp(Vector2.zero, _endingOffset, t);
@@ -94,7 +96,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         }
         public override IEnumerator Skip()
         {
-            Array.ForEach(_canvasGroups, canvasGroup=>canvasGroup.alpha = 0f);
+            Array.ForEach(_canvasGroups, canvasGroup=>canvasGroup.alpha = _endingAlpha);
             for(int i=0;i<_concealObjects.Length;i++)
             {
                 _displayObjectRectTransform[i].anchoredPosition=_initialPosition[i];
