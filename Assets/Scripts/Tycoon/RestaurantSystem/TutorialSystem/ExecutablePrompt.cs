@@ -2,6 +2,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
 {
     using System;
     using System.Collections;
+    using Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem;
     using UnityEngine;
     using UnityEngine.UI;
 
@@ -43,6 +44,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         }
         public override IEnumerator Complete()
         {
+            if(_promptPanel.transform.GetChild(1).TryGetComponent<ObjectDisplayAnimator>(out var objectDisplayAnimator))
+            {
+                yield return objectDisplayAnimator.HideMessageAnimation();
+            }
             _promptPanel.SetActive(false);
             yield break;
         }
