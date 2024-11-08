@@ -80,7 +80,7 @@ MonoBehaviour:
         itemType: 2
         ChoiceContentList:
         - SignLanguageItem: {fileID: 11400000, guid: d7b6e02fa56e1344ba654d7072867d3f, type: 2}
-          ChoiceText: "\uBC30\uC6B0\uB294 \uC911\uC774\uC5D0\uC694"
+          ChoiceText: "\uC218\uC5B4"
           Vocabulary: {fileID: 11400000, guid: e10b669b60ebc7643a3a94f147a62fa9, type: 2}
           AdditionalSetting:
             DialogueSO: {fileID: 0}
