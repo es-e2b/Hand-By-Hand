@@ -6,35 +6,22 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
     using UnityEngine.UI;
 
     [Serializable]
-    public class ExecutableConcealer : ExecutableElement
+    public class ExecutableMoveAnchor : ExecutableElement
     {
         [SerializeField]
-        private GameObject[] _concealObjects;
+        private RectTransform _targetRectTransform;
         [SerializeField]
         private float _animationDuration;
-        private CanvasGroup[] _canvasGroups;
         [SerializeField]
-        private float _endingAlpha;
+        private Vector2 _targetAnchorMin;
         [SerializeField]
-        private Vector2 _endingOffset;
-        private RectTransform[] _displayObjectRectTransform;
-        private Vector2[] _initialPosition;
+        private Vector2 _targetAnchorMax;
+        private Vector2 _initialAnchorMin;
+        private Vector2 _initialAnchorMax;
         public override IEnumerator Begin()
         {
-            _canvasGroups=new CanvasGroup[_concealObjects.Length];
-            _displayObjectRectTransform=new RectTransform[_concealObjects.Length];
-            _initialPosition=new Vector2[_concealObjects.Length];
-            for(int i=0;i<_concealObjects.Length;i++)
-            {
-                if(!_concealObjects[i].TryGetComponent<CanvasGroup>(out var canvasGroup))
-                {
-                    canvasGroup=_concealObjects[i].AddComponent<CanvasGroup>();
-                }
-                canvasGroup.alpha=1f;
-                _canvasGroups[i]=canvasGroup;
-                _displayObjectRectTransform[i]=_concealObjects[i].GetComponent<RectTransform>();
-                _initialPosition[i]=_displayObjectRectTransform[i].anchoredPosition;
-            }
+            _initialAnchorMin=_targetRectTransform.anchorMin;
+            _initialAnchorMax=_targetRectTransform.anchorMax;
             if(_skipButton!=null)
             {
                 _skipButton.gameObject.SetActive(true);
@@ -55,28 +42,19 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             {
                 float t = elapsedTime / _animationDuration;
 
-                Array.ForEach(_canvasGroups, canvasGroup=>canvasGroup.alpha = Mathf.Lerp(1f, _endingAlpha, t));
-                for(int i=0;i<_concealObjects.Length;i++)
-                {
-                    _displayObjectRectTransform[i].anchoredPosition=_initialPosition[i]+Vector2.Lerp(Vector2.zero, _endingOffset, t);
-                }
+                _targetRectTransform.anchorMax=_targetRectTransform.pivot=Vector2.Lerp(_initialAnchorMax, _targetAnchorMax, t*t*t);
+                _targetRectTransform.anchorMin=_targetRectTransform.pivot=Vector2.Lerp(_initialAnchorMin, _targetAnchorMin, t*t*t);
 
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-            Array.ForEach(_canvasGroups, canvasGroup=>canvasGroup.alpha = _endingAlpha);
-            for(int i=0;i<_concealObjects.Length;i++)
-            {
-                _displayObjectRectTransform[i].anchoredPosition=_initialPosition[i];
-            }
+            _targetRectTransform.anchorMax=_targetAnchorMax;
+            _targetRectTransform.anchorMin=_targetAnchorMin;
             if(_isSkipping)
             {
                 yield return Skip();
             }
-            else
-            {
-                yield return Pause();
-            }
+            yield return Pause();
         }
         public override IEnumerator Pause()
         {
@@ -88,6 +66,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
+            yield break;
         }
         public override IEnumerator Skip()
         {
@@ -95,7 +74,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         }
         public override IEnumerator Complete()
         {
-            Array.ForEach(_concealObjects, concealObject=>concealObject.SetActive(false));
             if(_skipButton!=null)
             {
                 _skipButton.onClick.RemoveListener(OnClickSkipButton);

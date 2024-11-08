@@ -11,23 +11,14 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         [SerializeField]
         private GameObject[] _displayObjects;
         [SerializeField]
-        private Button _skipButton;
-        [SerializeField]
         private float _animationDuration;
-        [SerializeField]
-        private float _puaseDuration;
         private CanvasGroup[] _canvasGroups;
         [SerializeField]
         private float _staringAlpha;
-        private bool _isSkipping;
         [SerializeField]
         private Vector2 _startingOffset;
         private RectTransform[] _displayObjectRectTransform;
         private Vector2[] _initialPosition;
-        private void OnClickSkipButton()
-        {
-            _isSkipping=true;
-        }
         public override IEnumerator Begin()
         {
             _canvasGroups=new CanvasGroup[_displayObjects.Length];
@@ -53,11 +44,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             }
             yield return Next();
         }
-        public override IEnumerator Next()
-        {
-            yield return Execute();
-            yield return Complete();
-        }
         public override IEnumerator Execute()
         {
             float elapsedTime = 0f;
@@ -76,40 +62,16 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 yield return null;
             }
 
-            if(_isSkipping)
-            {
-                yield return Skip();
-            }
-            yield return Pause();
-        }
-        public override IEnumerator Pause()
-        {
-            _isSkipping=false;
-            float elapsedTime=0f;
-
-            while (elapsedTime < _puaseDuration && !_isSkipping)
-            {
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-        }
-        public override IEnumerator Skip()
-        {
             Array.ForEach(_canvasGroups, canvasGroup=>canvasGroup.alpha = 1f);
             for(int i=0;i<_displayObjects.Length;i++)
             {
                 _displayObjectRectTransform[i].anchoredPosition=_initialPosition[i];
             }
-            yield break;
-        }
-        public override IEnumerator Complete()
-        {
-            if(_skipButton!=null)
+            if(_isSkipping)
             {
-                _skipButton.onClick.RemoveListener(OnClickSkipButton);
-                _skipButton.gameObject.SetActive(false);
+                yield return Skip();
             }
-            yield break;
+            yield return Pause();
         }
     }
 }
