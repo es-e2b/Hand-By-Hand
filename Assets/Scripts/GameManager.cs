@@ -63,7 +63,6 @@ namespace Assets.Scripts
         private void Start()
         {
             DayCount=1;
-            Debug.Log("Gama Manager Started");
         }
         public void ExitGame()
         {
@@ -80,6 +79,18 @@ namespace Assets.Scripts
             {
                 yield return executables[i].Initialize();
             }
+        }
+        public void ChangeCartoonScene()
+        {
+            CurrentDayCycle=DayCycle.Cartoon;
+        }
+        public void ChangeDayScene()
+        {
+            CurrentDayCycle=DayCycle.Day;
+        }
+        public void ChangeNightScene()
+        {
+            CurrentDayCycle=DayCycle.Night;
         }
 
         public UnityEvent<int> OnChangedDayCount { get; private set; }

@@ -183,7 +183,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3459847367980188632, guid: 4f6cd13fdc42f4135a50d620427ae034, type: 3}
       propertyPath: _animationDuration
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3459847367980188632, guid: 4f6cd13fdc42f4135a50d620427ae034, type: 3}
       propertyPath: _displayObjects.Array.size
@@ -432,12 +432,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6198270624711072197, guid: e369c427cf09b4750ada0319202397d0, type: 3}
       propertyPath: m_Name
-      value: Start Game Action
+      value: Change Cartoon Scene Action
+      objectReference: {fileID: 0}
+    - target: {fileID: 9101618837783078497, guid: e369c427cf09b4750ada0319202397d0, type: 3}
+      propertyPath: _action.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9101618837783078497, guid: e369c427cf09b4750ada0319202397d0, type: 3}
       propertyPath: _action.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 768846789}
+      objectReference: {fileID: 194459079}
+    - target: {fileID: 9101618837783078497, guid: e369c427cf09b4750ada0319202397d0, type: 3}
+      propertyPath: _action.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeCartoonScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 9101618837783078497, guid: e369c427cf09b4750ada0319202397d0, type: 3}
+      propertyPath: _action.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Assets.Scripts.GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9101618837783078497, guid: e369c427cf09b4750ada0319202397d0, type: 3}
+      propertyPath: _action.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
