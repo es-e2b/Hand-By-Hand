@@ -27,10 +27,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         private bool _buttonClicked = false;
         [SerializeField]
         private Button _button;
-        public override IEnumerator Initialize()
-        {
-            yield break;
-        }
 
         public override IEnumerator Begin()
         {
