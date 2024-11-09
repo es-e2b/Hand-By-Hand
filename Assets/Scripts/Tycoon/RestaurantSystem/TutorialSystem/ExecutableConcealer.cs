@@ -12,6 +12,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         private GameObject[] _concealObjects;
         [SerializeField]
         private float _animationDuration;
+        [SerializeField]
+        private float _animationExponent=1;
         private CanvasGroup[] _canvasGroups;
         [SerializeField]
         private float _endingAlpha;
@@ -55,10 +57,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             {
                 float t = elapsedTime / _animationDuration;
 
-                Array.ForEach(_canvasGroups, canvasGroup=>canvasGroup.alpha = Mathf.Lerp(1f, _endingAlpha, t));
+                Array.ForEach(_canvasGroups, canvasGroup=>canvasGroup.alpha = Mathf.Lerp(1f, _endingAlpha, Mathf.Pow(t, _animationExponent)));
                 for(int i=0;i<_concealObjects.Length;i++)
                 {
-                    _displayObjectRectTransform[i].anchoredPosition=_initialPosition[i]+Vector2.Lerp(Vector2.zero, _endingOffset, t);
+                    _displayObjectRectTransform[i].anchoredPosition=_initialPosition[i]+Vector2.Lerp(Vector2.zero, _endingOffset, Mathf.Pow(t, _animationExponent));
                 }
 
                 elapsedTime += Time.deltaTime;
