@@ -615,7 +615,7 @@ RectTransform:
   m_GameObject: {fileID: 488133949}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 815980404}
@@ -2581,11 +2581,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3459847367980188632, guid: 4f6cd13fdc42f4135a50d620427ae034, type: 3}
       propertyPath: _startingOffset.x
-      value: 15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3459847367980188632, guid: 4f6cd13fdc42f4135a50d620427ae034, type: 3}
       propertyPath: _startingOffset.y
-      value: 15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3459847367980188632, guid: 4f6cd13fdc42f4135a50d620427ae034, type: 3}
       propertyPath: _animationDuration
@@ -3201,7 +3201,11 @@ PrefabInstance:
       objectReference: {fileID: 203562659}
     - target: {fileID: 8572632098251159115, guid: fd99f4140654241cfa69f4ea5fab2306, type: 3}
       propertyPath: _shakeInterval
-      value: 0.5
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8572632098251159115, guid: fd99f4140654241cfa69f4ea5fab2306, type: 3}
+      propertyPath: _animationDuration
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8572632098251159115, guid: fd99f4140654241cfa69f4ea5fab2306, type: 3}
       propertyPath: _targetRectTransform
@@ -3242,7 +3246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6075656457297522542, guid: e3816a08d3e2940ab8ae60e68bdbcb1a, type: 3}
       propertyPath: _puaseDuration
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6075656457297522542, guid: e3816a08d3e2940ab8ae60e68bdbcb1a, type: 3}
       propertyPath: _targetRotation.z
