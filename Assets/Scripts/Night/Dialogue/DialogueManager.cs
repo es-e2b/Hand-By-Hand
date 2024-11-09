@@ -11,8 +11,9 @@ namespace HandByHand.NightSystem.DialogueSystem
     {
         public DialogueFileSO DialogueFileSO;
 
+        //수화 선택창에서 Vocabulary 팝업을 닫았을 시 Swipe기능을 on
         [HideInInspector]
-        public bool PopupClose { get; private set; } = false;
+        public bool IsSwipeEnable { get; private set; } = false;
 
         [Header("UI Components")]
         public GameObject DialogueSpeaker;
@@ -32,9 +33,6 @@ namespace HandByHand.NightSystem.DialogueSystem
         #region MANAGERCOMPONENT
         [SerializeField]
         private SignLanguageUIManager signLanguageUIManager;
-
-        [SerializeField]
-        private SwipeInput swipeInputManager;
 
         private PrintManager printManager;
 
@@ -168,7 +166,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                         {
                             //Set Active Popup
                             PopupObject.SetActive(true);
-                            PopupClose = false;
+                            IsSwipeEnable = false;
 
                             //Show SignLanguageUICanvas (Make SignLanguage)
                             signLanguageUIManager.ActiveUIObject(selectedSignLanguageSO.Mean);
@@ -178,14 +176,12 @@ namespace HandByHand.NightSystem.DialogueSystem
                             //waiting offset
                             yield return new WaitForSeconds(waitingTimeOffset);
 
-                            swipeInputManager.gameObject.SetActive(true);
-
                             //Show SignLanguageVocabulary while it's closing
                             if (((PlayerChoice)itemList[itemCount]).ChoiceContentList[selectedChoiceNumber].AdditionalSetting.ShowVocabularyFirst)
                             {
                                 Vocabulary vocabulary = ((PlayerChoice)itemList[itemCount]).ChoiceContentList[selectedChoiceNumber].Vocabulary;
 
-                                while (!PopupClose)
+                                while (!IsSwipeEnable)
                                 {
                                     yield return new WaitForSeconds(0.5f);
 
@@ -194,8 +190,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                             }
 
                             yield return new WaitUntil(() => signLanguageManager.IsSignLanguageMade == true);
-
-                            swipeInputManager.gameObject.SetActive(false);
+                            IsSwipeEnable = false;
 
                             //Close SignLanguageUICanvas
                             signLanguageUIManager.InActiveUIObject();
@@ -231,17 +226,15 @@ namespace HandByHand.NightSystem.DialogueSystem
                         //waiting offset
                         yield return new WaitForSeconds(waitingTimeOffset);
 
-                        swipeInputManager.gameObject.SetActive(true);
-
                         PopupObject.SetActive(true);
-                        PopupClose = false;
+                        IsSwipeEnable = false;
 
                         //Show SignLanguageVocabulary
                         if (makeSignLanguageItem.AdditionalSetting.ShowVocabularyFirst)
                         {
                             Vocabulary vocabulary = makeSignLanguageItem.Vocabulary;
 
-                            while(!PopupClose)
+                            while(!IsSwipeEnable)
                             {
                                 yield return new WaitForSeconds(0.5f);
 
@@ -251,7 +244,7 @@ namespace HandByHand.NightSystem.DialogueSystem
 
                         yield return new WaitUntil(() => signLanguageManager.IsSignLanguageMade == true);
 
-                        swipeInputManager.gameObject.SetActive(false);
+                        IsSwipeEnable = false;
 
                         //Close SignLanguageUICanvas
                         signLanguageUIManager.InActiveUIObject();
@@ -305,7 +298,7 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         public void ClosePopup()
         {
-            PopupClose = true;
+            IsSwipeEnable = true;
             PopupObject.SetActive(false);
         }
 

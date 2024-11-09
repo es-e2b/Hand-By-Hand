@@ -57,7 +57,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             // 좌우 스와이프 확인
             if (isSwiping && swipeDistanceX > swipeThreshold && swipeDistanceX > swipeDistanceY)
             {
-                if (fingerDownPosition.x - fingerUpPosition.x > 0 && dialogueManager.PopupClose)
+                if (fingerDownPosition.x - fingerUpPosition.x > 0 && dialogueManager.IsSwipeEnable)
                 {
                     // 오른쪽으로 스와이프한 경우
                     if ((signLanguageUIManager.presentPanelIndex + 1) < 4)
@@ -81,7 +81,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 else
                 {
                     // 왼쪽으로 스와이프한 경우
-                    if ((signLanguageUIManager.presentPanelIndex - 1) > -1 && dialogueManager.PopupClose)
+                    if ((signLanguageUIManager.presentPanelIndex - 1) > -1 && dialogueManager.IsSwipeEnable)
                     {
                         if (signLanguageUIManager.incorrectAnswerIndexList[0] != -1)
                         {
