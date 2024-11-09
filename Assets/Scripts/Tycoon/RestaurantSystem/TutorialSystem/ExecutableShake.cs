@@ -51,7 +51,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             {
                 currentTime-=_shakeInterval;
             }
-            while (elapsedTime < _animationDuration && !_isSkipping)
+            while (currentTime < _shakeInterval && !_isSkipping)
             {
                 float t = currentTime / _shakeInterval;
                 if(t<_rotationRate/2)
