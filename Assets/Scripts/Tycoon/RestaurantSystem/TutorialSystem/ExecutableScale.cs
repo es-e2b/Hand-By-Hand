@@ -18,11 +18,11 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         private Vector3 _initialScale;
         public override IEnumerator Initialize()
         {
-            _initialScale=_targetRectTransform.localScale;
             yield return base.Initialize();
         }
         public override IEnumerator Execute()
         {
+            _initialScale=_targetRectTransform.localScale;
             float elapsedTime = 0f;
 
             while (elapsedTime < _animationDuration && !_isSkipping)
