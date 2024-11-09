@@ -16,10 +16,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         [SerializeField]
         private Vector3 _targetScale;
         private Vector3 _initialScale;
-        public override IEnumerator Begin()
+        public override IEnumerator Initialize()
         {
             _initialScale=_targetRectTransform.localScale;
-            yield return base.Begin();
+            yield return base.Initialize();
         }
         public override IEnumerator Execute()
         {
@@ -36,6 +36,11 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             }
             _targetRectTransform.localScale=_targetScale;
             yield return base.Execute();
+        }
+        public override IEnumerator Finalize()
+        {
+            _targetRectTransform.localScale=_targetScale;
+            yield return base.Finalize();
         }
     }
 }

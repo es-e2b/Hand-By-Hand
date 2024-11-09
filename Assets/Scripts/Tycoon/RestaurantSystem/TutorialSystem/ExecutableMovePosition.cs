@@ -16,20 +16,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         [SerializeField]
         private Vector2 _targetPosition;
         private Vector2 _initialPosition;
-        public override IEnumerator Begin()
+        public override IEnumerator Initialize()
         {
             _initialPosition=_targetRectTransform.anchoredPosition;
-            if(_skipButton!=null)
-            {
-                _skipButton.gameObject.SetActive(true);
-                _skipButton.onClick.AddListener(OnClickSkipButton);
-            }
-            yield return Next();
-        }
-        public override IEnumerator Next()
-        {
-            yield return Execute();
-            yield return Complete();
+            yield return base.Initialize();
         }
         public override IEnumerator Execute()
         {
@@ -44,37 +34,12 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
+            yield return base.Execute();
+        }
+        public override IEnumerator Finalize()
+        {
             _targetRectTransform.anchoredPosition=_initialPosition+_targetPosition;
-            if(_isSkipping)
-            {
-                yield return Skip();
-            }
-            yield return Pause();
-        }
-        public override IEnumerator Pause()
-        {
-            _isSkipping=false;
-            float elapsedTime=0f;
-
-            while (elapsedTime < _puaseDuration && !_isSkipping)
-            {
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-            yield break;
-        }
-        public override IEnumerator Skip()
-        {
-            yield break;
-        }
-        public override IEnumerator Complete()
-        {
-            if(_skipButton!=null)
-            {
-                _skipButton.onClick.RemoveListener(OnClickSkipButton);
-                _skipButton.gameObject.SetActive(false);
-            }
-            yield break;
+            yield return base.Finalize();
         }
     }
 }

@@ -15,19 +15,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         {
             isClicked=true;
         }
-        public override IEnumerator Begin()
-        {
-            yield return Next();
-        }
-        public override IEnumerator Next()
-        {
-            yield return Execute();
-            yield return Complete();
-        }
-        public override IEnumerator Execute()
-        {
-            yield return Pause();
-        }
         public override IEnumerator Pause()
         {
             if(!_buttonObject.TryGetComponent<Button>(out var button))
@@ -37,14 +24,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             button.onClick.AddListener(OnClick);
             yield return new WaitUntil(()=>isClicked);
             button.onClick.RemoveListener(OnClick);
-        }
-        public override IEnumerator Skip()
-        {
-            throw new NotImplementedException();
-        }
-        public override IEnumerator Complete()
-        {
-            yield break;
         }
     }
 }

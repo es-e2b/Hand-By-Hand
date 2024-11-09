@@ -17,22 +17,38 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         protected bool _isSkipping;
         [SerializeField]
         protected bool isRequiredClickToComplete;
-        protected void OnClickSkipButton()
+        public virtual void Skip()
         {
             _isSkipping=true;
         }
         public virtual IEnumerator Initialize()
         {
-            yield return new WaitForSeconds(_watingStartTime);
-            yield return Begin();
-        }
-        public virtual IEnumerator Begin()
-        {
             if(_skipButton!=null)
             {
                 _skipButton.gameObject.SetActive(true);
-                _skipButton.onClick.AddListener(OnClickSkipButton);
+                _skipButton.onClick.AddListener(Skip);
             }
+            float elapsedTime=0f;
+
+            while (elapsedTime < _watingStartTime && !_isSkipping)
+            {
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+            if(_isSkipping)
+            {
+                // _isSkipping=false;
+                yield return Finalize();
+                yield return Pause();
+                yield return Complete();
+            }
+            else
+            {
+                yield return Begin();
+            }
+        }
+        public virtual IEnumerator Begin()
+        {
             yield return Next();
         }
         public virtual IEnumerator Next()
@@ -43,22 +59,12 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
 
         public virtual IEnumerator Execute()
         {
-            if(_isSkipping)
-            {
-                yield return Skip();
-            }
+            yield return Finalize();
             yield return Pause();
         }
-
-
         public virtual IEnumerator Pause()
         {
             _isSkipping=false;
-            if(isRequiredClickToComplete)
-            {
-                yield return new WaitUntil(()=>_isSkipping);
-                yield break;
-            }
             float elapsedTime=0f;
 
             while (elapsedTime < _puaseDuration && !_isSkipping)
@@ -69,7 +75,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             yield break;
         }
 
-        public virtual IEnumerator Skip()
+        public virtual IEnumerator Finalize()
         {
             yield break;
         }
@@ -78,7 +84,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         {
             if(_skipButton!=null)
             {
-                _skipButton.onClick.RemoveListener(OnClickSkipButton);
+                _skipButton.onClick.RemoveListener(Skip);
                 _skipButton.gameObject.SetActive(false);
             }
             yield break;

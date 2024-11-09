@@ -16,11 +16,11 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         [SerializeField]
         private Vector3 _targetRotation;
         private Vector3 _initialRotation;
-        public override IEnumerator Begin()
+        public override IEnumerator Initialize()
         {
             _initialRotation=_targetRectTransform.eulerAngles;
             Debug.Log(_initialRotation);
-            yield return base.Begin();
+            yield return base.Initialize();
         }
         public override IEnumerator Execute()
         {
@@ -37,6 +37,11 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             }
             _targetRectTransform.eulerAngles=_targetRotation;
             yield return base.Execute();
+        }
+        public override IEnumerator Finalize()
+        {
+            _targetRectTransform.eulerAngles=_targetRotation;
+            yield return base.Finalize();
         }
     }
 }

@@ -19,24 +19,11 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         {
             isClicked=true;
         }
-        public override IEnumerator Begin()
-        {
-            _buttonPanel.gameObject.SetActive(true);
-            yield return Next();
-        }
-        public override IEnumerator Next()
-        {
-            yield return Execute();
-            yield return Complete();
-        }
-        public override IEnumerator Execute()
-        {
-            yield return null;
-            _buttonPanel.TargetRectTransform=_highlightObject.GetComponent<RectTransform>();
-            yield return Pause();
-        }
         public override IEnumerator Pause()
         {
+            _buttonPanel.gameObject.SetActive(true);
+            yield return null;
+            _buttonPanel.TargetRectTransform=_highlightObject.GetComponent<RectTransform>();
             if(!_buttonObject.TryGetComponent<Button>(out var button))
             {
                 button=_buttonObject.AddComponent<Button>();
@@ -44,10 +31,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             button.onClick.AddListener(OnClick);
             yield return new WaitUntil(()=>isClicked);
             button.onClick.RemoveListener(OnClick);
-        }
-        public override IEnumerator Skip()
-        {
-            throw new NotImplementedException();
         }
         public override IEnumerator Complete()
         {

@@ -19,34 +19,26 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         private Vector3 _rotationMax;
         private Vector3 _initialRotation;
         private float _rotationRate;
-        private float elapsedTime = 0f;
-        public override IEnumerator Begin()
+        private float _elapsedTime = 0f;
+        public override IEnumerator Initialize()
         {
             _initialRotation=_targetRectTransform.eulerAngles;
             _rotationRate=Math.Abs(_initialRotation.z-_rotationMax.z)/(Math.Abs(_initialRotation.z-_rotationMax.z)+Math.Abs(_initialRotation.z-_rotationMin.z));
-            if(_skipButton!=null)
-            {
-                _skipButton.gameObject.SetActive(true);
-                _skipButton.onClick.AddListener(OnClickSkipButton);
-            }
-            yield return Next();
+            yield return base.Initialize();
         }
         public override IEnumerator Next()
         {
-            while(elapsedTime < _animationDuration && !_isSkipping)
+            while(_elapsedTime < _animationDuration && !_isSkipping)
             {
                 yield return Execute();
             }
-            if(_isSkipping)
-            {
-                yield return Skip();
-            }
+            yield return Finalize();
             yield return Pause();
             yield return Complete();
         }
         public override IEnumerator Execute()
         {
-            float currentTime = elapsedTime;
+            float currentTime = _elapsedTime;
             while(currentTime>_shakeInterval)
             {
                 currentTime-=_shakeInterval;
@@ -77,29 +69,12 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                     t/=(1-_rotationRate)/2;
                     _targetRectTransform.eulerAngles=Vector3.Lerp(_rotationMin, _initialRotation,t);
                 }
-                print(t+": "+_targetRectTransform.eulerAngles);
                 currentTime += Time.deltaTime;
-                elapsedTime += Time.deltaTime;
+                _elapsedTime += Time.deltaTime;
                 yield return null;
             }
         }
-        public override IEnumerator Pause()
-        {
-            _isSkipping=false;
-            float elapsedTime=0f;
-
-            while (elapsedTime < _puaseDuration && !_isSkipping)
-            {
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-            yield break;
-        }
-        public override IEnumerator Skip()
-        {
-            yield break;
-        }
-        public override IEnumerator Complete()
+        public override IEnumerator Finalize()
         {
             float currentTime = _animationDuration;
             while(currentTime>_shakeInterval)
@@ -123,12 +98,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             {
                 _targetRectTransform.eulerAngles=Vector3.Lerp(_rotationMin, _initialRotation,t);
             }
-            if(_skipButton!=null)
-            {
-                _skipButton.onClick.RemoveListener(OnClickSkipButton);
-                _skipButton.gameObject.SetActive(false);
-            }
-            yield break;
+            yield return base.Finalize();
         }
     }
 }

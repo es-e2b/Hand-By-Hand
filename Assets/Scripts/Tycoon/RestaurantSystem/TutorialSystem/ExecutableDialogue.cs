@@ -27,6 +27,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         private bool _buttonClicked = false;
         [SerializeField]
         private Button _button;
+        public override IEnumerator Initialize()
+        {
+            yield break;
+        }
 
         public override IEnumerator Begin()
         {
@@ -96,7 +100,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             }
             if(_buttonClicked)
             {
-                yield return Skip();
+                yield return Finalize();
             }
 
             yield return Pause();
@@ -113,7 +117,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             _nextDialogueIcon.SetActive(false);
         }
 
-        public override IEnumerator Skip()
+        public override IEnumerator Finalize()
         {
             _text.text = _currentString;
             _buttonClicked = false; // 스킵 후 플래그 초기화

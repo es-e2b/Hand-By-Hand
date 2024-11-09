@@ -17,6 +17,11 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         [SerializeField]
         private float _targetFillAmount;
         private float _initialFillAmount;
+        public override IEnumerator Initialize()
+        {
+            _initialFillAmount=_targetImage.fillAmount;
+            yield return base.Initialize();
+        }
         public override IEnumerator Execute()
         {
             float elapsedTime = 0f;
@@ -30,12 +35,12 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
+            yield return base.Execute();
+        }
+        public override IEnumerator Finalize()
+        {
             _targetImage.fillAmount=_targetFillAmount;
-            if(_isSkipping)
-            {
-                yield return Skip();
-            }
-            yield return Pause();
+            yield return base.Finalize();
         }
     }
 }

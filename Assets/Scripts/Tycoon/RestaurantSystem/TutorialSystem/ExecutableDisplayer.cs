@@ -21,7 +21,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         private Vector2 _startingOffset;
         private RectTransform[] _displayObjectRectTransform;
         private Vector2[] _initialPosition;
-        public override IEnumerator Begin()
+        public override IEnumerator Initialize()
         {
             _canvasGroups=new CanvasGroup[_displayObjects.Length];
             _displayObjectRectTransform=new RectTransform[_displayObjects.Length];
@@ -39,12 +39,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 _initialPosition[i]=_displayObjectRectTransform[i].anchoredPosition;
                 _displayObjects[i].SetActive(true);
             }
-            if(_skipButton!=null)
-            {
-                _skipButton.gameObject.SetActive(true);
-                _skipButton.onClick.AddListener(OnClickSkipButton);
-            }
-            yield return Next();
+            yield return base.Initialize();
         }
         public override IEnumerator Execute()
         {
@@ -63,17 +58,16 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-
+            yield return base.Execute();
+        }
+        public override IEnumerator Finalize()
+        {
             Array.ForEach(_canvasGroups, canvasGroup=>canvasGroup.alpha = 1f);
             for(int i=0;i<_displayObjects.Length;i++)
             {
                 _displayObjectRectTransform[i].anchoredPosition=_initialPosition[i];
             }
-            if(_isSkipping)
-            {
-                yield return Skip();
-            }
-            yield return Pause();
+            yield return base.Finalize();
         }
     }
 }
