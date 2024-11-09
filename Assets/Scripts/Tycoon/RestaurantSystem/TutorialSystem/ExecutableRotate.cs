@@ -3,7 +3,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
     using System;
     using System.Collections;
     using UnityEngine;
-    using UnityEngine.UI;
 
     [Serializable]
     public class ExecutableRotate : ExecutableElement
@@ -12,6 +11,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         private RectTransform _targetRectTransform;
         [SerializeField]
         private float _animationDuration;
+        [SerializeField]
+        private float _animationExponent=1f;
         [SerializeField]
         private Vector3 _targetRotation;
         private Vector3 _initialRotation;
@@ -29,7 +30,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             {
                 float t = elapsedTime / _animationDuration;
 
-                _targetRectTransform.eulerAngles=Vector3.Lerp(_initialRotation, _targetRotation, t*t*t);
+                _targetRectTransform.eulerAngles=Vector3.Lerp(_initialRotation, _targetRotation, Mathf.Pow(t, _animationExponent));
 
                 elapsedTime += Time.deltaTime;
                 yield return null;

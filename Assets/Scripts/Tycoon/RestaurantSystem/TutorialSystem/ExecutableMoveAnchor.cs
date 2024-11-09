@@ -3,7 +3,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
     using System;
     using System.Collections;
     using UnityEngine;
-    using UnityEngine.UI;
 
     [Serializable]
     public class ExecutableMoveAnchor : ExecutableElement
@@ -12,6 +11,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         private RectTransform _targetRectTransform;
         [SerializeField]
         private float _animationDuration;
+        [SerializeField]
+        private float _animationExponent=1;
         [SerializeField]
         private Vector2 _targetAnchorMin;
         [SerializeField]
@@ -42,8 +43,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             {
                 float t = elapsedTime / _animationDuration;
 
-                _targetRectTransform.anchorMax=_targetRectTransform.pivot=Vector2.Lerp(_initialAnchorMax, _targetAnchorMax, t*t*t);
-                _targetRectTransform.anchorMin=_targetRectTransform.pivot=Vector2.Lerp(_initialAnchorMin, _targetAnchorMin, t*t*t);
+                _targetRectTransform.anchorMax=_targetRectTransform.pivot=Vector2.Lerp(_initialAnchorMax, _targetAnchorMax, Mathf.Pow(t, _animationExponent));
+                _targetRectTransform.anchorMin=_targetRectTransform.pivot=Vector2.Lerp(_initialAnchorMin, _targetAnchorMin, Mathf.Pow(t, _animationExponent));
 
                 elapsedTime += Time.deltaTime;
                 yield return null;

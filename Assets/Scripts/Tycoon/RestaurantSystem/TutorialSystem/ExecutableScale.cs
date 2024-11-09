@@ -13,6 +13,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         [SerializeField]
         private float _animationDuration;
         [SerializeField]
+        private float _animationExponent=1;
+        [SerializeField]
         private Vector3 _targetScale;
         private Vector3 _initialScale;
         public override IEnumerator Begin()
@@ -28,7 +30,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             {
                 float t = elapsedTime / _animationDuration;
 
-                _targetRectTransform.localScale=Vector3.Lerp(_initialScale, _targetScale, t*t*t);
+                _targetRectTransform.localScale=Vector3.Lerp(_initialScale, _targetScale, Mathf.Pow(t, _animationExponent));
 
                 elapsedTime += Time.deltaTime;
                 yield return null;

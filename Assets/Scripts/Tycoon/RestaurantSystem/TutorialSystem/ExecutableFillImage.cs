@@ -13,6 +13,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         [SerializeField]
         private float _animationDuration;
         [SerializeField]
+        private float _animationExponent=1;
+        [SerializeField]
         private float _targetFillAmount;
         private float _initialFillAmount;
         public override IEnumerator Execute()
@@ -23,7 +25,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             {
                 float t = elapsedTime / _animationDuration;
 
-                _targetImage.fillAmount=Mathf.Lerp(_initialFillAmount, _targetFillAmount, t*t*t);
+                _targetImage.fillAmount=Mathf.Lerp(_initialFillAmount, _targetFillAmount, Mathf.Pow(t, _animationExponent));
 
                 elapsedTime += Time.deltaTime;
                 yield return null;

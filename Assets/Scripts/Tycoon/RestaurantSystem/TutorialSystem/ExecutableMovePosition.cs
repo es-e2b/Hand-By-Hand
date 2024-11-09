@@ -13,6 +13,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         [SerializeField]
         private float _animationDuration;
         [SerializeField]
+        private float _animationExponent=1;
+        [SerializeField]
         private Vector2 _targetPosition;
         private Vector2 _initialPosition;
         public override IEnumerator Begin()
@@ -38,7 +40,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             {
                 float t = elapsedTime / _animationDuration;
 
-                _targetRectTransform.anchoredPosition=_initialPosition+Vector2.Lerp(Vector2.zero, _targetPosition, t*t*t);
+                _targetRectTransform.anchoredPosition=_initialPosition+Vector2.Lerp(Vector2.zero, _targetPosition, Mathf.Pow(t, _animationExponent));
 
                 elapsedTime += Time.deltaTime;
                 yield return null;
