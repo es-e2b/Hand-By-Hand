@@ -24,8 +24,17 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             _executeIndex=index;
             _isSelected=true;
         }
+        private void SkipBeforeElement()
+        {
+            _beforeSelectExecuteElement.Skip();
+        }
+        private void SkipAfterElement()
+        {
+            _afterSelectExecuteElement.Skip();
+        }
         public override IEnumerator Begin()
         {
+            _skipButton.onClick.AddListener(SkipBeforeElement);
             if(_isSkipping)
             {
                 _beforeSelectExecuteElement.Skip();
@@ -34,6 +43,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             {
                 yield return _beforeSelectExecuteElement.Initialize();
             }
+            _skipButton.onClick.RemoveListener(SkipBeforeElement);
+
             _isSkipping=false;
             for(int i=0;i<_executeButtons.Length;i++)
             {
@@ -54,6 +65,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         }
         public override IEnumerator Execute()
         {
+            _skipButton.onClick.AddListener(SkipAfterElement);
             if(_isSkipping)
             {
                 _afterSelectExecuteElement.Skip();
@@ -62,6 +74,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             {
                 yield return _afterSelectExecuteElement.Initialize();
             }
+            _skipButton.onClick.RemoveListener(SkipAfterElement);
+
             _skipButton.gameObject.SetActive(false);
             if(_executeIndex<_executableElements.Length&&_executableElements[_executeIndex]!=null)
             {
