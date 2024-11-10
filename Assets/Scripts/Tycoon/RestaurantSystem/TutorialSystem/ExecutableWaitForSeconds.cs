@@ -16,6 +16,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         {
             _parentPanel.SetActive(true);
             yield return new WaitForSeconds(_watingTime);
+            yield return base.Pause();
         }
         public override IEnumerator Complete()
         {

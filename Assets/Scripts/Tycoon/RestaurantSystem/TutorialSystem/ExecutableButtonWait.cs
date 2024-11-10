@@ -28,6 +28,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         public override IEnumerator Pause()
         {
             yield return new WaitUntil(()=>isClicked);
+            yield return base.Pause();
         }
         public override IEnumerator Complete()
         {

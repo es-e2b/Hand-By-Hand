@@ -16,6 +16,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         {
             _waitPanel.SetActive(true);
             yield return new WaitUntil(()=>Input.GetMouseButtonDown(0));
+            yield return base.Pause();
         }
         public override IEnumerator Complete()
         {

@@ -28,15 +28,11 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             Array.ForEach(_buttons, button=>button.onClick.AddListener(OnClick));
             yield return new WaitUntil(()=>isClicked);
             Array.ForEach(_buttons, button=>button.onClick.RemoveListener(OnClick));
-        }
-        public override IEnumerator Complete()
-        {
             if(_promptPanel.transform.GetChild(1).TryGetComponent<ObjectDisplayAnimator>(out var objectDisplayAnimator))
             {
                 yield return objectDisplayAnimator.HideMessageAnimation();
             }
             _promptPanel.SetActive(false);
-            yield break;
         }
     }
 }

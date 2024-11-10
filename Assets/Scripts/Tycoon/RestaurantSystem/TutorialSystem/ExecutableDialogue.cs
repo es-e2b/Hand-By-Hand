@@ -28,7 +28,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         [SerializeField]
         private Button _button;
 
-        public override IEnumerator Initialize()
+        public override IEnumerator Begin()
         {
             Debug.Log("Called Begin");
             _textPanel=transform.GetChild(0).gameObject;
@@ -37,12 +37,11 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
 
             _button.onClick.AddListener(OnButtonClick);
 
-            yield return Next();
+            yield return base.Begin();
         }
 
         private void OnButtonClick()
         {
-            print("Called On Button Click Method");
             _buttonClicked = true; // 버튼 클릭 이벤트 발생 시 플래그를 설정
         }
 
@@ -56,7 +55,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 LayoutRebuilder.ForceRebuildLayoutImmediate(_wholeText.GetComponent<RectTransform>());
                 yield return Execute();
             }
-            yield return Complete();
         }
 
         public override IEnumerator Execute()
@@ -94,30 +92,15 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 }
                 _text.text=stringBuilder.ToString();
             }
-            if(_buttonClicked)
-            {
-                yield return Finalize();
-            }
-
-            yield return Pause();
-        }
-
-        public override IEnumerator Pause()
-        {
-            _nextDialogueIcon.SetActive(true);
-            _buttonClicked = false;
-
-            print("Called Dialogue Element Pause Method");
-
-            yield return new WaitUntil(() => _buttonClicked); // 버튼 클릭 대기
-            _nextDialogueIcon.SetActive(false);
-        }
-
-        public override IEnumerator Finalize()
-        {
             _text.text = _currentString;
             _buttonClicked = false; // 스킵 후 플래그 초기화
             yield return null;
+
+            _nextDialogueIcon.SetActive(true);
+            _buttonClicked = false;
+
+            yield return new WaitUntil(() => _buttonClicked); // 버튼 클릭 대기
+            _nextDialogueIcon.SetActive(false);
         }
 
         public override IEnumerator Complete()
