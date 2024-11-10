@@ -1,3 +1,4 @@
+using HandByHand.SoundSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -69,10 +70,12 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 && handPositionComponent.IsCorrect && particularComponent.IsCorrect)
             {
                 isSignLanguageCorrect = true;
+                SoundManager.Instance.PlaySE(SoundName.Success);
                 StartCoroutine(MadeSignLanguageCoroutine());
             }
             else
             {
+                SoundManager.Instance.PlaySE(SoundName.Wrong);
                 CheckWrongAnswerAndDisableCorrectAnswer();
             }
         }

@@ -47,7 +47,7 @@ MonoBehaviour:
         whoseItem: 0
         itemType: 0
         Name: "\uB2E4\uB8E8"
-        Text: "\uC7A0\uAE50\uB9CC! \uB9D0\uD558\uAE30 \uC804\uC5D0, <color=red>\uC6B0\uB9AC
+        Text: "\uC7A0\uAE50\uB9CC! \uB9D0\uD558\uAE30 \uC804\uC5D0, <color=#FA6B54>\uC6B0\uB9AC
           \uC774\uC81C\uBD80\uD130 \uC218\uC5B4\uB85C \uC598\uAE30\uD574\uBCF4\uB294
           \uAC74 \uC5B4\uB54C?</color>"
     - rid: 7424402959524429828
