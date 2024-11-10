@@ -15,6 +15,10 @@ namespace HandByHand.SoundSystem
         private Dictionary<SoundName, AudioClip> bgmDict = new Dictionary<SoundName, AudioClip>();
 
         private Dictionary<SoundName, AudioClip> seDict = new Dictionary<SoundName, AudioClip>();
+
+        public float BGMVolume = 1.0f;
+
+        public float SEVolume = 0.7f;
         #endregion
 
         private void Awake()
@@ -37,6 +41,8 @@ namespace HandByHand.SoundSystem
         /// <param name="seList"></param>
         public void Init(List<SoundAndName> bgmList, List<SoundAndName> seList)
         {
+            audioSource.volume = BGMVolume;
+
             for (int i = 0; i < bgmList.Count; i++)
             {
                 bgmDict.Add(bgmList[i].Name, bgmList[i].AudioClip);
@@ -56,10 +62,13 @@ namespace HandByHand.SoundSystem
 
         public void PlaySE(SoundName clipName)
         {
-            audioSource.PlayOneShot(seDict[clipName], 0.7f);
+            audioSource.PlayOneShot(seDict[clipName], SEVolume);
         }
 
-        //오프셋 실행을 위한 오버로드
+        /// <summary>
+        /// 클립에 맞는 Enum타입이 없을 경우 사용하기 위한 오버로딩 함수
+        /// </summary>
+        /// <param name="clip"></param>
         public void PlaySE(AudioClip clip)
         {
             audioSource.PlayOneShot(clip);
@@ -82,6 +91,11 @@ namespace HandByHand.SoundSystem
             }
         }
 
+        /// <summary>
+        /// 볼륨을 fadeTime동안 천천히 줄여나감.
+        /// </summary>
+        /// <param name="fadeTime"></param>
+        /// <returns></returns>
         IEnumerator BGMFadeIn(float fadeTime)
         {
             float time = 0;
@@ -100,6 +114,16 @@ namespace HandByHand.SoundSystem
             audioSource.volume = 0;
 
             audioSource.Stop();
+        }
+
+        public void AdjustBGMVolume(float volume)
+        {
+            audioSource.volume = volume;
+        }
+
+        public void AdjustSEVolume(float volume)
+        {
+            SEVolume = volume;
         }
     }
 }
