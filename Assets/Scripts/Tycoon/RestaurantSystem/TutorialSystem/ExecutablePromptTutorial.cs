@@ -6,7 +6,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
     using UnityEngine.UI;
 
     [Serializable]
-    public class ExecutablePromptTutorial : ExecutablePrompt
+    public class ExecutablePromptTutorial : ExecutablePromptLegacy
     {
         public override IEnumerator Finalize()
         {
