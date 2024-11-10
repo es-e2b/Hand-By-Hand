@@ -15,7 +15,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         private ElementExecutor _elementExecutor;
         public override void Skip()
         {
-            print("Execute Class: Skip Method");
             Array.ForEach(_executableElements, element=>element.Skip());
             base.Skip();
         }
