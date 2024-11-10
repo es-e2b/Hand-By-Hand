@@ -6,8 +6,6 @@ namespace Assets.Scripts.Cartoon
 
     public class CartoonSceneManager : MonoBehaviour
     {
-        [SerializeField]
-        private ExecutableList _executableList;
         private void Start()
         {
             
