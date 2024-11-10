@@ -3787,53 +3787,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 764351638}
   m_CullTransparentMesh: 1
---- !u!1 &765463507
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 765463509}
-  - component: {fileID: 765463508}
-  m_Layer: 0
-  m_Name: Common Sign Language Dictionary
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &765463508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 765463507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65597917b31614fb5b49add6fefbd95b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _commonSignLanguageDictionary:
-    _vocabulary:
-    - {fileID: 11400000, guid: 50794acef20c543a2b3506fc44135f55, type: 2}
---- !u!4 &765463509
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 765463507}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &766071038
 GameObject:
   m_ObjectHideFlags: 0
@@ -6404,57 +6357,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1117376054
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1117376056}
-  - component: {fileID: 1117376055}
-  m_Layer: 0
-  m_Name: Game Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1117376055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1117376054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e087312d5149c4afb991a385c0fac215, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hasCompletedTutorial: 0
-  CharacterPool:
-  - {fileID: 11400000, guid: 2937e69156a5c4536b96f7754663eaa4, type: 2}
-  - {fileID: 11400000, guid: dc86020439f294fb7a352b93f6260402, type: 2}
-  - {fileID: 11400000, guid: a3a133dce5003433b976fd81c07728b7, type: 2}
-  - {fileID: 11400000, guid: 19a0f719c349a4eaeae1273b5d33f308, type: 2}
-  - {fileID: 11400000, guid: 9fdd6e50aa1b0431d9f7fcc4113616a0, type: 2}
---- !u!4 &1117376056
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1117376054}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1155140128
 GameObject:
   m_ObjectHideFlags: 0
@@ -14227,6 +14129,4 @@ SceneRoots:
   - {fileID: 872276776}
   - {fileID: 1155140130}
   - {fileID: 354043239}
-  - {fileID: 1117376056}
   - {fileID: 1528385894}
-  - {fileID: 765463509}
