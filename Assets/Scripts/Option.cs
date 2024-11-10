@@ -31,7 +31,10 @@ namespace HandByHand
         private Image _SEImage;
 
         [SerializeField]
-        private Sprite muteSprite;
+        private Sprite musicMuteSprite;
+
+        [SerializeField]
+        private Sprite _SEMuteSprite;
 
         private Sprite musicSprite;
         private Sprite _SESprite;
@@ -88,7 +91,7 @@ namespace HandByHand
 
             if (SoundManager.Instance.BGMVolume == 0)
             {
-                musicImage.sprite = muteSprite;
+                musicImage.sprite = musicMuteSprite;
             }
             else
             {
@@ -126,7 +129,7 @@ namespace HandByHand
 
             if (SoundManager.Instance.SEVolume == 0)
             {
-                _SEImage.sprite = muteSprite;
+                _SEImage.sprite = _SEMuteSprite;
             }
             else
             {

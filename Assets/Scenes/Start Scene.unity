@@ -5456,7 +5456,8 @@ MonoBehaviour:
   MainMenuButton: {fileID: 1968430604}
   musicImage: {fileID: 920670430}
   _SEImage: {fileID: 36149035}
-  muteSprite: {fileID: 0}
+  musicMuteSprite: {fileID: -830673943, guid: bd636139aefb2bf4aa58152156a57c95, type: 3}
+  _SEMuteSprite: {fileID: -754885695, guid: bd636139aefb2bf4aa58152156a57c95, type: 3}
 --- !u!114 &1984825835
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -71,7 +71,7 @@ namespace HandByHand.SoundSystem
         /// <param name="clip"></param>
         public void PlaySE(AudioClip clip)
         {
-            audioSource.PlayOneShot(clip);
+            audioSource.PlayOneShot(clip, SEVolume);
         }
 
         /// <summary>
@@ -119,6 +119,7 @@ namespace HandByHand.SoundSystem
         public void AdjustBGMVolume(float volume)
         {
             audioSource.volume = volume;
+            BGMVolume = volume;
         }
 
         public void AdjustSEVolume(float volume)
