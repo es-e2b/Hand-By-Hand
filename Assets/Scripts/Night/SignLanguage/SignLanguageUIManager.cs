@@ -19,6 +19,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         public GameObject SignLanguageCanvas;
         public TMP_Text WordToMake;
         public Button CompareEventButton;
+        public GameObject RayCastBlockPanel;
 
         [Header("UIListComponent")]
         public ButtonListUIComponent ButtonListUIComponent;
@@ -27,12 +28,11 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         private List<TMP_Text> buttonTextList;
         private List<GameObject> buttonGameObjectList;
         private List<GameObject> viewportObjectList;
-        
+
         private GameObject UIObjectInSignLanguageCanvas;
-        private Vector3 originalUIObjectPosition;
-        private float screenHeight = Screen.height;
+        private float screenHeight = 2340f;
         private Vector3 originalCompareEventButtonPosition;
-        
+
         #endregion
 
 
@@ -60,7 +60,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             buttonGameObjectList = ButtonListUIComponent.buttonGameObject;
             viewportObjectList = ViewportListUIComponent.UIObject;
             UIObjectInSignLanguageCanvas = SignLanguageCanvas.transform.Find("UIObject").gameObject;
-            originalUIObjectPosition = UIObjectInSignLanguageCanvas.transform.localPosition;
             originalCompareEventButtonPosition = CompareEventButton.GetComponent<RectTransform>().anchoredPosition;
 
             IsVerticalAnimationDone = true;
@@ -68,8 +67,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         private void Start()
         {
-            if (UIObjectInSignLanguageCanvas.GetComponent<RectTransform>().anchoredPosition != new Vector2(0, -1 * screenHeight))
-                UIObjectInSignLanguageCanvas.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -1 * screenHeight);
+            //if (UIObjectInSignLanguageCanvas.GetComponent<RectTransform>().anchoredPosition != new Vector2(0, -1 * screenHeight))
+            //UIObjectInSignLanguageCanvas.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -1 * screenHeight);
         }
 
         /// <summary>
@@ -110,12 +109,12 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// </summary>
         private void InitCompareEventButtonPosition()
         {
-            CompareEventButton.transform.localPosition = originalCompareEventButtonPosition;
+            CompareEventButton.GetComponent<RectTransform>().anchoredPosition = originalCompareEventButtonPosition;
         }
 
         private void InitViewportAndButtonOpacity()
         {
-            for(int i = 0; i < viewportObjectList.Count; i++)
+            for (int i = 0; i < viewportObjectList.Count; i++)
             {
                 viewportObjectList[i].GetComponent<WhatIsSelectedComponent>().Init();
             }
@@ -153,7 +152,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         {
             if (SignLanguageCanvas.activeSelf)
             {
-                Vector3 targetPosition = new Vector3(0, 0, 0);
+                Vector2 targetPosition = new Vector2(0, 0);
                 WordToMake.SetText("수화로 표현해보자!\n\"" + SignLanguageMean + "\"");
                 SignLanguageUIActiveSelf = true;
 
@@ -165,7 +164,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         {
             if (SignLanguageCanvas.activeSelf)
             {
-                Vector3 targetPosition = new Vector3(0, -1 * screenHeight, 0);
+                Vector3 targetPosition = new Vector3(0, -2340, 0);
                 SignLanguageUIActiveSelf = false;
 
                 StartCoroutine(UICanvasVerticalSlideCoroutine(targetPosition, true));
@@ -354,7 +353,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             }
 
 
-            if(incorrectIndexList.Count > 0)
+            if (incorrectIndexList.Count > 0)
             {
                 return incorrectIndexList;
             }
@@ -375,28 +374,29 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// <param name="targetPosition">목표 지점</param>
         /// <param name="isInitObject">오브젝트 위치를 재정렬 할것인지에 대한 boolean</param>
         /// <returns></returns>
-        IEnumerator UICanvasVerticalSlideCoroutine(Vector3 targetPosition, bool isInitObject)
+        IEnumerator UICanvasVerticalSlideCoroutine(Vector2 targetPosition, bool isInitObject)
         {
             //변수 선언
             #region VARIABLEFIELD
-            float UIObjectX = UIObjectInSignLanguageCanvas.transform.localPosition.x;
-            float UIObjectZ = UIObjectInSignLanguageCanvas.transform.localPosition.z;
+            RectTransform rectTransform = UIObjectInSignLanguageCanvas.GetComponent<RectTransform>();
 
-            float velocityY = 0f;
+            Vector2 velocityY = Vector2.zero;
             float smoothTime = 0.3f;
 
-            float offset = 0.1f;
+            float offset = 0.5f;
+
             #endregion
 
             IsVerticalAnimationDone = false;
+            RayCastBlock(true);
+
             //패널을 위로 부드럽게 올린다
             //목표 지점이 패널의 현재 위치보다 위에 있을 경우
-            if (targetPosition.y - offset > UIObjectInSignLanguageCanvas.transform.localPosition.y)
+            if (rectTransform.anchoredPosition.y < targetPosition.y - offset)
             {
-                while (targetPosition.y - offset > UIObjectInSignLanguageCanvas.transform.localPosition.y)
+                while (rectTransform.anchoredPosition.y < targetPosition.y - offset)
                 {
-                    float positionY = Mathf.SmoothDamp(UIObjectInSignLanguageCanvas.transform.localPosition.y, targetPosition.y, ref velocityY, smoothTime);
-                    UIObjectInSignLanguageCanvas.transform.localPosition = new Vector3(UIObjectX, positionY, UIObjectZ);
+                    rectTransform.anchoredPosition = Vector2.SmoothDamp(rectTransform.anchoredPosition, targetPosition, ref velocityY, smoothTime);
 
                     yield return null;
                 }
@@ -404,16 +404,17 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             //목표 지점이 아래 있을 경우
             else
             {
-                while (targetPosition.y + offset < UIObjectInSignLanguageCanvas.transform.localPosition.y)
+                while (targetPosition.y + offset < rectTransform.anchoredPosition.y)
                 {
-                    float positionY = Mathf.SmoothDamp(UIObjectInSignLanguageCanvas.transform.localPosition.y, targetPosition.y, ref velocityY, smoothTime);
-                    UIObjectInSignLanguageCanvas.transform.localPosition = new Vector3(UIObjectX, positionY, UIObjectZ);
+                    rectTransform.anchoredPosition = Vector2.SmoothDamp(rectTransform.anchoredPosition, targetPosition, ref velocityY, smoothTime);
 
                     yield return null;
                 }
             }
 
-            UIObjectInSignLanguageCanvas.transform.localPosition = targetPosition;
+            rectTransform.anchoredPosition = targetPosition;
+
+            RayCastBlock(false);
 
             //애니메이션 완료를 알림
             yield return StartCoroutine(AnnounceAnimationDone(isInitObject));
@@ -443,7 +444,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             //목표 위치를 저장할 변수
             Vector2 targetPosition;
 
-            float velocityX = 0f;
+            Vector2 velocityX = Vector2.zero;
             float smoothTime = 0.15f;
 
             float offset = 0.5f;
@@ -457,8 +458,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
                 while (targetPosition.x + offset < viewportRectTransformComponent.anchoredPosition.x)
                 {
-                    float positionX = Mathf.SmoothDamp(viewportRectTransformComponent.anchoredPosition.x, targetPosition.x, ref velocityX, smoothTime);
-                    viewportRectTransformComponent.anchoredPosition = new Vector2(positionX, UIObjectY);
+                    viewportRectTransformComponent.anchoredPosition = Vector2.SmoothDamp(viewportRectTransformComponent.anchoredPosition, targetPosition, ref velocityX, smoothTime);
 
                     yield return null;
                 }
@@ -469,8 +469,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
                 while (targetPosition.x - offset > viewportRectTransformComponent.anchoredPosition.x)
                 {
-                    float positionX = Mathf.SmoothDamp(viewportRectTransformComponent.anchoredPosition.x, targetPosition.x, ref velocityX, smoothTime);
-                    viewportRectTransformComponent.anchoredPosition = new Vector2(positionX, UIObjectY);
+                    viewportRectTransformComponent.anchoredPosition = Vector2.SmoothDamp(viewportRectTransformComponent.anchoredPosition, targetPosition, ref velocityX, smoothTime);
 
                     yield return null;
                 }
@@ -496,19 +495,19 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 SignLanguageUIActiveSelf = false;
                 incorrectAnswerIndexList = new List<int>() { -1 };
                 presentPanelIndex = 0;
+                RayCastBlock(true);
             }
 
             IsVerticalAnimationDone = true;
             yield return null;
         }
 
-        IEnumerator CompareButtonVerticalSlideCoroutine(Vector3 targetPosition)
+        IEnumerator CompareButtonVerticalSlideCoroutine(Vector2 targetPosition)
         {
             #region VARIABLEFIELD
-            float UIObjectX = CompareEventButton.transform.localPosition.x;
-            float UIObjectZ = CompareEventButton.transform.localPosition.z;
+            RectTransform rectTransform = CompareEventButton.GetComponent<RectTransform>();
 
-            float velocityY = 0f;
+            Vector2 velocityY = Vector2.zero;
             float smoothTime = 0.3f;
 
             float offset = 0.1f;
@@ -516,12 +515,11 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             //패널을 위로 부드럽게 올린다
             //목표 지점이 패널의 현재 위치보다 위에 있을 경우
-            if (targetPosition.y - offset > CompareEventButton.transform.localPosition.y)
+            if (targetPosition.y - offset > rectTransform.anchoredPosition.y)
             {
-                while (targetPosition.y - offset > CompareEventButton.transform.localPosition.y)
+                while (targetPosition.y - offset > rectTransform.anchoredPosition.y)
                 {
-                    float positionY = Mathf.SmoothDamp(CompareEventButton.transform.localPosition.y, targetPosition.y, ref velocityY, smoothTime);
-                    CompareEventButton.transform.localPosition = new Vector3(UIObjectX, positionY, UIObjectZ);
+                    rectTransform.anchoredPosition = Vector2.SmoothDamp(rectTransform.anchoredPosition, targetPosition, ref velocityY, smoothTime);
 
                     yield return null;
                 }
@@ -529,19 +527,26 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             //목표 지점이 아래 있을 경우
             else
             {
-                while (targetPosition.y + offset < CompareEventButton.transform.localPosition.y)
+                while (targetPosition.y + offset < rectTransform.anchoredPosition.y)
                 {
-                    float positionY = Mathf.SmoothDamp(CompareEventButton.transform.localPosition.y, targetPosition.y, ref velocityY, smoothTime);
-                    CompareEventButton.transform.localPosition = new Vector3(UIObjectX, positionY, UIObjectZ);
+                    rectTransform.anchoredPosition = Vector2.SmoothDamp(rectTransform.anchoredPosition, targetPosition, ref velocityY, smoothTime);
 
                     yield return null;
                 }
             }
 
-            CompareEventButton.transform.localPosition = targetPosition;
+            rectTransform.anchoredPosition = targetPosition;
 
             yield return null;
         }
         #endregion
+
+        private void RayCastBlock(bool isBlock)
+        {
+            if(isBlock)
+                RayCastBlockPanel.SetActive(true);
+            else
+                RayCastBlockPanel.SetActive(false);
+        }
     }
 }

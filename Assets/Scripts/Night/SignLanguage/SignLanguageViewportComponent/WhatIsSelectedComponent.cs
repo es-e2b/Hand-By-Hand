@@ -1,3 +1,4 @@
+using HandByHand.SoundSystem;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -88,6 +89,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             StartCoroutine(AdjustButtonImageOpacity(index));
         }
 
+        #region BUTTONEVENT
         /// <summary>
         /// 버튼 클릭시 해당 함수를 불러옴
         /// </summary>
@@ -135,6 +137,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             AdjustObjectScaleCoroutine = StartCoroutine(AdjustObjectSize(clickObjectHierarchyIndex));
         }
+        #endregion
 
         #region COROUTINE
         /// <summary>

@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using HandByHand.NightSystem.SignLanguageSystem;
 using Assets.Scripts.SignLanguage;
+using HandByHand.SoundSystem;
 
 namespace HandByHand.NightSystem.DialogueSystem
 {
@@ -28,35 +29,44 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         float waitingTimeOffset = 1.5f;
 
-        Coroutine DialogueCoroutine;
+        public Coroutine DialogueCoroutine;
 
         #region MANAGERCOMPONENT
+        [Header("ManagerComponents")]
         [SerializeField]
         private SignLanguageUIManager signLanguageUIManager;
 
+        [SerializeField]
         private PrintManager printManager;
 
+        [SerializeField]
         private SignLanguageManager signLanguageManager;
 
+        [SerializeField]
         private DialogueChoiceSelectManager dialogueChoiceSelectManager;
         #endregion
 
         #region INIT
+        void Awake()
+        {
+            getInput = BlinkIcon.GetComponent<GetInput>();
+            LoadDialogue();
+        }
+
+        void Start()
+        {
+            BlinkIcon.SetActive(false);
+        }
+
+        #region FILESAVEANDLOAD
         //하루가 지났을 시 해당 함수를 불러주세요.
-        private void SaveDayIndex()
+        void SaveDayIndex()
         {
             PlayerPrefs.SetInt("Day", PlayerPrefs.GetInt("Day") + 1);
         }
 
-        void Awake()
-        {
-            printManager = gameObject.transform.Find("PrintManager").GetComponent<PrintManager>();
-            signLanguageManager = gameObject.transform.Find("SignLanguageManager").GetComponent<SignLanguageManager>();
-            dialogueChoiceSelectManager = gameObject.transform.Find("DialogueChoiceSelectManager").GetComponent<DialogueChoiceSelectManager>();
-            getInput = BlinkIcon.GetComponent<GetInput>();
-        }
 
-        void Start()
+        void LoadDialogue()
         {
             //Init PlayerPrefs
             if (!PlayerPrefs.HasKey("Day"))
@@ -68,8 +78,12 @@ namespace HandByHand.NightSystem.DialogueSystem
             {
                 LoadDialogueFileSO();
             }
-            DialogueCoroutine = StartCoroutine(StartDialogue());
-            BlinkIcon.SetActive(false);
+        }
+
+        void LoadDialogueFileSO()
+        {
+            int index = PlayerPrefs.GetInt("Day");
+            DialogueFileSO = Resources.Load<DialogueFileSO>("DialogueSOFile/DialogueFile/Day" + index + "/Day" + index);
         }
 
         //키 값을 초기화 하기 위한 함수
@@ -78,6 +92,7 @@ namespace HandByHand.NightSystem.DialogueSystem
         {
             PlayerPrefs.DeleteKey("Day");
         }
+        #endregion
         #endregion
 
         public IEnumerator StartDialogue()
@@ -123,6 +138,8 @@ namespace HandByHand.NightSystem.DialogueSystem
                             BlinkIcon.SetActive(true);
                             yield return new WaitUntil(() => getInput.IsGetInput == true);
                             BlinkIcon.SetActive(false);
+                            //Play Click SE
+                            SoundManager.Instance.PlaySE(SoundName.Click);
                         }
                         else
                         {
@@ -136,6 +153,8 @@ namespace HandByHand.NightSystem.DialogueSystem
                         BlinkIcon.SetActive(true);
 
                         yield return new WaitUntil(() => getInput.IsGetInput == true);
+                        //Play Click SE
+                        SoundManager.Instance.PlaySE(SoundName.Click);
                         BlinkIcon.SetActive(false);
 
                         printManager.ReturnChoiceObject();
@@ -147,7 +166,8 @@ namespace HandByHand.NightSystem.DialogueSystem
 
                         dialogueChoiceSelectManager.WaitForSelectChoice();
                         yield return new WaitUntil(() => dialogueChoiceSelectManager.IsChoiceSelected == true);
-
+                        //Play Click SE
+                        SoundManager.Instance.PlaySE(SoundName.Click);
                         printManager.ReturnChoiceObject();
 
                         yield return new WaitUntil(() => printManager.IsPrintEnd == true);
@@ -280,8 +300,6 @@ namespace HandByHand.NightSystem.DialogueSystem
 
                         Destroy(tutorialAsset);
 
-                        yield return new WaitForSeconds(0.3f);
-
                         signLanguageUIManager.InActiveUIObject();
 
                         //waiting offset
@@ -299,19 +317,14 @@ namespace HandByHand.NightSystem.DialogueSystem
         public void ClosePopup()
         {
             IsSwipeEnable = true;
-            PopupObject.SetActive(false);
+            //비활성화시 Enqueue 코루틴에서 오류 발생
+            PopupObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(2000, 2000);
         }
 
         private void Restart()
         {
             StopCoroutine(DialogueCoroutine);
             DialogueCoroutine = StartCoroutine(StartDialogue());
-        }
-
-        private void LoadDialogueFileSO()
-        {
-            int index = PlayerPrefs.GetInt("Day");
-            DialogueFileSO = Resources.Load<DialogueFileSO>("DialogueSOFile/DialogueFile/Day" + index + "/Day" + index);
         }
     }
 }

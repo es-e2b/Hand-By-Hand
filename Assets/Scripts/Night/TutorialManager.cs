@@ -1,4 +1,5 @@
 using Assets.Scripts.SignLanguage;
+using HandByHand.SoundSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -137,6 +138,9 @@ namespace HandByHand.NightSystem.DialogueSystem
                 BlinkIcon.SetActive(true);
 
                 yield return StartCoroutine(WaitUntilTouchInput());
+
+                //Play Click SE
+                SoundManager.Instance.PlaySE(SoundName.Click);
 
                 itemCount++;
             }
