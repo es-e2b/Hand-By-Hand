@@ -9,6 +9,8 @@ namespace Assets.Scripts
 
     public class GameManager : MonoBehaviour
     {
+        [field:SerializeField]
+        private int StartDayCount { get; set; }
         public static GameManager Instance { get; private set; }
         public bool hasCompletedTutorial;
         private DayCycle _currentDayCycle;
@@ -66,7 +68,7 @@ namespace Assets.Scripts
         }
         private void Start()
         {
-            DayCount=1;
+            DayCount=StartDayCount;
         }
         public void ExitGame()
         {
