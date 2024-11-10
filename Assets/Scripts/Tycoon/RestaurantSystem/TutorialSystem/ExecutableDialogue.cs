@@ -41,7 +41,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                     LayoutRebuilder.ForceRebuildLayoutImmediate(_wholeText.GetComponent<RectTransform>());
                 }
                 yield return Execute();
-
+                
+                _isSkipping=false;
                 if(_nextDialogueIcon!=null)
                 {
                     _nextDialogueIcon.SetActive(true);
