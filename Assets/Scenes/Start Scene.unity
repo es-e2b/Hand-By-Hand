@@ -2653,7 +2653,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _commonSignLanguageDictionary:
     _vocabulary:
-    - {fileID: 11400000, guid: 50794acef20c543a2b3506fc44135f55, type: 2}
+    - {fileID: 11400000, guid: 200090ce5b842da4b83b88ae5bbacd48, type: 2}
 --- !u!4 &1012152289
 Transform:
   m_ObjectHideFlags: 0
