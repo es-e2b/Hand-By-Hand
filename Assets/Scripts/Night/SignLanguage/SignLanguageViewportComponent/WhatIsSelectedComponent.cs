@@ -56,6 +56,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             for (int i = 0; i < buttonComponentList.Count; i++)
             {
                 buttonComponentList[i].onClick.AddListener(AdjustOpacityExceptSelectedButton);
+                buttonComponentList[i].onClick.AddListener(AdjustObjectScale);
             }
 
             //초기화시 사용할 오브젝트 기존 투명도
@@ -103,12 +104,34 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             }
 
             if (AdjustButtonImageOpacityCoroutine != null)
+            {
                 StopCoroutine(AdjustButtonImageOpacityCoroutine);
-            
+                AdjustObjectScaleCoroutine = null;
+            }
+
             AdjustButtonImageOpacityCoroutine = StartCoroutine(AdjustButtonImageOpacity(clickObjectHierarchyIndex));
-            
+        }
+
+        /// <summary>
+        /// 버튼 클릭시 오브젝트 크기 조정
+        /// </summary>
+        private void AdjustObjectScale()
+        {
+            //오브젝트의 hierarchy에서의 인덱스 받아오기
+            GameObject clickObject = EventSystem.current.currentSelectedGameObject;
+            int clickObjectHierarchyIndex = clickObject.transform.GetSiblingIndex() - ignoreLayoutIndex;
+
+            //눌렀던 버튼 또 누를시 중단
+            if (clickObjectHierarchyIndex == formerSelectedButtonIndex)
+            {
+                return;
+            }
+
             if (AdjustObjectScaleCoroutine != null)
+            {
                 StopCoroutine(AdjustObjectScaleCoroutine);
+                AdjustObjectScaleCoroutine = null;
+            }
 
             AdjustObjectScaleCoroutine = StartCoroutine(AdjustObjectSize(clickObjectHierarchyIndex));
         }
@@ -220,7 +243,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             formerSelectedButtonIndex = selectedButtonIndex;
 
-            yield return null;
+            AdjustButtonImageOpacityCoroutine = null;
+            yield break;
         }
 
         /// <summary>
@@ -236,7 +260,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             float offset = 0.005f;
 
             float velocityY = 0;
-            float smoothTime = 0.02f;
+            float smoothTime = 0.01f;
 
             float selectedObjectScale;
 
@@ -267,11 +291,13 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 }
                 else
                 {
-                    buttonGameObject[i].transform.localScale = new Vector3(minSize, minSize, 0);
+                    selectedObjectScale = Mathf.SmoothDamp(buttonGameObject[i].transform.localScale.x, minSize, ref velocityY, smoothTime);
+                    buttonGameObject[i].transform.localScale = new Vector3(selectedObjectScale, selectedObjectScale, 0);
                 }
             }
 
-            yield return null;
+            AdjustObjectScaleCoroutine = null;
+            yield break;
         }
         #endregion
     }

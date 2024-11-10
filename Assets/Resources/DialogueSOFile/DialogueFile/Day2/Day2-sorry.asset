@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56e3cfb14d113449b924edeb519b6eb, type: 3}
+  m_Name: Day2-sorry
+  m_EditorClassIdentifier: 
+  DialogueItemList:
+  - rid: 8649954912755515437
+  - rid: 8649954912755515438
+  - rid: 8649954912755515439
+  - rid: 8649954912755515440
+  - rid: 8649954912755515441
+  - rid: 8649954912755515442
+  - rid: 8649954912755515443
+  - rid: 8649954912755515444
+  references:
+    version: 2
+    RefIds:
+    - rid: 8649954912755515437
+      type: {class: NPCText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 0
+        itemType: 0
+        Name: "\uB2E4\uB8E8"
+        Text: "\uC5ED\uC2DC \uADF8\uB807\uC9C0? \uC88B\uC544, \uADF8\uB7FC \uBC30\uC6CC\uBCF4\uB3C4\uB85D
+          \uD558\uC790!"
+    - rid: 8649954912755515438
+      type: {class: MakeSignLanguage, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 1
+        itemType: 4
+        SignLanguageSO: {fileID: 11400000, guid: 9af578969a078b34cbaad6a7863e85f3, type: 2}
+        Vocabulary: {fileID: 11400000, guid: 5ead1f893b381bc478114fc4213af0bd, type: 2}
+        AdditionalSetting:
+          DialogueSO: {fileID: 0}
+          ShowVocabularyFirst: 1
+          ShowVocabularyLast: 1
+    - rid: 8649954912755515439
+      type: {class: NPCText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 0
+        itemType: 0
+        Name: "\uB2E4\uB8E8"
+        Text: "\uB2E4\uC74C\uC73C\uB85C, '\uACE0\uB9C8\uC6CC'\uB3C4 \uBC30\uC6CC\uBCFC\uAE4C?"
+    - rid: 8649954912755515440
+      type: {class: MakeSignLanguage, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 1
+        itemType: 4
+        SignLanguageSO: {fileID: 11400000, guid: b6e7a840c17f73e4e934ec4c408889af, type: 2}
+        Vocabulary: {fileID: 11400000, guid: 5d5f39c80cc8992458560efa2910adb5, type: 2}
+        AdditionalSetting:
+          DialogueSO: {fileID: 0}
+          ShowVocabularyFirst: 1
+          ShowVocabularyLast: 1
+    - rid: 8649954912755515441
+      type: {class: NPCText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 0
+        itemType: 0
+        Name: "\uB2E4\uB8E8"
+        Text: "\uC815\uB9D0 \uC798 \uD558\uB124! \uC5ED\uC2DC \uB0B4 \uCE5C\uAD6C\uB2E4\uC6CC. "
+    - rid: 8649954912755515442
+      type: {class: NPCText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 0
+        itemType: 0
+        Name: "\uB2E4\uB8E8"
+        Text: "\uC624\uB298\uB3C4 \uC2DC\uAC04\uC774 \uBC8C\uC368\u2026 \uC5B4\uCA54
+          \uC218 \uC5C6\uC9C0, \uB0B4\uC77C\uB3C4 \uC2DC\uAC04\uC740 \uB9CE\uC73C\uB2C8\uAE4C!"
+    - rid: 8649954912755515443
+      type: {class: NPCText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 0
+        itemType: 0
+        Name: "\uB2E4\uB8E8"
+        Text: "\uC798 \uC790, \uCE5C\uAD6C. \uC624\uB298\uB3C4 \uB108\uC5D0\uAC8C
+          \uC18C\uC911\uD55C \uB0A0\uC774 \uB418\uC5C8\uAE38."
+    - rid: 8649954912755515444
+      type: {class: NPCText, ns: HandByHand.NightSystem.DialogueSystem, asm: Assembly-CSharp}
+      data:
+        whoseItem: 0
+        itemType: 0
+        Name: "\uB2E4\uB8E8"
+        Text: "\u2026\uAC71\uC815\uC2DC\uCF1C\uC11C \uBBF8\uC548\uD574."

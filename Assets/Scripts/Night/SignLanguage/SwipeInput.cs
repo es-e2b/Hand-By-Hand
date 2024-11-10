@@ -1,3 +1,4 @@
+using HandByHand.NightSystem.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         private bool isSwiping = false;
 
         public SignLanguageUIManager signLanguageUIManager;
+        public DialogueManager dialogueManager;
         public float swipeThreshold = 50f;
 
         void Update()
@@ -55,7 +57,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             // 좌우 스와이프 확인
             if (isSwiping && swipeDistanceX > swipeThreshold && swipeDistanceX > swipeDistanceY)
             {
-                if (fingerDownPosition.x - fingerUpPosition.x > 0)
+                if (fingerDownPosition.x - fingerUpPosition.x > 0 && dialogueManager.IsSwipeEnable)
                 {
                     // 오른쪽으로 스와이프한 경우
                     if ((signLanguageUIManager.presentPanelIndex + 1) < 4)
@@ -79,7 +81,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 else
                 {
                     // 왼쪽으로 스와이프한 경우
-                    if ((signLanguageUIManager.presentPanelIndex - 1) > -1)
+                    if ((signLanguageUIManager.presentPanelIndex - 1) > -1 && dialogueManager.IsSwipeEnable)
                     {
                         if (signLanguageUIManager.incorrectAnswerIndexList[0] != -1)
                         {
@@ -98,22 +100,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                     }
                 }
             }
-            // 상하 스와이프 확인
-            /*
-            else if (isSwiping && swipeDistanceY > swipeThreshold && swipeDistanceY > swipeDistanceX)
-            {
-                if (fingerDownPosition.y - fingerUpPosition.y > 0)
-                {
-                    // 아래로 스와이프한 경우
-                    Debug.Log("아래로 스와이프");
-                }
-                else
-                {
-                    // 위로 스와이프한 경우
-                    Debug.Log("위로 스와이프");
-                }
-            }
-            */
         }
     }
 }

@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Images/SignLanguage/Common/Thank.asset.meta
+guid: 89cc030fd2b63e04cbad1875c31aa0cf
+========
+guid: 763ac880d996988419a8d950a8981fd7
+>>>>>>>> feature-night-dialogueSystem:Assets/Scripts/Night/DialogueSOFile/DialogueFile/Day1/Day1-dislike.asset.meta
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

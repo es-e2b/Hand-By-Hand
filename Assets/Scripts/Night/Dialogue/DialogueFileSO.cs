@@ -50,5 +50,11 @@ namespace HandByHand.NightSystem.DialogueSystem
         {
             DialogueItemList.Add(new Tutorial());
         }
+
+        [ContextMenu("AddMakeSignLanguage")]
+        public void AddMakeSignLanguage()
+        {
+            DialogueItemList.Add(new MakeSignLanguage());
+        }
     }
 }
