@@ -35,6 +35,10 @@ namespace Assets.Scripts
             {
                 _dayCount = value;
                 OnChangedDayCount.Invoke(value);
+                if(PlayerPrefs.HasKey("Day"))
+                {
+                    PlayerPrefs.SetInt("Day", value);
+                }
             }
         }
         private int _dailySales;
