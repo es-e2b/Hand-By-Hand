@@ -11,40 +11,29 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         [SerializeField]
         private GameObject _buttonObject;
         private bool isClicked = false;
+        private Button _button;
         private void OnClick()
         {
             isClicked=true;
         }
-        public override IEnumerator Begin()
+        public override IEnumerator Initialize()
         {
-            yield return Next();
-        }
-        public override IEnumerator Next()
-        {
-            yield return Execute();
-            yield return Complete();
-        }
-        public override IEnumerator Execute()
-        {
+            if(!_buttonObject.TryGetComponent<Button>(out _button))
+            {
+                _button=_buttonObject.AddComponent<Button>();
+            }
+            _button.onClick.AddListener(OnClick);
             yield return Pause();
         }
         public override IEnumerator Pause()
         {
-            if(!_buttonObject.TryGetComponent<Button>(out var button))
-            {
-                button=_buttonObject.AddComponent<Button>();
-            }
-            button.onClick.AddListener(OnClick);
             yield return new WaitUntil(()=>isClicked);
-            button.onClick.RemoveListener(OnClick);
-        }
-        public override IEnumerator Skip()
-        {
-            throw new NotImplementedException();
+            yield return base.Pause();
         }
         public override IEnumerator Complete()
         {
-            yield break;
+            _button.onClick.RemoveListener(OnClick);
+            yield return base.Complete();
         }
     }
 }

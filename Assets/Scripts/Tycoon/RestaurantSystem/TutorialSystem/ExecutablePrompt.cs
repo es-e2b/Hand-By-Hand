@@ -18,38 +18,21 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         {
             isClicked=true;
         }
-        public override IEnumerator Begin()
+        public override IEnumerator Finalize()
         {
             _promptPanel.SetActive(true);
-            yield return Next();
-        }
-        public override IEnumerator Next()
-        {
-            yield return Execute();
-            yield return Complete();
-        }
-        public override IEnumerator Execute()
-        {
-            yield return Pause();
+            return base.Finalize();
         }
         public override IEnumerator Pause()
         {
             Array.ForEach(_buttons, button=>button.onClick.AddListener(OnClick));
             yield return new WaitUntil(()=>isClicked);
             Array.ForEach(_buttons, button=>button.onClick.RemoveListener(OnClick));
-        }
-        public override IEnumerator Skip()
-        {
-            throw new NotImplementedException();
-        }
-        public override IEnumerator Complete()
-        {
             if(_promptPanel.transform.GetChild(1).TryGetComponent<ObjectDisplayAnimator>(out var objectDisplayAnimator))
             {
                 yield return objectDisplayAnimator.HideMessageAnimation();
             }
             _promptPanel.SetActive(false);
-            yield break;
         }
     }
 }

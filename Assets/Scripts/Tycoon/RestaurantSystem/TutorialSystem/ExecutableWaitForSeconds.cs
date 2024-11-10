@@ -12,27 +12,11 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         private GameObject _parentPanel;
         [SerializeField]
         private float _watingTime;
-        public override IEnumerator Begin()
-        {
-            _parentPanel.SetActive(true);
-            yield return Next();
-        }
-        public override IEnumerator Next()
-        {
-            yield return Execute();
-            yield return Complete();
-        }
-        public override IEnumerator Execute()
-        {
-            yield return Pause();
-        }
         public override IEnumerator Pause()
         {
+            _parentPanel.SetActive(true);
             yield return new WaitForSeconds(_watingTime);
-        }
-        public override IEnumerator Skip()
-        {
-            throw new NotImplementedException();
+            yield return base.Pause();
         }
         public override IEnumerator Complete()
         {

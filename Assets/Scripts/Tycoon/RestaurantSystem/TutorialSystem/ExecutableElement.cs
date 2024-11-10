@@ -3,46 +3,84 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
     using System;
     using System.Collections;
     using UnityEngine;
+    using UnityEngine.UI;
 
     [Serializable]
     public class ExecutableElement : MonoBehaviour, IExcutable
     {
         [SerializeField]
         private float _watingStartTime;
+        [SerializeField]
+        protected float _puaseDuration;
+        [SerializeField]
+        protected Button _skipButton;
+        protected bool _isSkipping;
+        [SerializeField]
+        protected bool isRequiredClickToComplete;
+        public virtual void Skip()
+        {
+            _isSkipping=true;
+        }
         public virtual IEnumerator Initialize()
         {
-            yield return new WaitForSeconds(_watingStartTime);
-            Debug.Log("Called Initialize");
+            if(_skipButton!=null)
+            {
+                _skipButton.gameObject.SetActive(true);
+                _skipButton.onClick.AddListener(Skip);
+            }
+
+            float elapsedTime=0f;
+            while (elapsedTime < _watingStartTime && !_isSkipping)
+            {
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
             yield return Begin();
         }
-        public virtual IEnumerator Complete()
+        public virtual IEnumerator Begin()
         {
-            throw new NotImplementedException();
+            if(!_isSkipping)
+            {
+                yield return Next();
+            }
+            yield return Finalize();
+        }
+        public virtual IEnumerator Next()
+        {
+            yield return Execute();
         }
 
         public virtual IEnumerator Execute()
         {
-            throw new NotImplementedException();
+            yield break;
         }
-
-        public virtual IEnumerator Next()
-        {
-            throw new NotImplementedException();
-        }
-
         public virtual IEnumerator Pause()
         {
-            throw new NotImplementedException();
+            _isSkipping=false;
+            float elapsedTime=0f;
+
+            while (elapsedTime < _puaseDuration && !_isSkipping)
+            {
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+            yield return Complete();
         }
 
-        public virtual IEnumerator Skip()
+        public virtual IEnumerator Finalize()
         {
-            throw new NotImplementedException();
+            yield return Pause();
         }
 
-        public virtual IEnumerator Begin()
+        public virtual IEnumerator Complete()
         {
-            throw new NotImplementedException();
+            if(_skipButton!=null)
+            {
+                _skipButton.onClick.RemoveListener(Skip);
+                _skipButton.gameObject.SetActive(false);
+            }
+            yield break;
         }
     }
 }

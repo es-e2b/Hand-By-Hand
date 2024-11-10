@@ -12,27 +12,11 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
     {
         [SerializeField]
         private GameObject _waitPanel;
-        public override IEnumerator Begin()
-        {
-            _waitPanel.SetActive(true);
-            yield return Next();
-        }
-        public override IEnumerator Next()
-        {
-            yield return Execute();
-            yield return Complete();
-        }
-        public override IEnumerator Execute()
-        {
-            yield return Pause();
-        }
         public override IEnumerator Pause()
         {
+            _waitPanel.SetActive(true);
             yield return new WaitUntil(()=>Input.GetMouseButtonDown(0));
-        }
-        public override IEnumerator Skip()
-        {
-            throw new NotImplementedException();
+            yield return base.Pause();
         }
         public override IEnumerator Complete()
         {

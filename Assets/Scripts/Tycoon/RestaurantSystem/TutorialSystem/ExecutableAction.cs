@@ -8,37 +8,26 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
     [Serializable]
     public class ExecutableAction : ExecutableElement
     {
-        [SerializeField]
-        private bool isClickRequired;
         public UnityEvent _action;
+        [SerializeField]
+        private float _executionDuration;
         public override IEnumerator Begin()
         {
-            yield return Next();
-        }
-        public override IEnumerator Next()
-        {
-            yield return Execute();
-            yield return Complete();
+            _action.Invoke();
+            yield return base.Begin();
         }
         public override IEnumerator Execute()
         {
-            _action.Invoke();
-            yield return Pause();
-        }
-        public override IEnumerator Pause()
-        {
-            if(isClickRequired)
+            float elapsedTime = 0f;
+
+            while (elapsedTime < _executionDuration && !_isSkipping)
             {
-                yield return new WaitUntil(()=>Input.GetMouseButtonDown(0));
+                float t = elapsedTime / _executionDuration;
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
             }
-        }
-        public override IEnumerator Skip()
-        {
-            throw new NotImplementedException();
-        }
-        public override IEnumerator Complete()
-        {
-            yield break;
+            yield return base.Execute();
         }
     }
 }

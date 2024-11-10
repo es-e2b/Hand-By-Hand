@@ -4,13 +4,13 @@ namespace Assets.Scripts
     using CharacterData;
     using UnityEngine.Events;
     using UnityEngine.SceneManagement;
+    using Tycoon.RestaurantSystem.TutorialSystem;
+    using System.Collections;
 
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
         public bool hasCompletedTutorial;
-        [SerializeField]
-        private Object[] DayCycleScenes;
         private DayCycle _currentDayCycle;
         public DayCycle CurrentDayCycle
         {
@@ -35,6 +35,10 @@ namespace Assets.Scripts
             {
                 _dayCount = value;
                 OnChangedDayCount.Invoke(value);
+                if(PlayerPrefs.HasKey("Day"))
+                {
+                    PlayerPrefs.SetInt("Day", value);
+                }
             }
         }
         private int _dailySales;
@@ -63,8 +67,36 @@ namespace Assets.Scripts
         private void Start()
         {
             DayCount=1;
-            Debug.Log("Gama Manager Started");
         }
+        public void ExitGame()
+        {
+            Application.Quit();
+        }
+        public void StartExecutableList(ExecutableList executableList)
+        {
+            StartCoroutine(ExecuteExecutableList(executableList));
+        }
+        private IEnumerator ExecuteExecutableList(ExecutableList executableList)
+        {
+            ExecutableElement[] executables=executableList.Executables;
+            for(int i=0;i<executables.Length;i++)
+            {
+                yield return executables[i].Initialize();
+            }
+        }
+        public void ChangeCartoonScene()
+        {
+            CurrentDayCycle=DayCycle.Cartoon;
+        }
+        public void ChangeDayScene()
+        {
+            CurrentDayCycle=DayCycle.Day;
+        }
+        public void ChangeNightScene()
+        {
+            CurrentDayCycle=DayCycle.Night;
+        }
+
         public UnityEvent<int> OnChangedDayCount { get; private set; }
         public UnityEvent<int> OnChangedDailySales { get; private set; }
         public UnityEvent<DayCycle> OnChangedDayCycle { get; private set; }
@@ -72,6 +104,7 @@ namespace Assets.Scripts
     public enum DayCycle
     {
         Start,
+        Cartoon,
         Day,
         // DayToNight,
         Night,
