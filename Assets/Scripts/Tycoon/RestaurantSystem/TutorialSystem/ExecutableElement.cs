@@ -23,6 +23,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         }
         public virtual IEnumerator Initialize()
         {
+            _isSkipping=false;
             if(_skipButton!=null)
             {
                 _skipButton.gameObject.SetActive(true);
@@ -37,7 +38,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             }
             if(_isSkipping)
             {
-                // _isSkipping=false;
                 yield return Finalize();
                 yield return Pause();
                 yield return Complete();
