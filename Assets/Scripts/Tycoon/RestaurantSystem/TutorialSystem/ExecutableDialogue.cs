@@ -38,8 +38,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 if(_wholeText!=null)
                 {
                     _wholeText.text = _currentString;
+                    LayoutRebuilder.ForceRebuildLayoutImmediate(_wholeText.GetComponent<RectTransform>());
                 }
-                LayoutRebuilder.ForceRebuildLayoutImmediate(_wholeText.GetComponent<RectTransform>());
                 yield return Execute();
 
                 if(_nextDialogueIcon!=null)
