@@ -126,10 +126,10 @@ TextureImporter:
       name: Cartoon_Scene3_0
       rect:
         serializedVersion: 2
-        x: 543
-        y: 1716
-        width: 921
-        height: 543
+        x: 547
+        y: 1726
+        width: 914
+        height: 522
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
