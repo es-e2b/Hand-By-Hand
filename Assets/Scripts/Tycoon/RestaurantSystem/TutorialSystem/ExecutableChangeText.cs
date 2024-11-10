@@ -4,6 +4,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
     using System.Collections;
     using TMPro;
     using UnityEngine;
+    using UnityEngine.UI;
 
     [Serializable]
     public class ExecutableChangeText : ExecutableElement
@@ -16,6 +17,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         public override IEnumerator Finalize()
         {
             _targetTextObject.text=_changeText;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_targetTextObject.GetComponent<RectTransform>());
             yield return base.Finalize();
         }
     }
