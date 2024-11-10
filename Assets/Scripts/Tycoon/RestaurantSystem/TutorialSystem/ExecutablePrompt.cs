@@ -43,7 +43,9 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         }
         public override IEnumerator Next()
         {
+            _skipButton.gameObject.SetActive(false);
             yield return new WaitUntil(()=>_isSelected);
+            _skipButton.gameObject.SetActive(true);
             for(int i=0;i<_executeButtons.Length;i++)
             {
                 _executeButtons[i].onClick.RemoveAllListeners();
@@ -61,7 +63,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 yield return _afterSelectExecuteElement.Initialize();
             }
             _skipButton.gameObject.SetActive(false);
-            yield return _executableElements[_executeIndex].Initialize();
+            if(_executeIndex<_executableElements.Length&&_executableElements[_executeIndex]!=null)
+            {
+                yield return _executableElements[_executeIndex].Initialize();
+            }
             _skipButton.gameObject.SetActive(true);
         }
     }
