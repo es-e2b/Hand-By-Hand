@@ -16,10 +16,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         [SerializeField]
         private Vector2 _targetPivot;
         private Vector2 _initialPivot;
-        public override IEnumerator Initialize()
+        public override IEnumerator Begin()
         {
             _initialPivot=_targetRectTransform.pivot;
-            yield return base.Initialize();
+            yield return base.Begin();
         }
         public override IEnumerator Execute()
         {

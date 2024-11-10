@@ -11,10 +11,13 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         public UnityEvent _action;
         [SerializeField]
         private float _executionDuration;
-        public override IEnumerator Finalize()
+        public override IEnumerator Begin()
         {
             _action.Invoke();
-            
+            yield return base.Begin();
+        }
+        public override IEnumerator Execute()
+        {
             float elapsedTime = 0f;
 
             while (elapsedTime < _executionDuration && !_isSkipping)
@@ -24,7 +27,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-            yield return base.Finalize();
+            yield return base.Execute();
         }
     }
 }

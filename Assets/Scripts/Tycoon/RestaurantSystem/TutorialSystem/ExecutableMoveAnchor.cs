@@ -19,11 +19,11 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         private Vector2 _targetAnchorMax;
         private Vector2 _initialAnchorMin;
         private Vector2 _initialAnchorMax;
-        public override IEnumerator Initialize()
+        public override IEnumerator Begin()
         {
             _initialAnchorMin=_targetRectTransform.anchorMin;
             _initialAnchorMax=_targetRectTransform.anchorMax;
-            yield return base.Initialize();
+            yield return base.Begin();
         }
         public override IEnumerator Execute()
         {

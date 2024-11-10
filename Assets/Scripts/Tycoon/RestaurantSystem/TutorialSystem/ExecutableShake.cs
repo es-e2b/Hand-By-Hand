@@ -32,9 +32,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             {
                 yield return Execute();
             }
-            yield return Finalize();
-            yield return Pause();
-            yield return Complete();
+            yield return base.Next();
         }
         public override IEnumerator Execute()
         {
@@ -73,6 +71,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 _elapsedTime += Time.deltaTime;
                 yield return null;
             }
+            yield return base.Execute();
         }
         public override IEnumerator Finalize()
         {

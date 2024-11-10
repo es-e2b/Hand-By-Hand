@@ -16,10 +16,11 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         [SerializeField]
         private Vector2 _targetPosition;
         private Vector2 _initialPosition;
-        public override IEnumerator Initialize()
+        public override IEnumerator Begin()
         {
             _initialPosition=_targetRectTransform.anchoredPosition;
-            yield return base.Initialize();
+            // print("Move Position Class: _targetRectTransform.anchoredPosition - "+_targetRectTransform.anchoredPosition);
+            yield return base.Begin();
         }
         public override IEnumerator Execute()
         {
@@ -38,7 +39,11 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         }
         public override IEnumerator Finalize()
         {
+            print("Move Position Class: Called Finalize Method");
             _targetRectTransform.anchoredPosition=_initialPosition+_targetPosition;
+            print("Move Position Class: _targetRectTransform.anchoredPosition - "+_targetRectTransform.anchoredPosition);
+            print("Move Position Class: _initialPosition - "+_initialPosition);
+            print("Move Position Class: _targetPosition - "+_targetPosition);
             yield return base.Finalize();
         }
     }

@@ -19,7 +19,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         public override IEnumerator Initialize()
         {
             _initialRotation=_targetRectTransform.eulerAngles;
-            Debug.Log(_initialRotation);
             yield return base.Initialize();
         }
         public override IEnumerator Execute()

@@ -28,7 +28,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         [SerializeField]
         private Button _button;
 
-        public override IEnumerator Begin()
+        public override IEnumerator Initialize()
         {
             Debug.Log("Called Begin");
             _textPanel=transform.GetChild(0).gameObject;

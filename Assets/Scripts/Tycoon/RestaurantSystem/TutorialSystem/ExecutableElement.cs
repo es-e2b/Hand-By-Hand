@@ -23,44 +23,37 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         }
         public virtual IEnumerator Initialize()
         {
-            _isSkipping=false;
             if(_skipButton!=null)
             {
                 _skipButton.gameObject.SetActive(true);
                 _skipButton.onClick.AddListener(Skip);
             }
-            float elapsedTime=0f;
 
+            float elapsedTime=0f;
             while (elapsedTime < _watingStartTime && !_isSkipping)
             {
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-            if(_isSkipping)
-            {
-                yield return Finalize();
-                yield return Pause();
-                yield return Complete();
-            }
-            else
-            {
-                yield return Begin();
-            }
+
+            yield return Begin();
         }
         public virtual IEnumerator Begin()
         {
-            yield return Next();
+            if(!_isSkipping)
+            {
+                yield return Next();
+            }
+            yield return Finalize();
         }
         public virtual IEnumerator Next()
         {
             yield return Execute();
-            yield return Complete();
         }
 
         public virtual IEnumerator Execute()
         {
-            yield return Finalize();
-            yield return Pause();
+            yield break;
         }
         public virtual IEnumerator Pause()
         {
@@ -72,12 +65,12 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-            yield break;
+            yield return Complete();
         }
 
         public virtual IEnumerator Finalize()
         {
-            yield break;
+            yield return Pause();
         }
 
         public virtual IEnumerator Complete()

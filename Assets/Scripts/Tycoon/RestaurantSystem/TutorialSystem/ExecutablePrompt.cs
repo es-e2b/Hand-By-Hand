@@ -18,9 +18,13 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         {
             isClicked=true;
         }
-        public override IEnumerator Pause()
+        public override IEnumerator Finalize()
         {
             _promptPanel.SetActive(true);
+            return base.Finalize();
+        }
+        public override IEnumerator Pause()
+        {
             Array.ForEach(_buttons, button=>button.onClick.AddListener(OnClick));
             yield return new WaitUntil(()=>isClicked);
             Array.ForEach(_buttons, button=>button.onClick.RemoveListener(OnClick));

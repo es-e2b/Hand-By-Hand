@@ -13,14 +13,25 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         [SerializeField]
         private float _executionDuration;
         private ElementExecutor _elementExecutor;
+        public override void Skip()
+        {
+            print("Execute Class: Skip Method");
+            Array.ForEach(_executableElements, element=>element.Skip());
+            base.Skip();
+        }
         public override IEnumerator Initialize()
         {
             _elementExecutor=FindAnyObjectByType<ElementExecutor>();
-            Array.ForEach(_executableElements, element=>_elementExecutor.StartExecutableElement(element));
             yield return base.Initialize();
+        }
+        public override IEnumerator Begin()
+        {
+            Array.ForEach(_executableElements, element=>_elementExecutor.StartExecutableElement(element));
+            yield return base.Begin();
         }
         public override IEnumerator Execute()
         {
+            print("Called Execute Method");
             float elapsedTime = 0f;
             while (elapsedTime < _executionDuration && !_isSkipping)
             {
@@ -29,24 +40,16 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-            yield return base.Execute();
+            if(_isSkipping)
+            {
+                print("Execute Class Skipped");
+            }
         }
         public override IEnumerator Finalize()
         {
+            print("Called Fininalize Method");
             Array.ForEach(_executableElements, element=>element.Skip());
             yield return base.Finalize();
-        }
-        public override IEnumerator Pause()
-        {
-            _isSkipping=false;
-            float elapsedTime=0f;
-
-            while (elapsedTime < _puaseDuration && !_isSkipping)
-            {
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-            yield break;
         }
     }
 }

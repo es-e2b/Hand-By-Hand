@@ -17,10 +17,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         [SerializeField]
         private float _targetFillAmount;
         private float _initialFillAmount;
-        public override IEnumerator Initialize()
+        public override IEnumerator Begin()
         {
             _initialFillAmount=_targetImage.fillAmount;
-            yield return base.Initialize();
+            yield return base.Begin();
         }
         public override IEnumerator Execute()
         {
