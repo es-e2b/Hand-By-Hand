@@ -10,8 +10,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
     [Serializable]
     public class ExecutableDialogue : ExecutableElement
     {
-        // [SerializeField] 
-        private GameObject _textPanel;
         [SerializeField]
         private TMP_Text _text;
         [SerializeField]
@@ -20,29 +18,15 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         private GameObject _nextDialogueIcon;
         [SerializeField]
         private string[] _dialogue;
-        private int _index;
+        private int _index=0;
         private string _currentString;
         [SerializeField]
-        private int _charactersPerSecond;
-        private bool _buttonClicked = false;
-        [SerializeField]
-        private Button _button;
+        private int _charactersPerSecond=30;
 
         public override IEnumerator Begin()
         {
-            Debug.Log("Called Begin");
-            _textPanel=transform.GetChild(0).gameObject;
-            _textPanel.SetActive(true);
-            _index = 0;
-
-            _button.onClick.AddListener(OnButtonClick);
-
+            _isSkipping=false;
             yield return base.Begin();
-        }
-
-        private void OnButtonClick()
-        {
-            _buttonClicked = true; // 버튼 클릭 이벤트 발생 시 플래그를 설정
         }
 
         public override IEnumerator Next()
@@ -51,9 +35,24 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             {
                 _text.text = "";
                 _currentString = _dialogue[_index++];
-                _wholeText.text = _currentString;
+                if(_wholeText!=null)
+                {
+                    _wholeText.text = _currentString;
+                }
                 LayoutRebuilder.ForceRebuildLayoutImmediate(_wholeText.GetComponent<RectTransform>());
                 yield return Execute();
+
+                if(_nextDialogueIcon!=null)
+                {
+                    _nextDialogueIcon.SetActive(true);
+                }
+                yield return new WaitUntil(() => _isSkipping);
+
+                _isSkipping=false;
+                if(_nextDialogueIcon!=null)
+                {
+                    _nextDialogueIcon.SetActive(false);
+                }
             }
         }
 
@@ -62,9 +61,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             StringBuilder stringBuilder=new();
             float elapseTime=0f;
             int currentIndex=0;
-            _buttonClicked = false;
 
-            while(!_buttonClicked&&currentIndex<_currentString.Length)
+            while(currentIndex<_currentString.Length && !_isSkipping)
             {
                 yield return null;
                 elapseTime+=Time.deltaTime;
@@ -93,21 +91,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 _text.text=stringBuilder.ToString();
             }
             _text.text = _currentString;
-            _buttonClicked = false; // 스킵 후 플래그 초기화
-            yield return null;
-
-            _nextDialogueIcon.SetActive(true);
-            _buttonClicked = false;
-
-            yield return new WaitUntil(() => _buttonClicked); // 버튼 클릭 대기
-            _nextDialogueIcon.SetActive(false);
-        }
-
-        public override IEnumerator Complete()
-        {
-            _textPanel.SetActive(false);
-            _button.onClick.RemoveListener(OnButtonClick); // 이벤트 제거
-            yield break;
         }
     }
 }
