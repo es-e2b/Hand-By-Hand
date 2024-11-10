@@ -2,37 +2,67 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
 {
     using System;
     using System.Collections;
-    using Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem;
     using UnityEngine;
+    using UnityEngine.Events;
     using UnityEngine.UI;
 
     [Serializable]
     public class ExecutablePrompt : ExecutableElement
     {
         [SerializeField]
-        private GameObject _promptPanel;
+        private ExecutableElement _beforeSelectExecuteElement;
         [SerializeField]
-        private Button[] _buttons;
-        private bool isClicked = false;
-        private void OnClick()
+        private ExecutableElement[] _executableElements;
+        [SerializeField]
+        private Button[] _executeButtons;
+        [SerializeField]
+        private ExecutableElement _afterSelectExecuteElement;
+        private bool _isSelected;
+        private int _executeIndex;
+        private void SelectElement(int index)
         {
-            isClicked=true;
+            _executeIndex=index;
+            _isSelected=true;
         }
-        public override IEnumerator Finalize()
+        public override IEnumerator Begin()
         {
-            _promptPanel.SetActive(true);
-            return base.Finalize();
-        }
-        public override IEnumerator Pause()
-        {
-            Array.ForEach(_buttons, button=>button.onClick.AddListener(OnClick));
-            yield return new WaitUntil(()=>isClicked);
-            Array.ForEach(_buttons, button=>button.onClick.RemoveListener(OnClick));
-            if(_promptPanel.transform.GetChild(1).TryGetComponent<ObjectDisplayAnimator>(out var objectDisplayAnimator))
+            if(_isSkipping)
             {
-                yield return objectDisplayAnimator.HideMessageAnimation();
+                _beforeSelectExecuteElement.Skip();
             }
-            _promptPanel.SetActive(false);
+            if(_beforeSelectExecuteElement!=null)
+            {
+                yield return _beforeSelectExecuteElement.Initialize();
+            }
+            _isSkipping=false;
+            for(int i=0;i<_executeButtons.Length;i++)
+            {
+                _executeButtons[i].onClick.AddListener(()=>SelectElement(i));
+            }
+            yield return base.Begin();
+        }
+        public override IEnumerator Next()
+        {
+            yield return new WaitUntil(()=>_isSelected);
+            for(int i=0;i<_executeButtons.Length;i++)
+            {
+                _executeButtons[i].onClick.RemoveAllListeners();
+            }
+            yield return base.Next();
+        }
+        public override IEnumerator Execute()
+        {
+            if(_isSkipping)
+            {
+                _afterSelectExecuteElement.Skip();
+            }
+            if(_afterSelectExecuteElement!=null)
+            {
+                yield return _afterSelectExecuteElement.Initialize();
+            }
+            _skipButton.gameObject.SetActive(false);
+            yield return _executableElements[_executeIndex].Initialize();
+            _skipButton.gameObject.SetActive(true);
         }
     }
 }
