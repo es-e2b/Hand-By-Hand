@@ -16,13 +16,12 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         public override IEnumerator Initialize()
         {
             _elementExecutor=FindAnyObjectByType<ElementExecutor>();
+            Array.ForEach(_executableElements, element=>_elementExecutor.StartExecutableElement(element));
             yield return base.Initialize();
         }
-        public override IEnumerator Finalize()
+        public override IEnumerator Execute()
         {
-            Array.ForEach(_executableElements, element=>_elementExecutor.StartExecutableElement(element));
             float elapsedTime = 0f;
-
             while (elapsedTime < _executionDuration && !_isSkipping)
             {
                 float t = elapsedTime / _executionDuration;
@@ -30,11 +29,24 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-            if(_isSkipping)
-            {
-                Array.ForEach(_executableElements, element=>element.Skip());
-            }
+            yield return base.Execute();
+        }
+        public override IEnumerator Finalize()
+        {
+            Array.ForEach(_executableElements, element=>element.Skip());
             yield return base.Finalize();
+        }
+        public override IEnumerator Pause()
+        {
+            _isSkipping=false;
+            float elapsedTime=0f;
+
+            while (elapsedTime < _puaseDuration && !_isSkipping)
+            {
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+            yield break;
         }
     }
 }
