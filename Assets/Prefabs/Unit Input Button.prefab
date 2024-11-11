@@ -217,8 +217,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uB9CC"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f5b4fd6b43cad654d9c53e2d399c6b2c, type: 2}
-  m_sharedMaterial: {fileID: 7428397927792526593, guid: f5b4fd6b43cad654d9c53e2d399c6b2c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2dab82c4b95d94520a2c8386c3a136e0, type: 2}
+  m_sharedMaterial: {fileID: -4810925088806931418, guid: 2dab82c4b95d94520a2c8386c3a136e0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
