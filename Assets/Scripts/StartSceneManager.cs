@@ -10,5 +10,17 @@ namespace Assets.Scripts
         {
             GameManager.Instance.CurrentDayCycle=dayCycle;
         }
+        public void ChangeCartoonScene()
+        {
+            ChangeScene(DayCycle.Cartoon);
+        }
+        public void ChangeDayScene()
+        {
+            ChangeScene(DayCycle.Day);
+        }
+        public void ChangeNightScene()
+        {
+            ChangeScene(DayCycle.Night);
+        }
     }
 }
