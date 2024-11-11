@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Assets.Scripts;
 
 namespace HandByHand
 {
@@ -146,7 +145,7 @@ namespace HandByHand
 
         public void GoToMainMenu()
         {
-            GameManager.Instance.CurrentDayCycle=DayCycle.Start;
+            SceneManager.LoadScene("Start Scene", LoadSceneMode.Single);
             SetActiveOptionPanel();
         }
     }
