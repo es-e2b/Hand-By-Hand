@@ -139,7 +139,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                             yield return new WaitUntil(() => getInput.IsGetInput == true);
                             BlinkIcon.SetActive(false);
                             //Play Click SE
-                            SoundManager.Instance.PlaySE(SoundName.Click);
+                            SoundManager.Instance.PlaySE(SoundName.Select);
                         }
                         else
                         {
@@ -154,7 +154,7 @@ namespace HandByHand.NightSystem.DialogueSystem
 
                         yield return new WaitUntil(() => getInput.IsGetInput == true);
                         //Play Click SE
-                        SoundManager.Instance.PlaySE(SoundName.Click);
+                        SoundManager.Instance.PlaySE(SoundName.Select);
                         BlinkIcon.SetActive(false);
 
                         printManager.ReturnChoiceObject();
@@ -167,7 +167,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                         dialogueChoiceSelectManager.WaitForSelectChoice();
                         yield return new WaitUntil(() => dialogueChoiceSelectManager.IsChoiceSelected == true);
                         //Play Click SE
-                        SoundManager.Instance.PlaySE(SoundName.Click);
+                        SoundManager.Instance.PlaySE(SoundName.Select);
                         printManager.ReturnChoiceObject();
 
                         yield return new WaitUntil(() => printManager.IsPrintEnd == true);

@@ -140,7 +140,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                 yield return StartCoroutine(WaitUntilTouchInput());
 
                 //Play Click SE
-                SoundManager.Instance.PlaySE(SoundName.Click);
+                SoundManager.Instance.PlaySE(SoundName.Select);
 
                 itemCount++;
             }

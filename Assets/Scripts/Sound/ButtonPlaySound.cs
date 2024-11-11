@@ -8,7 +8,7 @@ namespace HandByHand.SoundSystem
     public class ButtonPlaySound : MonoBehaviour
     {
         [SerializeField]
-        private SoundName soundName = SoundName.Click;
+        private SoundName soundName = SoundName.Select;
         private void Start()
         {
             gameObject.GetComponent<Button>().onClick.AddListener(PlaySound);
