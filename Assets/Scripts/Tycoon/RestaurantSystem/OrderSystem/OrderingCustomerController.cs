@@ -7,6 +7,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
     using UnityEngine;
     using UnityEngine.UI;
     using TutorialSystem;
+    using HandByHand.SoundSystem;
 
     public class OrderingCustomerController : MonoBehaviour
     {
@@ -69,6 +70,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
             OrderManager.Instance.OnIncorrectAnswer.AddListener(()=>
             {
                 _incorrectAnswerOjbect.SetActive(false);
+                SoundManager.Instance.StopSE();
+                SoundManager.Instance.PlaySE(SoundName.Wrong);
                 _incorrectAnswerOjbect.SetActive(true);
             });
             OrderManager.Instance.OnCorrectAnswer.AddListener((index)=>
@@ -103,6 +106,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
             {
                 orderMenuButton.GetComponent<OrderMenuButton>().ToggleSelectedUI(5);
             }
+            SoundManager.Instance.StopSE();
+            SoundManager.Instance.PlaySE(SoundName.Success);
             yield return SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(customerImage, CommonSignLanguageDictionary.Instance[CommonSignLanguageDictionary.CommonSignLanguage.Thank]);
             yield return OrderManager.Instance.OnAllCorrectAnswer();
             _answerProcessingCoroutine=null;
