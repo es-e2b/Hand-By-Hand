@@ -21,7 +21,8 @@ namespace HandByHand.SoundSystem
         MenuSelect,
         Success,
         Wrong,
-        SceneChangeBGM, //¿¬°á È­¸é BGM
+        SceneChangeBGM, //ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ BGM
+        CutSceneBGM,
     }
 
     [System.Serializable]
@@ -48,6 +49,11 @@ namespace HandByHand.SoundSystem
 
         private void Start()
         {
+            StartCoroutine(Initialize());
+        }
+        private IEnumerator Initialize()
+        {
+            yield return new WaitUntil(()=>SoundManager.Instance!=null);
             SoundManager.Instance.Init(BGMClips, SEClips);
         }
     }

@@ -35,8 +35,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 canvasGroup.alpha=_staringAlpha;
                 _canvasGroups[i]=canvasGroup;
                 _displayObjectRectTransform[i]=_displayObjects[i].GetComponent<RectTransform>();
-                _displayObjects[i].GetComponent<RectTransform>().anchoredPosition+=_startingOffset;
                 _initialPosition[i]=_displayObjectRectTransform[i].anchoredPosition;
+                _displayObjects[i].GetComponent<RectTransform>().anchoredPosition+=_startingOffset;
                 _displayObjects[i].SetActive(true);
             }
             yield return base.Initialize();

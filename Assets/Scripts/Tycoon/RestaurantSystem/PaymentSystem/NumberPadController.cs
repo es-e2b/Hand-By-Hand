@@ -3,6 +3,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
     using System;
     using System.Collections;
     using Assets.Scripts.SignLanguage;
+    using HandByHand.SoundSystem;
     using UnityEngine;
     using UnityEngine.UI;
 
@@ -114,6 +115,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
         }
         private void CheckAnswer()
         {
+            if(PaymentManager.Instance.PayingCustomer==null)
+            {
+                return;
+            }
             foreach(var numberObject in numberObjects)
             {
                 if(numberObject.AnswerValue!=numberObject.InputValue)
@@ -121,6 +126,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
                     //아니다 애니메이션
                     _incorrectAnswerObejct.SetActive(false);
                     _incorrectAnswerObejct.SetActive(true);
+                    SoundManager.Instance.StopSE();
+                    SoundManager.Instance.PlaySE(SoundName.Wrong);
                     ResetInput();
                     return;
                 }
@@ -149,6 +156,8 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
                 yield return SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(customerImage, vocabulary);
             }
 
+            SoundManager.Instance.StopSE();
+            SoundManager.Instance.PlaySE(SoundName.Success);
             yield return SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(customerImage, CommonSignLanguageDictionary.Instance[CommonSignLanguageDictionary.CommonSignLanguage.Thank]);
             ResetInput();
             

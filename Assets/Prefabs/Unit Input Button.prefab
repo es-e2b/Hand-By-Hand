@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3921807437608991923}
   - component: {fileID: 8681489317203037608}
   - component: {fileID: 4364828413822189735}
+  - component: {fileID: 7733322238382416960}
   m_Layer: 5
   m_Name: Unit Input Button
   m_TagString: Untagged
@@ -107,7 +108,7 @@ MonoBehaviour:
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.2
+    m_FadeDuration: 0
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -150,6 +151,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 5, y: 5, z: 5, w: 5}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &7733322238382416960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098397785347654438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0455a91838c8cf8499c06448afb26a67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: 10
 --- !u!1 &7938135028466002890
 GameObject:
   m_ObjectHideFlags: 0

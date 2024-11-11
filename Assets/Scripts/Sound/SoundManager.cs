@@ -10,15 +10,18 @@ namespace HandByHand.SoundSystem
         [HideInInspector]
         static public SoundManager Instance { get; private set; }
 
-        private AudioSource audioSource;
+        [SerializeField]
+        private AudioSource _BGMAudioSource;
+        [SerializeField]
+        private AudioSource _SEAudioSource;
 
         private Dictionary<SoundName, AudioClip> bgmDict = new Dictionary<SoundName, AudioClip>();
 
         private Dictionary<SoundName, AudioClip> seDict = new Dictionary<SoundName, AudioClip>();
 
-        public float BGMVolume = 1.0f;
+        public float BGMVolume = 0.5f;
 
-        public float SEVolume = 0.7f;
+        public float SEVolume = 0.5f;
         #endregion
 
         private void Awake()
@@ -30,18 +33,16 @@ namespace HandByHand.SoundSystem
             }
             Instance = this;
             DontDestroyOnLoad(gameObject);
-
-            audioSource = gameObject.GetComponent<AudioSource>();
         }
 
         /// <summary>
-        /// SoundClip ¹èÁ¤
+        /// SoundClip ï¿½ï¿½ï¿½ï¿½
         /// </summary>
         /// <param name="bgmList"></param>
         /// <param name="seList"></param>
         public void Init(List<SoundAndName> bgmList, List<SoundAndName> seList)
         {
-            audioSource.volume = BGMVolume;
+            _BGMAudioSource.volume = BGMVolume;
 
             for (int i = 0; i < bgmList.Count; i++)
             {
@@ -56,33 +57,41 @@ namespace HandByHand.SoundSystem
 
         public void PlayBGM(SoundName clipName)
         {
-            audioSource.clip = bgmDict[clipName];
-            audioSource.Play();
+            _BGMAudioSource.clip = bgmDict[clipName];
+            _BGMAudioSource.Play();
+        }
+        public void StopBGM()
+        {
+            _BGMAudioSource.Stop();
         }
 
         public void PlaySE(SoundName clipName)
         {
-            audioSource.PlayOneShot(seDict[clipName], SEVolume);
+            _SEAudioSource.PlayOneShot(seDict[clipName], SEVolume);
+        }
+        public void StopSE()
+        {
+            _SEAudioSource.Stop();
         }
 
         /// <summary>
-        /// Å¬¸³¿¡ ¸Â´Â EnumÅ¸ÀÔÀÌ ¾øÀ» °æ¿ì »ç¿ëÇÏ±â À§ÇÑ ¿À¹ö·Îµù ÇÔ¼ö
+        /// Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½Â´ï¿½ EnumÅ¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Îµï¿½ ï¿½Ô¼ï¿½
         /// </summary>
         /// <param name="clip"></param>
         public void PlaySE(AudioClip clip)
         {
-            audioSource.PlayOneShot(clip, SEVolume);
+            _SEAudioSource.PlayOneShot(clip, SEVolume);
         }
 
         /// <summary>
-        /// ÇöÀç Àç»ýÁßÀÎ BGMÀ» Á¤Áö
+        /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ BGMï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         /// </summary>
-        /// <param name="fadeTime">Á¤Áö½Ã ÆäÀÌµå ÀÎ ½Ã°£</param>
+        /// <param name="fadeTime">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ ï¿½Ã°ï¿½</param>
         public void StopBGM(float fadeTime = 0)
         {
             if(fadeTime == 0)
             {
-                audioSource.Stop();
+                _BGMAudioSource.Stop();
                 return;
             }
             else
@@ -92,7 +101,7 @@ namespace HandByHand.SoundSystem
         }
 
         /// <summary>
-        /// º¼·ýÀ» fadeTimeµ¿¾È ÃµÃµÈ÷ ÁÙ¿©³ª°¨.
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ fadeTimeï¿½ï¿½ï¿½ï¿½ ÃµÃµï¿½ï¿½ ï¿½Ù¿ï¿½ï¿½ï¿½ï¿½ï¿½.
         /// </summary>
         /// <param name="fadeTime"></param>
         /// <returns></returns>
@@ -105,20 +114,20 @@ namespace HandByHand.SoundSystem
             while(time < fadeTime)
             {
                 volume = (fadeTime - time) / fadeTime;
-                audioSource.volume = volume;
+                _BGMAudioSource.volume = volume;
 
                 time += Time.deltaTime;
                 yield return null;
             }
 
-            audioSource.volume = 0;
+            _BGMAudioSource.volume = 0;
 
-            audioSource.Stop();
+            _BGMAudioSource.Stop();
         }
 
         public void AdjustBGMVolume(float volume)
         {
-            audioSource.volume = volume;
+            _BGMAudioSource.volume = volume;
             BGMVolume = volume;
         }
 

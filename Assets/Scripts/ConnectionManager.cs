@@ -20,6 +20,7 @@ namespace Assets.Scripts
             _rootCanvas.worldCamera=Camera.main;
             if(GameManager.Instance==null)
             {
+                print("Game Manager is null");
                 if(_testDayCycle==DayCycle.Night)
                 {
                     FindObjectOfType<ElementExecutor>().StartExecutableList(_nightExecutableList);    
@@ -29,13 +30,15 @@ namespace Assets.Scripts
                     FindObjectOfType<ElementExecutor>().StartExecutableList(_dayExecutableList);
                 }
             }
-            else if(GameManager.Instance.CurrentDayCycle==DayCycle.Night)
+            else if(GameManager.Instance.CurrentDayCycle==DayCycle.Day)
             {
-                FindObjectOfType<ElementExecutor>().StartExecutableList(_nightExecutableList);
+                print("Game Manager Curren Cycle is Day");
+                FindObjectOfType<ElementExecutor>().StartExecutableList(_dayExecutableList);
             }
             else
             {
-                FindObjectOfType<ElementExecutor>().StartExecutableList(_dayExecutableList);
+                print("Game Manager Curren Cycle is Night");
+                FindObjectOfType<ElementExecutor>().StartExecutableList(_nightExecutableList);
             }
         }
         public void ChangeDayScene()

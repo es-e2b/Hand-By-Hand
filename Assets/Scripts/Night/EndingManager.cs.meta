@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/Night/EndingManager.cs.meta
 guid: 1adfbf6cb2303e64b811116ed52f771a
+========
+guid: 0ee8e7dd090324ea09b4c627b86fd7f8
+>>>>>>>> release/1.0.0:Assets/Scripts/LayoutRebuilderComponent.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

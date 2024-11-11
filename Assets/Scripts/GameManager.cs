@@ -6,6 +6,7 @@ namespace Assets.Scripts
     using UnityEngine.SceneManagement;
     using Tycoon.RestaurantSystem.TutorialSystem;
     using System.Collections;
+    using HandByHand.SoundSystem;
 
     public class GameManager : MonoBehaviour
     {
@@ -13,6 +14,7 @@ namespace Assets.Scripts
         private int StartDayCount { get; set; }
         public static GameManager Instance { get; private set; }
         public bool hasCompletedTutorial;
+        [SerializeField]
         private DayCycle _currentDayCycle;
         public DayCycle CurrentDayCycle
         {
@@ -26,6 +28,8 @@ namespace Assets.Scripts
                 _currentDayCycle=value;
                 OnChangedDayCycle.Invoke(value);
                 SceneManager.LoadScene((int)value);
+                SoundManager.Instance.StopBGM();
+                SoundManager.Instance.StopSE();
             }
         }
         public Character[] CharacterPool;
