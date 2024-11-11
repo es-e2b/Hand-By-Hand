@@ -10,7 +10,10 @@ namespace HandByHand.SoundSystem
         [HideInInspector]
         static public SoundManager Instance { get; private set; }
 
-        private AudioSource audioSource;
+        [SerializeField]
+        private AudioSource _BGMAudioSource;
+        [SerializeField]
+        private AudioSource _SEAudioSource;
 
         private Dictionary<SoundName, AudioClip> bgmDict = new Dictionary<SoundName, AudioClip>();
 
@@ -30,8 +33,6 @@ namespace HandByHand.SoundSystem
             }
             Instance = this;
             DontDestroyOnLoad(gameObject);
-
-            audioSource = gameObject.GetComponent<AudioSource>();
         }
 
         /// <summary>
@@ -41,7 +42,7 @@ namespace HandByHand.SoundSystem
         /// <param name="seList"></param>
         public void Init(List<SoundAndName> bgmList, List<SoundAndName> seList)
         {
-            audioSource.volume = BGMVolume;
+            _BGMAudioSource.volume = BGMVolume;
 
             for (int i = 0; i < bgmList.Count; i++)
             {
@@ -56,13 +57,21 @@ namespace HandByHand.SoundSystem
 
         public void PlayBGM(SoundName clipName)
         {
-            audioSource.clip = bgmDict[clipName];
-            audioSource.Play();
+            _BGMAudioSource.clip = bgmDict[clipName];
+            _BGMAudioSource.Play();
+        }
+        public void StopBGM()
+        {
+            _BGMAudioSource.Stop();
         }
 
         public void PlaySE(SoundName clipName)
         {
-            audioSource.PlayOneShot(seDict[clipName], SEVolume);
+            _SEAudioSource.PlayOneShot(seDict[clipName], SEVolume);
+        }
+        public void StopSE()
+        {
+            _SEAudioSource.Stop();
         }
 
         /// <summary>
@@ -71,7 +80,7 @@ namespace HandByHand.SoundSystem
         /// <param name="clip"></param>
         public void PlaySE(AudioClip clip)
         {
-            audioSource.PlayOneShot(clip, SEVolume);
+            _SEAudioSource.PlayOneShot(clip, SEVolume);
         }
 
         /// <summary>
@@ -82,7 +91,7 @@ namespace HandByHand.SoundSystem
         {
             if(fadeTime == 0)
             {
-                audioSource.Stop();
+                _BGMAudioSource.Stop();
                 return;
             }
             else
@@ -105,20 +114,20 @@ namespace HandByHand.SoundSystem
             while(time < fadeTime)
             {
                 volume = (fadeTime - time) / fadeTime;
-                audioSource.volume = volume;
+                _BGMAudioSource.volume = volume;
 
                 time += Time.deltaTime;
                 yield return null;
             }
 
-            audioSource.volume = 0;
+            _BGMAudioSource.volume = 0;
 
-            audioSource.Stop();
+            _BGMAudioSource.Stop();
         }
 
         public void AdjustBGMVolume(float volume)
         {
-            audioSource.volume = volume;
+            _BGMAudioSource.volume = volume;
             BGMVolume = volume;
         }
 
