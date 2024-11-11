@@ -31,6 +31,12 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         public Coroutine DialogueCoroutine;
 
+        [SerializeField]
+        private GameObject ConnectionCanvasObject;
+
+        [SerializeField]
+        private GameObject EndingCanvasObject;
+
         #region MANAGERCOMPONENT
         [Header("ManagerComponents")]
         [SerializeField]
@@ -49,6 +55,12 @@ namespace HandByHand.NightSystem.DialogueSystem
         #region INIT
         void Awake()
         {
+            if (EndingCanvasObject.activeSelf)
+                EndingCanvasObject.SetActive(false);
+
+            if (ConnectionCanvasObject.activeSelf)
+                ConnectionCanvasObject.SetActive(false);
+
             getInput = BlinkIcon.GetComponent<GetInput>();
             LoadDialogue();
         }
@@ -56,6 +68,8 @@ namespace HandByHand.NightSystem.DialogueSystem
         void Start()
         {
             BlinkIcon.SetActive(false);
+            SoundManager.Instance.PlayBGM(SoundName.NightBGM);
+            DialogueCoroutine = StartCoroutine(StartDialogue());
         }
 
         #region FILESAVEANDLOAD
@@ -65,7 +79,6 @@ namespace HandByHand.NightSystem.DialogueSystem
             PlayerPrefs.SetInt("Day", PlayerPrefs.GetInt("Day") + 1);
         }
 
-
         void LoadDialogue()
         {
             //Init PlayerPrefs
@@ -74,7 +87,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                 PlayerPrefs.SetInt("Day", 1);
             }
 
-            if (DialogueFileSO == null)
+            if(DialogueFileSO == null)
             {
                 LoadDialogueFileSO();
             }
@@ -310,6 +323,18 @@ namespace HandByHand.NightSystem.DialogueSystem
 
                 itemCount++;
             }
+
+            //3일차의 경우 끝나고 엔딩으로 넘어감
+            if(PlayerPrefs.GetInt("Day") == 3)
+            {
+                EndingCanvasObject.SetActive(true);
+                yield break;
+            }
+
+            //날짜 저장
+            SaveDayIndex();
+            //씬 전환
+            ConnectionCanvasObject.SetActive(true);
 
             yield return null;
         }

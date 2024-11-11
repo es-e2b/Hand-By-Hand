@@ -40,6 +40,8 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         public void Start()
         {
+            transform.parent.GetComponent<Canvas>().worldCamera = Camera.main;
+
             //init punchObjects
             punchPanel = PunchParentObject.transform.GetChild(0).gameObject;
             for (int i = 0; i < upperButtonObjects.transform.childCount; i++)
