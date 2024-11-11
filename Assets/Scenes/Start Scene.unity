@@ -1445,7 +1445,7 @@ PrefabInstance:
       objectReference: {fileID: 768846790}
     - target: {fileID: 9101618837783078497, guid: e369c427cf09b4750ada0319202397d0, type: 3}
       propertyPath: _action.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeCartoonScene
+      value: ChangeDayScene
       objectReference: {fileID: 0}
     - target: {fileID: 9101618837783078497, guid: e369c427cf09b4750ada0319202397d0, type: 3}
       propertyPath: _action.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
