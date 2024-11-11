@@ -30,7 +30,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         private List<GameObject> viewportObjectList;
 
         private GameObject UIObjectInSignLanguageCanvas;
-        private float screenHeight = 2340f;
         private Vector3 originalCompareEventButtonPosition;
 
         #endregion

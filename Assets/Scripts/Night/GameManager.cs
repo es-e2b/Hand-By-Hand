@@ -13,7 +13,7 @@ namespace HandByHand.NightSystem
         private void Start()
         {
             DialogueManager.DialogueCoroutine = StartCoroutine(DialogueManager.StartDialogue());
-            SoundManager.Instance.PlayBGM(SoundName.BGM);
+            SoundManager.Instance.PlayBGM(SoundName.NightBGM);
         }
     }
 }

@@ -6,20 +6,22 @@ namespace HandByHand.SoundSystem
 {
     public enum SoundName
     {
-        BGM,
+        GameStartBGM,
+        AfternoonBGM,
+        NightBGM,
+        GameEndingBGM,
         BusStart,
         WalkAndListenNatureSound,
         Falling,
         ClothesRustling,
         Surprise,
-        ClockTicking,
-        TimerEnd,
+        ClockTickingAndTimerEnd,
         CalculatingMachineType,
-        Click,
+        Select,
+        MenuSelect,
         Success,
         Wrong,
-        SceneChange,
-        SceneChange2,
+        SceneChangeBGM, //연결 화면 BGM
     }
 
     [System.Serializable]
