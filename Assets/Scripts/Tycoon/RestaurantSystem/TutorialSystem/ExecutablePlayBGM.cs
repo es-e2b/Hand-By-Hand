@@ -12,6 +12,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         private SoundName soundName = SoundName.Select;
         public override IEnumerator Finalize()
         {
+            SoundManager.Instance.StopBGM();
             SoundManager.Instance.PlayBGM(soundName);
             return base.Finalize();
         }
