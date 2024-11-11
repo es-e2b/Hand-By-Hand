@@ -66,7 +66,6 @@ namespace HandByHand.NightSystem.DialogueSystem
             PlayerPrefs.SetInt("Day", PlayerPrefs.GetInt("Day") + 1);
         }
 
-
         void LoadDialogue()
         {
             //Init PlayerPrefs
@@ -312,6 +311,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                 itemCount++;
             }
 
+            SaveDayIndex();
             yield return null;
         }
 
