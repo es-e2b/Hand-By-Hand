@@ -46,14 +46,15 @@ namespace HandByHand
 
         private void Start()
         {
+            musicSprite = musicImage.sprite;
+            _SESprite = _SEImage.sprite;
+            
             musicSlider.value = SoundManager.Instance.BGMVolume;
             _SESlider.value = SoundManager.Instance.SEVolume;
 
             preMusicVolume = SoundManager.Instance.BGMVolume;
             preSEVolume = SoundManager.Instance.SEVolume;
 
-            musicSprite = musicImage.sprite;
-            _SESprite = _SEImage.sprite;
         }
 
         public void SetActiveOptionPanel()

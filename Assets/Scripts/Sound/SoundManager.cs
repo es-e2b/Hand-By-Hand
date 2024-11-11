@@ -16,9 +16,9 @@ namespace HandByHand.SoundSystem
 
         private Dictionary<SoundName, AudioClip> seDict = new Dictionary<SoundName, AudioClip>();
 
-        public float BGMVolume = 1.0f;
+        public float BGMVolume = 0.5f;
 
-        public float SEVolume = 0.7f;
+        public float SEVolume = 0.5f;
         #endregion
 
         private void Awake()
@@ -35,7 +35,7 @@ namespace HandByHand.SoundSystem
         }
 
         /// <summary>
-        /// SoundClip ¹èÁ¤
+        /// SoundClip ï¿½ï¿½ï¿½ï¿½
         /// </summary>
         /// <param name="bgmList"></param>
         /// <param name="seList"></param>
@@ -66,7 +66,7 @@ namespace HandByHand.SoundSystem
         }
 
         /// <summary>
-        /// Å¬¸³¿¡ ¸Â´Â EnumÅ¸ÀÔÀÌ ¾øÀ» °æ¿ì »ç¿ëÇÏ±â À§ÇÑ ¿À¹ö·Îµù ÇÔ¼ö
+        /// Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½Â´ï¿½ EnumÅ¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Îµï¿½ ï¿½Ô¼ï¿½
         /// </summary>
         /// <param name="clip"></param>
         public void PlaySE(AudioClip clip)
@@ -75,9 +75,9 @@ namespace HandByHand.SoundSystem
         }
 
         /// <summary>
-        /// ÇöÀç Àç»ýÁßÀÎ BGMÀ» Á¤Áö
+        /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ BGMï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         /// </summary>
-        /// <param name="fadeTime">Á¤Áö½Ã ÆäÀÌµå ÀÎ ½Ã°£</param>
+        /// <param name="fadeTime">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ ï¿½Ã°ï¿½</param>
         public void StopBGM(float fadeTime = 0)
         {
             if(fadeTime == 0)
@@ -92,7 +92,7 @@ namespace HandByHand.SoundSystem
         }
 
         /// <summary>
-        /// º¼·ýÀ» fadeTimeµ¿¾È ÃµÃµÈ÷ ÁÙ¿©³ª°¨.
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ fadeTimeï¿½ï¿½ï¿½ï¿½ ÃµÃµï¿½ï¿½ ï¿½Ù¿ï¿½ï¿½ï¿½ï¿½ï¿½.
         /// </summary>
         /// <param name="fadeTime"></param>
         /// <returns></returns>
