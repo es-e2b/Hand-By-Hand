@@ -19,9 +19,9 @@ namespace Assets.Scripts
             get => _currentDayCycle;
             set
             {
-                if(value==0)
+                if(DayCount==0)
                 {
-                    value++;
+                    DayCount++;
                 }
                 _currentDayCycle=value;
                 OnChangedDayCycle.Invoke(value);
