@@ -8,8 +8,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
     [Serializable]
     public class ExecutableStopSE : ExecutableElement
     {
-        [SerializeField]
-        private SoundName soundName = SoundName.Select;
         public override IEnumerator Finalize()
         {
             SoundManager.Instance.StopSE();
