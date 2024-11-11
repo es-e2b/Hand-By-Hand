@@ -17,11 +17,11 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         [SerializeField]
         private Color _targetColor;
         private Color _initialColor;
-        public override IEnumerator Initialize()
+        public override IEnumerator Begin()
         {
             print("Called Change Color Begin");
             _initialColor=_targetImage.color;
-            yield return base.Initialize();
+            yield return base.Begin();
         }
         public override IEnumerator Execute()
         {

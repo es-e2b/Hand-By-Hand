@@ -6,13 +6,11 @@ namespace Assets.Scripts.Cartoon
 
     public class CartoonSceneManager : MonoBehaviour
     {
-        private void Start()
+        [SerializeField]
+        private GameObject _connectionCanvas;
+        public void SetActiveConnectionCanvas()
         {
-            
-        }
-        public void ChangeDayScene()
-        {
-            GameManager.Instance.CurrentDayCycle=DayCycle.Day;
+            _connectionCanvas.SetActive(true);
         }
     }
 }
