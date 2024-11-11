@@ -2030,7 +2030,7 @@ PrefabInstance:
     - target: {fileID: 4118395828228665949, guid: 02692c6b171804564bdabdd967438408, type: 3}
       propertyPath: _concealObjects.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1216939947}
     - target: {fileID: 6986026300844658449, guid: 02692c6b171804564bdabdd967438408, type: 3}
       propertyPath: m_Name
       value: Background Concealer
@@ -2167,7 +2167,7 @@ PrefabInstance:
     - target: {fileID: 4118395828228665949, guid: 02692c6b171804564bdabdd967438408, type: 3}
       propertyPath: _concealObjects.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 67264240}
     - target: {fileID: 6986026300844658449, guid: 02692c6b171804564bdabdd967438408, type: 3}
       propertyPath: m_Name
       value: Button Panel Concealer
