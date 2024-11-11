@@ -12,16 +12,24 @@ namespace Assets.Scripts
         private ExecutableList _nightExecutableList;
         [SerializeField]
         private Canvas _rootCanvas;
+        [SerializeField]
+        private DayCycle _testDayCycle;
 
         private void Start()
         {
-            StartCoroutine(Initialize());
             _rootCanvas.worldCamera=Camera.main;
-        }
-        private IEnumerator Initialize()
-        {
-            yield return new WaitUntil(()=>GameManager.Instance!=null);
-            if(GameManager.Instance.CurrentDayCycle==DayCycle.Night)
+            if(GameManager.Instance==null)
+            {
+                if(_testDayCycle==DayCycle.Night)
+                {
+                    FindObjectOfType<ElementExecutor>().StartExecutableList(_nightExecutableList);    
+                }
+                else
+                {
+                    FindObjectOfType<ElementExecutor>().StartExecutableList(_dayExecutableList);
+                }
+            }
+            else if(GameManager.Instance.CurrentDayCycle==DayCycle.Night)
             {
                 FindObjectOfType<ElementExecutor>().StartExecutableList(_nightExecutableList);
             }
@@ -29,6 +37,14 @@ namespace Assets.Scripts
             {
                 FindObjectOfType<ElementExecutor>().StartExecutableList(_dayExecutableList);
             }
+        }
+        public void ChangeDayScene()
+        {
+            GameManager.Instance.CurrentDayCycle=DayCycle.Day;
+        }
+        public void ChangeNightScene()
+        {
+            GameManager.Instance.CurrentDayCycle=DayCycle.Night;
         }
     }
 }
