@@ -214,6 +214,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1288774258 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4231294207825123860, guid: d37cbf6da160542218f32750304d0755, type: 3}
+  m_PrefabInstance: {fileID: 2983776327334970396}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc9604e8870f7422dac569450125d8f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1505225306
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,6 +293,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2109000031 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3189946966801844166, guid: d37cbf6da160542218f32750304d0755, type: 3}
+  m_PrefabInstance: {fileID: 2983776327334970396}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc9604e8870f7422dac569450125d8f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2983776327334970396
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -298,10 +320,26 @@ PrefabInstance:
       propertyPath: _testDayCycle
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5811758423249291754, guid: d37cbf6da160542218f32750304d0755, type: 3}
+      propertyPath: _executableElements.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5811758423249291754, guid: d37cbf6da160542218f32750304d0755, type: 3}
+      propertyPath: _executableElements.Array.data[8]
+      value: 
+      objectReference: {fileID: 2109000031}
     - target: {fileID: 6436267113287755577, guid: d37cbf6da160542218f32750304d0755, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 831614968}
+    - target: {fileID: 6460090188292246892, guid: d37cbf6da160542218f32750304d0755, type: 3}
+      propertyPath: _executableElements.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6460090188292246892, guid: d37cbf6da160542218f32750304d0755, type: 3}
+      propertyPath: _executableElements.Array.data[8]
+      value: 
+      objectReference: {fileID: 1288774258}
     - target: {fileID: 6944430304488595234, guid: d37cbf6da160542218f32750304d0755, type: 3}
       propertyPath: m_Pivot.x
       value: 0
