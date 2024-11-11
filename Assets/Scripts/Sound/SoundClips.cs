@@ -22,6 +22,7 @@ namespace HandByHand.SoundSystem
         Success,
         Wrong,
         SceneChangeBGM, //���� ȭ�� BGM
+        CutSceneBGM,
     }
 
     [System.Serializable]

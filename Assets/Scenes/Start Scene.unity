@@ -638,6 +638,8 @@ MonoBehaviour:
     AudioClip: {fileID: 8300000, guid: 471347de796cc0347960b5087e3e3eba, type: 3}
   - Name: 15
     AudioClip: {fileID: 8300000, guid: 32f971642dcc65f4e996c112059d7539, type: 3}
+  - Name: 16
+    AudioClip: {fileID: 8300000, guid: 48bb01839e8114ba985c547c00aa775f, type: 3}
   SEClips:
   - Name: 4
     AudioClip: {fileID: 8300000, guid: 35fc06d627853ad429f2692f96fe62dc, type: 3}
@@ -1443,7 +1445,7 @@ PrefabInstance:
       objectReference: {fileID: 768846790}
     - target: {fileID: 9101618837783078497, guid: e369c427cf09b4750ada0319202397d0, type: 3}
       propertyPath: _action.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeDayScene
+      value: ChangeCartoonScene
       objectReference: {fileID: 0}
     - target: {fileID: 9101618837783078497, guid: e369c427cf09b4750ada0319202397d0, type: 3}
       propertyPath: _action.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
