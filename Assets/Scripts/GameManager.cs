@@ -6,6 +6,7 @@ namespace Assets.Scripts
     using UnityEngine.SceneManagement;
     using Tycoon.RestaurantSystem.TutorialSystem;
     using System.Collections;
+    using HandByHand.SoundSystem;
 
     public class GameManager : MonoBehaviour
     {
@@ -27,6 +28,8 @@ namespace Assets.Scripts
                 _currentDayCycle=value;
                 OnChangedDayCycle.Invoke(value);
                 SceneManager.LoadScene((int)value);
+                SoundManager.Instance.StopBGM();
+                SoundManager.Instance.StopSE();
             }
         }
         public Character[] CharacterPool;
