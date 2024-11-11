@@ -711,7 +711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e087312d5149c4afb991a385c0fac215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <StartDayCount>k__BackingField: 0
+  <StartDayCount>k__BackingField: 1
   hasCompletedTutorial: 0
   CharacterPool:
   - {fileID: 11400000, guid: 2937e69156a5c4536b96f7754663eaa4, type: 2}

@@ -57,6 +57,7 @@ namespace HandByHand.NightSystem.DialogueSystem
         {
             BlinkIcon.SetActive(false);
             DialogueCoroutine = StartCoroutine(StartDialogue());
+            SoundManager.Instance.PlayBGM(SoundName.NightBGM);
         }
 
         #region FILESAVEANDLOAD
@@ -74,7 +75,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                 PlayerPrefs.SetInt("Day", 1);
             }
 
-            if (DialogueFileSO == null)
+            if(DialogueFileSO == null)
             {
                 LoadDialogueFileSO();
             }
