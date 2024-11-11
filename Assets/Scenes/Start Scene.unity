@@ -747,10 +747,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6c8e3f1f9f71a646b2f444d29127b9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BGMClips: []
+  BGMClips:
+  - Name: 0
+    AudioClip: {fileID: 8300000, guid: 67612a0c1b87262428fc2e058c727bef, type: 3}
+  - Name: 1
+    AudioClip: {fileID: 8300000, guid: 6af1e06d772880148a2e4f87841b8bbb, type: 3}
+  - Name: 2
+    AudioClip: {fileID: 8300000, guid: 86975cd8a1619ac48be02752ccb3236a, type: 3}
+  - Name: 3
+    AudioClip: {fileID: 8300000, guid: 471347de796cc0347960b5087e3e3eba, type: 3}
+  - Name: 15
+    AudioClip: {fileID: 8300000, guid: 32f971642dcc65f4e996c112059d7539, type: 3}
   SEClips:
+  - Name: 4
+    AudioClip: {fileID: 8300000, guid: 35fc06d627853ad429f2692f96fe62dc, type: 3}
+  - Name: 5
+    AudioClip: {fileID: 8300000, guid: 621034c1fd4654f4f8c379a41a71efaa, type: 3}
+  - Name: 6
+    AudioClip: {fileID: 8300000, guid: c6ceb92904c1f7040b6a378db1b89bb0, type: 3}
+  - Name: 7
+    AudioClip: {fileID: 8300000, guid: a3153efd927cfb04a9296cab7e753f43, type: 3}
+  - Name: 8
+    AudioClip: {fileID: 8300000, guid: 98f0058b9aff6704fb35ee9c7e661daa, type: 3}
   - Name: 9
+    AudioClip: {fileID: 8300000, guid: 555bd3040ab988c4091767b64fa137b4, type: 3}
+  - Name: 10
+    AudioClip: {fileID: 8300000, guid: 596bf6b5cfc19164f80217c35ec74e6d, type: 3}
+  - Name: 11
     AudioClip: {fileID: 8300000, guid: 50e3c770e1571cd439b9ced94df74afd, type: 3}
+  - Name: 12
+    AudioClip: {fileID: 8300000, guid: 72ecd5c691972f64e9e33cfe366979e5, type: 3}
+  - Name: 13
+    AudioClip: {fileID: 8300000, guid: 3d42bf520164c3f41beb3135f800e95d, type: 3}
+  - Name: 14
+    AudioClip: {fileID: 8300000, guid: b4704ce4810c7b445bdaf0e74a1032fe, type: 3}
 --- !u!1 &196209702
 GameObject:
   m_ObjectHideFlags: 0
