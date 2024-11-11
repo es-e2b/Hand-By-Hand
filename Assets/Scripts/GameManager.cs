@@ -13,6 +13,7 @@ namespace Assets.Scripts
         private int StartDayCount { get; set; }
         public static GameManager Instance { get; private set; }
         public bool hasCompletedTutorial;
+        [SerializeField]
         private DayCycle _currentDayCycle;
         public DayCycle CurrentDayCycle
         {
