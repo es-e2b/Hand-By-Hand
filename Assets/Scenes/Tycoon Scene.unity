@@ -11814,6 +11814,7 @@ GameObject:
   - component: {fileID: 1798921853}
   - component: {fileID: 1798921852}
   - component: {fileID: 1798921851}
+  - component: {fileID: 1798921854}
   m_Layer: 5
   m_Name: Hint Button
   m_TagString: Untagged
@@ -11923,6 +11924,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798921849}
   m_CullTransparentMesh: 1
+--- !u!114 &1798921854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798921849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0455a91838c8cf8499c06448afb26a67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: 12
 --- !u!1 &1804303964
 GameObject:
   m_ObjectHideFlags: 0
@@ -12812,6 +12826,7 @@ GameObject:
   - component: {fileID: 1920080067}
   - component: {fileID: 1920080066}
   - component: {fileID: 1920080065}
+  - component: {fileID: 1920080068}
   m_Layer: 5
   m_Name: Replay Button
   m_TagString: Untagged
@@ -12921,6 +12936,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1920080063}
   m_CullTransparentMesh: 1
+--- !u!114 &1920080068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920080063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0455a91838c8cf8499c06448afb26a67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: 12
 --- !u!1001 &1948655187
 PrefabInstance:
   m_ObjectHideFlags: 0

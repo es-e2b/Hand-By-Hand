@@ -115,6 +115,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.PaymentSystem
         }
         private void CheckAnswer()
         {
+            if(PaymentManager.Instance.PayingCustomer==null)
+            {
+                return;
+            }
             foreach(var numberObject in numberObjects)
             {
                 if(numberObject.AnswerValue!=numberObject.InputValue)
