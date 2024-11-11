@@ -6,6 +6,9 @@ namespace Assets.Scripts
 
     public class StartSceneManager : MonoBehaviour
     {
+        [SerializeField]
+        private GameObject CreditPanel;
+
         public void ChangeScene(DayCycle dayCycle)
         {
             GameManager.Instance.CurrentDayCycle=dayCycle;
@@ -21,6 +24,18 @@ namespace Assets.Scripts
         public void ChangeNightScene()
         {
             ChangeScene(DayCycle.Night);
+        }
+
+        public void CreditOnOff()
+        {
+            if(CreditPanel.activeSelf)
+            {
+                CreditPanel.SetActive(false);
+            }
+            else
+            {
+                CreditPanel.SetActive(true);
+            }
         }
     }
 }
