@@ -56,6 +56,7 @@ namespace HandByHand.NightSystem.DialogueSystem
         void Start()
         {
             BlinkIcon.SetActive(false);
+            DialogueCoroutine = StartCoroutine(StartDialogue());
         }
 
         #region FILESAVEANDLOAD

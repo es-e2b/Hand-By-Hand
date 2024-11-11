@@ -4620,51 +4620,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 980007059}
   m_CullTransparentMesh: 1
---- !u!1 &984438515
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 984438516}
-  - component: {fileID: 984438517}
-  m_Layer: 0
-  m_Name: SignAnimationRendererManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &984438516
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984438515}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 467.8002, y: 1021.05286, z: -17.867575}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &984438517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984438515}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f97900ad1a22c43e2a5dd290b1371dba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Hand>k__BackingField: {fileID: 3246090932330209544, guid: 3fb780a6dde22468ba3db556667521b0, type: 3}
 --- !u!1 &988310078
 GameObject:
   m_ObjectHideFlags: 0
@@ -6833,7 +6788,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1587800356}
   - {fileID: 543195606}
   - {fileID: 2020197580}
   - {fileID: 202230700}
@@ -7220,74 +7174,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1566461715}
   m_CullTransparentMesh: 1
---- !u!1 &1587800355
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1587800356}
-  - component: {fileID: 1587800358}
-  - component: {fileID: 1587800357}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1587800356
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1587800355}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 187.68527, y: -3102.421, z: 7.777851}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1508803796}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1587800357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1587800355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6c8e3f1f9f71a646b2f444d29127b9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BGMClips:
-  - Name: 0
-    AudioClip: {fileID: 8300000, guid: 86975cd8a1619ac48be02752ccb3236a, type: 3}
-  SEClips:
-  - Name: 9
-    AudioClip: {fileID: 8300000, guid: 50e3c770e1571cd439b9ced94df74afd, type: 3}
-  - Name: 10
-    AudioClip: {fileID: 8300000, guid: 3d42bf520164c3f41beb3135f800e95d, type: 3}
-  - Name: 11
-    AudioClip: {fileID: 8300000, guid: b4704ce4810c7b445bdaf0e74a1032fe, type: 3}
---- !u!114 &1587800358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1587800355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8da633aed67281743aeab9fe147ca91a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DialogueManager: {fileID: 1548574217}
 --- !u!1 &1606167954
 GameObject:
   m_ObjectHideFlags: 0
@@ -9866,7 +9752,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 1920128442}
   - {fileID: 988310081}
-  - {fileID: 984438516}
   - {fileID: 1508803796}
   - {fileID: 1521832668}
   - {fileID: 277384927}
