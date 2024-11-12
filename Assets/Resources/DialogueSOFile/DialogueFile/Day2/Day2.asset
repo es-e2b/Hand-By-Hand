@@ -66,17 +66,17 @@ MonoBehaviour:
         whoseItem: 1
         itemType: 2
         ChoiceContentList:
-        - SignLanguageItem: {fileID: 11400000, guid: b6e7a840c17f73e4e934ec4c408889af, type: 2}
+        - SignLanguageItem: {fileID: 0}
           ChoiceText: "\uACE0\uB9C8\uC6CC"
-          Vocabulary: {fileID: 11400000, guid: 5d5f39c80cc8992458560efa2910adb5, type: 2}
+          Vocabulary: {fileID: 0}
           AdditionalSetting:
             DialogueSO: {fileID: 11400000, guid: f59c589d9ef5c87419756187d4243c43, type: 2}
-            ShowVocabularyFirst: 1
-            ShowVocabularyLast: 1
-        - SignLanguageItem: {fileID: 11400000, guid: 9af578969a078b34cbaad6a7863e85f3, type: 2}
+            ShowVocabularyFirst: 0
+            ShowVocabularyLast: 0
+        - SignLanguageItem: {fileID: 0}
           ChoiceText: "\uBBF8\uC548\uD574"
-          Vocabulary: {fileID: 11400000, guid: 5ead1f893b381bc478114fc4213af0bd, type: 2}
+          Vocabulary: {fileID: 0}
           AdditionalSetting:
             DialogueSO: {fileID: 11400000, guid: 78ab5413a8f9f5040b27a9e55dbb8098, type: 2}
-            ShowVocabularyFirst: 1
-            ShowVocabularyLast: 1
+            ShowVocabularyFirst: 0
+            ShowVocabularyLast: 0
