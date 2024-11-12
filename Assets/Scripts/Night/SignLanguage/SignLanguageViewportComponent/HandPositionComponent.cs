@@ -35,29 +35,29 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         {
             for (int i = ignoreLayoutNumber; i < transform.childCount; i++)
             {
-                //πˆ∆∞ ø¿∫Í¡ß∆Æ¿« Text ƒƒ∆˜≥Õ∆Æ πﬁæ∆ø¿±‚
+                //Î≤ÑÌäº Ïò§Î∏åÏ†ùÌä∏Ïùò Text Ïª¥Ìè¨ÎÑåÌä∏ Î∞õÏïÑÏò§Í∏∞
                 TMP_Text tmp = transform.GetChild(i).transform.GetChild(0).GetComponent<TMP_Text>();
                 textObject.Add(tmp);
 
                 int index = i - ignoreLayoutNumber;
-                //≈ÿΩ∫∆Æ «“¥Á
+                //ÌÖçÏä§Ìä∏ Ìï†Îãπ
                 string buttonText = "";
                 switch(index)
                 {
                     case 0:
-                        buttonText = "∏”∏Æ ¿ß";
+                        buttonText = "Î®∏Î¶¨ ÏúÑ";
                         break;
                     case 1:
-                        buttonText = "æÛ±º";
+                        buttonText = "ÏñºÍµ¥";
                             break;
                     case 2:
-                        buttonText = "≈Œ";
+                        buttonText = "ÌÑ±";
                         break;
                     case 3:
-                        buttonText = "∞°Ωø";
+                        buttonText = "Í∞ÄÏä¥";
                         break;
                     case 4:
-                        buttonText = "πË";
+                        buttonText = "Î∞∞";
                         break;
                 }
                 textObject[index].text = buttonText;
@@ -72,7 +72,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         public void GetPlayerAnswer()
         {
-            //ø¿∫Í¡ß∆Æ¿« hierarchyø°º≠¿« index πﬁæ∆ø¿±‚
+            //Ïò§Î∏åÏ†ùÌä∏Ïùò hierarchyÏóêÏÑúÏùò index Î∞õÏïÑÏò§Í∏∞
             GameObject clickObject = EventSystem.current.currentSelectedGameObject;
             int clickObjectHierarchyIndex = clickObject.transform.GetSiblingIndex();
 
