@@ -34,7 +34,6 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-            _targetRectTransform.pivot=_targetPivot;
             yield return base.Execute();
         }
         public override IEnumerator Finalize()
