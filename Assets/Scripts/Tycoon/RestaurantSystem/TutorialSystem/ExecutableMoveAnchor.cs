@@ -31,13 +31,13 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
 
             while (elapsedTime < _animationDuration && !_isSkipping)
             {
+                yield return null;
                 float t = elapsedTime / _animationDuration;
 
                 _targetRectTransform.anchorMax=_targetRectTransform.pivot=Vector2.Lerp(_initialAnchorMax, _targetAnchorMax, Mathf.Pow(t, _animationExponent));
                 _targetRectTransform.anchorMin=_targetRectTransform.pivot=Vector2.Lerp(_initialAnchorMin, _targetAnchorMin, Mathf.Pow(t, _animationExponent));
 
                 elapsedTime += Time.deltaTime;
-                yield return null;
             }
             yield return base.Execute();
         }
