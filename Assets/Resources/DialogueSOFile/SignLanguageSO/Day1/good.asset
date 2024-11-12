@@ -16,7 +16,7 @@ MonoBehaviour:
   HandCount:
     UsingHand: 0
   SymbolAndDirection:
-    Sprite: {fileID: 21300000, guid: acde7531806e50041ba8186dc1494bbd, type: 3}
+    Sprite: {fileID: 21300000, guid: 6bc3a9fb0a83dc8438e0ba76ec0e0206, type: 3}
     Symbol: 0
     Direction: 0
   Position:

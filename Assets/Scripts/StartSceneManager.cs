@@ -24,18 +24,6 @@ namespace Assets.Scripts
             {
                 CreditPanel.SetActive(true);
             }
-        }
-
-        public void CreditOnOff()
-        {
-            if(CreditPanel.activeSelf)
-            {
-                CreditPanel.SetActive(false);
-            }
-            else
-            {
-                CreditPanel.SetActive(true);
-            }
-        }
+        }   
     }
 }

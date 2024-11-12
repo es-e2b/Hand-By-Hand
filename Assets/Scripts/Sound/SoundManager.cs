@@ -15,9 +15,9 @@ namespace HandByHand.SoundSystem
         [SerializeField]
         private AudioSource _SEAudioSource;
 
-        private Dictionary<SoundName, AudioClip> bgmDict = new Dictionary<SoundName, AudioClip>();
+        public Dictionary<SoundName, AudioClip> bgmDict = new Dictionary<SoundName, AudioClip>();
 
-        private Dictionary<SoundName, AudioClip> seDict = new Dictionary<SoundName, AudioClip>();
+        public Dictionary<SoundName, AudioClip> seDict = new Dictionary<SoundName, AudioClip>();
 
         public float BGMVolume = 0.5f;
 

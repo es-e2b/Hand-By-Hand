@@ -68,7 +68,6 @@ namespace HandByHand.NightSystem.DialogueSystem
         void Start()
         {
             BlinkIcon.SetActive(false);
-            SoundManager.Instance.PlayBGM(SoundName.NightBGM);
             DialogueCoroutine = StartCoroutine(StartDialogue());
         }
 
@@ -112,6 +111,11 @@ namespace HandByHand.NightSystem.DialogueSystem
         {
             int itemCount = 0;
             List<DialogueItem> itemList = new List<DialogueItem>(DialogueFileSO.DialogueItemList);
+
+            yield return new WaitUntil(() => SoundManager.Instance != null);
+            //yield return new WaitUntil(() => SoundManager.Instance.bgmDict[SoundName.NightBGM] != null);
+
+            //SoundManager.Instance.PlayBGM(SoundName.NightBGM);
 
             while (true)
             {
@@ -198,7 +202,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                         else
                         {
                             //Set Active Popup
-                            PopupObject.SetActive(true);
+                            PopupObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
                             IsSwipeEnable = false;
 
                             //Show SignLanguageUICanvas (Make SignLanguage)
@@ -259,7 +263,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                         //waiting offset
                         yield return new WaitForSeconds(waitingTimeOffset);
 
-                        PopupObject.SetActive(true);
+                        PopupObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
                         IsSwipeEnable = false;
 
                         //Show SignLanguageVocabulary
@@ -339,6 +343,7 @@ namespace HandByHand.NightSystem.DialogueSystem
             yield return null;
         }
 
+        //CloseButton Event
         public void ClosePopup()
         {
             IsSwipeEnable = true;

@@ -71,6 +71,6 @@ MonoBehaviour:
           ChoiceText: "\uC2EB\uC5B4"
           Vocabulary: {fileID: 11400000, guid: f59b5f19b13968e448a147692d0c2233, type: 2}
           AdditionalSetting:
-            DialogueSO: {fileID: 11400000, guid: 763ac880d996988419a8d950a8981fd7, type: 2}
+            DialogueSO: {fileID: 11400000, guid: 89cc030fd2b63e04cbad1875c31aa0cf, type: 2}
             ShowVocabularyFirst: 1
             ShowVocabularyLast: 1

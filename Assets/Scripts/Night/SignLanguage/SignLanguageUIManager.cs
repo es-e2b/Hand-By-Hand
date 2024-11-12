@@ -208,7 +208,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         }
 
         /// <summary>
-        /// 선택지 선택시 버튼 색깔을 초록색깔로 변경하는 이벤트용 함수
+        /// 선택지 선택시 버튼 색깔 변경하는 이벤트용 함수
         /// </summary>
         public void ChangeColorOfButtonEvent()
         {
@@ -235,9 +235,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             float A = image.color.a;
 
-            //R0 G255 B0 A255
-            image.color = new Color(0, 1, 0, A);
-        }
+            image.color = new Color(1, 1, 1, A);
+        } 
         #endregion
 
         #region COMPAREANSWER
