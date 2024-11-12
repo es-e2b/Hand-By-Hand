@@ -9156,6 +9156,10 @@ PrefabInstance:
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 24843385105436358, guid: 72fb5e293ebb04fb3b1e16338de7e1b9, type: 3}
+      propertyPath: _skipButton
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 24843385105436358, guid: 72fb5e293ebb04fb3b1e16338de7e1b9, type: 3}
       propertyPath: _watingStartTime
       value: 110
       objectReference: {fileID: 0}
