@@ -48,6 +48,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         [HideInInspector]
         public List<int> incorrectAnswerIndexList = new List<int>() { -1 };
 
+        public bool isHorizontalAnimationEnd { get; private set; } = true;
         #endregion
 
         #endregion
@@ -424,6 +425,9 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// <returns></returns>
         IEnumerator ViewportHorizontalSlideCoroutine(Vector2 viewportObjectRectPosition, float animationWaitingTime = 0)
         {
+            if (!isHorizontalAnimationEnd) yield break;
+            else isHorizontalAnimationEnd = false;
+
             if (!IsVerticalAnimationDone)
             {
                 yield return new WaitUntil(() => IsVerticalAnimationDone == true);
@@ -475,7 +479,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             viewportRectTransformComponent.anchoredPosition = targetPosition;
 
-            yield return null;
+            isHorizontalAnimationEnd = true;
         }
 
         IEnumerator AnnounceAnimationDone(bool isInitObject)
