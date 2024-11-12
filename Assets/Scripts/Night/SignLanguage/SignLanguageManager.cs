@@ -67,10 +67,10 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         public void ComparingHandSignSO()
         {
-            if (!isCheckEnd)
+            if (isCheckEnd)
                 return;
 
-            isCheckEnd = false;
+            isCheckEnd = true;
 
             //검사 후 맞는지 틀린지에 따라 isSignLanguageCorrect = true;
             if (handCountComponent.IsCorrect && symbolAndDirectionComponent.IsCorrect
@@ -78,7 +78,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             {
                 isSignLanguageCorrect = true;
                 SoundManager.Instance.PlaySE(SoundName.Success);
-                CheckEnd();
+                isCheckEnd = false;
                 StartCoroutine(MadeSignLanguageCoroutine());
             }
             else
@@ -105,13 +105,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             signLanguageUIManager.ChangeToWrongAnswerTab();
             isSignLanguageCorrect = false;
-            CheckEnd();
-        }
-
-
-        private void CheckEnd()
-        {
-            isCheckEnd = true;
+            isCheckEnd = false;
         }
 
         #region COROUTINE
