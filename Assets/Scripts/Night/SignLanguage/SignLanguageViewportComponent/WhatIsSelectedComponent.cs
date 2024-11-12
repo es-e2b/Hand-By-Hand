@@ -39,6 +39,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         Coroutine AdjustButtonImageOpacityCoroutine = null;
         Coroutine AdjustObjectScaleCoroutine = null;
 
+        private bool isInputOn = true;
         #endregion
 
         #region INIT
@@ -57,7 +58,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             for (int i = 0; i < buttonComponentList.Count; i++)
             {
                 buttonComponentList[i].onClick.AddListener(AdjustOpacityExceptSelectedButton);
-                buttonComponentList[i].onClick.AddListener(AdjustObjectScale);
+                //buttonComponentList[i].onClick.AddListener(AdjustObjectScale);
             }
 
             //초기화시 사용할 오브젝트 기존 투명도
@@ -105,24 +106,34 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 return;
             }
 
+            if(isInputOn == false)
+            {
+                return;
+            }
+            else
+            {
+                isInputOn = false;
+            }
+
+            AdjustObjectScale(clickObjectHierarchyIndex);
+
             if (AdjustButtonImageOpacityCoroutine != null)
             {
                 StopCoroutine(AdjustButtonImageOpacityCoroutine);
-                AdjustObjectScaleCoroutine = null;
+                AdjustButtonImageOpacityCoroutine = null;
             }
 
             AdjustButtonImageOpacityCoroutine = StartCoroutine(AdjustButtonImageOpacity(clickObjectHierarchyIndex));
+            Invoke("OnInput", 0.6f);
         }
 
-        /// <summary>
-        /// 버튼 클릭시 오브젝트 크기 조정
-        /// </summary>
-        private void AdjustObjectScale()
+        private void OnInput()
         {
-            //오브젝트의 hierarchy에서의 인덱스 받아오기
-            GameObject clickObject = EventSystem.current.currentSelectedGameObject;
-            int clickObjectHierarchyIndex = clickObject.transform.GetSiblingIndex() - ignoreLayoutIndex;
+            isInputOn = true;
+        }
 
+        private void AdjustObjectScale(int clickObjectHierarchyIndex)
+        {
             //눌렀던 버튼 또 누를시 중단
             if (clickObjectHierarchyIndex == formerSelectedButtonIndex)
             {
@@ -137,6 +148,37 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             AdjustObjectScaleCoroutine = StartCoroutine(AdjustObjectSize(clickObjectHierarchyIndex));
         }
+
+        /// <summary>
+        /// 버튼 클릭시 오브젝트 크기 조정
+        /// </summary>
+        /*
+        private void AdjustObjectScale()
+        {
+            //오브젝트의 hierarchy에서의 인덱스 받아오기
+            GameObject clickObject = EventSystem.current.currentSelectedGameObject;
+            int clickObjectHierarchyIndex = clickObject.transform.GetSiblingIndex() - ignoreLayoutIndex;
+
+            //눌렀던 버튼 또 누를시 중단
+            if (clickObjectHierarchyIndex == formerSelectedButtonIndex)
+            {
+                return;
+            }
+
+            if (isInputOn == false)
+            {
+                return;
+            }
+
+            if (AdjustObjectScaleCoroutine != null)
+            {
+                StopCoroutine(AdjustObjectScaleCoroutine);
+                AdjustObjectScaleCoroutine = null;
+            }
+
+            AdjustObjectScaleCoroutine = StartCoroutine(AdjustObjectSize(clickObjectHierarchyIndex));
+        }
+        */
         #endregion
 
         #region COROUTINE
