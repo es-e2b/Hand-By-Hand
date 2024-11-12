@@ -13,95 +13,64 @@ namespace Assets.Scripts.SignLanguage
         private GameObject leftHandObject;
         private Coroutine leftHandRenderingCoroutine;
         private Coroutine rightHandRenderingCoroutine;
-        private bool isRendering;
         #endregion
 
         #region Method
         private void Awake()
         {
             renderingQueue=new();
-            leftHandObject = Instantiate(SignAnimationRenderer.Instance.Hand, transform);
-            rightHandObject = Instantiate(SignAnimationRenderer.Instance.Hand, transform);
-
-            Rect speakerRect = gameObject.GetComponent<RectTransform>().rect;
-
-            float handSize = Mathf.Min(speakerRect.width, speakerRect.height)*0.3f;
-
-            leftHandObject.GetComponent<RectTransform>().sizeDelta = new Vector2(handSize, handSize);
-            rightHandObject.GetComponent<RectTransform>().sizeDelta = new Vector2(handSize, handSize);
-        }
-        public IEnumerator EnqueueVocabulary(Vocabulary vocabulary)
-        {
-            renderingQueue.Enqueue(vocabulary);
-            if(!isRendering)
-            {
-                yield return StartAnimation();
-            }
         }
         public IEnumerator StopAndEnqueueVocabulary(Vocabulary vocabulary)
         {
             if(leftHandRenderingCoroutine!=null)
             {
                 StopCoroutine(leftHandRenderingCoroutine);
-                leftHandRenderingCoroutine=null;
             }
             if(rightHandRenderingCoroutine!=null)
             {
                 StopCoroutine(rightHandRenderingCoroutine);
-                rightHandRenderingCoroutine=null;
             }
-            isRendering=false;
-            yield return EnqueueVocabulary(vocabulary);
+            renderingQueue.Clear();
+            renderingQueue.Enqueue(vocabulary);
+            yield return StartAnimation();
         }
         private IEnumerator StartAnimation()
         {
-            isRendering=true;
             while (renderingQueue.Count > 0)
             {
                 Vocabulary now = renderingQueue.Dequeue();
-                RectTransform speakerRectTransform=GetComponent<RectTransform>();
-                // rightHandObject.GetComponent<RectTransform>().localScale=speakerRectTransform.localScale;
-                // leftHandObject.GetComponent<RectTransform>().localScale=speakerRectTransform.localScale;
 
-                rightHandRenderingCoroutine = StartCoroutine(AnimateHandshape(now.RightHandshapes, rightHandObject));
+                if(leftHandObject==null && now.LeftHandshapes.Count>0)
+                {
+                    leftHandObject=InstantiateHandObject();
+                }
+                if(rightHandObject==null && now.RightHandshapes.Count>0)
+                {
+                    rightHandObject=InstantiateHandObject();
+                }
                 leftHandRenderingCoroutine = StartCoroutine(AnimateHandshape(now.LeftHandshapes, leftHandObject));
+                rightHandRenderingCoroutine = StartCoroutine(AnimateHandshape(now.RightHandshapes, rightHandObject));
 
                 yield return rightHandRenderingCoroutine;
                 yield return leftHandRenderingCoroutine;
-                print("Both Hand is End");
             }
-        }
-        private IEnumerator EndLeftHandAnimation()
-        {
-            // if(leftHandRenderingCoroutine == null) yield break;
-            print("Called Stop Left Hand Animation Method");
-            leftHandObject.transform.localScale=Vector2.zero;
-            leftHandRenderingCoroutine = null;
-            yield break;
-        }
-        private IEnumerator EndRightHandAnimation()
-        {
-            // if(rightHandRenderingCoroutine == null) yield break;
-            print("Called Stop Right Hand Animation Method");
-            rightHandObject.transform.localScale=Vector2.zero;
-            rightHandRenderingCoroutine = null;
-            yield break;
         }
         private IEnumerator AnimateHandshape(List<Handshape> handshapes, GameObject handObject)
         {
             foreach (Handshape handshape in handshapes)
             {
-                handObject.GetComponent<Image>().sprite = handshape.HandshapeImage;
+                if(handshape.HandshapeImage==null)
+                {
+                    handObject.SetActive(false);
+                }
+                else
+                {
+                    handObject.SetActive(true);
+                    handObject.GetComponent<Image>().sprite = handshape.HandshapeImage;
+                }
                 yield return MoveHandshape(handshape, handObject);
             }
-            if (handObject == leftHandObject)
-            {
-                yield return EndLeftHandAnimation();
-            }
-            else if (handObject == rightHandObject)
-            {
-                yield return EndRightHandAnimation();
-            }
+            handObject.SetActive(false);
         }
         private IEnumerator MoveHandshape(Handshape handshape, GameObject handObject)
         {
@@ -112,9 +81,9 @@ namespace Assets.Scripts.SignLanguage
             Vector3 currentRotation;
             float currentScale;
             
-
             while (elapsedTime < handshape.Duration)
             {
+
                 currentPosition = Vector2.Lerp(handshape.StartPosition, handshape.EndPosition, elapsedTime / handshape.Duration);
                 currentPosition += new Vector2(0.5f, 0.5f);
                 rectTransform.anchorMin = rectTransform.anchorMax = currentPosition;
@@ -125,12 +94,20 @@ namespace Assets.Scripts.SignLanguage
                 currentScale = (handshape.EndScale-handshape.StartScale)*elapsedTime/handshape.Duration+handshape.StartScale;
                 rectTransform.localScale = new Vector3(currentScale,currentScale,currentScale);
 
-                elapsedTime += Time.deltaTime;
                 yield return null;
+                elapsedTime += Time.deltaTime;
             }
+
             rectTransform.anchorMin = rectTransform.anchorMax = handshape.EndPosition;
             rectTransform.eulerAngles = handshape.EndRotation;
             rectTransform.localScale = new Vector3(handshape.EndScale, handshape.EndScale, handshape.EndScale);
+        }
+        private GameObject InstantiateHandObject()
+        {
+            GameObject handObject= Instantiate((GameObject)Resources.Load("Hand"), transform);
+            Rect speakerRect = GetComponent<RectTransform>().rect;
+            handObject.GetComponent<RectTransform>().sizeDelta = 0.3f * Mathf.Min(speakerRect.width, speakerRect.height) * Vector2.one;
+            return handObject;
         }
         #endregion
     }

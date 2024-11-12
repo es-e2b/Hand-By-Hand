@@ -6,39 +6,31 @@ namespace Assets.Scripts.SignLanguage
     public class SignAnimationRenderer : MonoBehaviour
     {
         #region Field
-        public static SignAnimationRenderer Instance { get; private set; }
-        
-        [field:SerializeField]
-        public GameObject Hand { get; private set; }
+        private static SignAnimationRenderer _instance;
+        public static SignAnimationRenderer Instance
+        {
+            get
+            {
+                if(_instance==null)
+                {
+                    SignAnimationRenderer obj = new GameObject("SignAnimationRenderer", typeof(SignAnimationRenderer)).GetComponent<SignAnimationRenderer>();
+                    DontDestroyOnLoad(obj);
+                    _instance=obj;
+                }
+                return _instance;
+            }
+        }
         #endregion
 
         #region Method
         private void Awake()
         {
-            if (Instance != null && Instance != this)
+            if (_instance != null && _instance != this)
             {
                 Destroy(gameObject);
                 return;
             }
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        public IEnumerator EnqueueVocabulary(GameObject speaker, Vocabulary vocabulary)
-        {
-            if(speaker == null)
-            {
-                Debug.LogError("Speaker object does not exist");
-                yield break;
-            }
-            if(vocabulary == null)
-            {
-                yield break;
-            }
-            if(!speaker.TryGetComponent<IndividualSignAnimationRenderer>(out var individualSignAnimationRenderer))
-            {
-                individualSignAnimationRenderer=speaker.AddComponent<IndividualSignAnimationRenderer>();
-            }
-            yield return individualSignAnimationRenderer.EnqueueVocabulary(vocabulary);
+            _instance=this;
         }
         public IEnumerator StopAndEnqueueVocabulary(GameObject speaker, Vocabulary vocabulary)
         {
