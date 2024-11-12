@@ -74,7 +74,7 @@ namespace HandByHand.NightSystem.DialogueSystem
         #endregion
 
 
-        public void StartPrint(DialogueItem dialogueItem)
+        public IEnumerator StartPrint(DialogueItem dialogueItem)
         {
             switch (dialogueItem.itemType)
             {
@@ -82,7 +82,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                     NPCText.text = "";
 
                     InitNPCName(((NPCText)dialogueItem).Name);
-                    StartCoroutine(TextPrintAnimation(((NPCText)dialogueItem).Text));
+                    yield return StartCoroutine(TextPrintAnimation(((NPCText)dialogueItem).Text));
                     break;
 
                 case ItemType.PlayerChoice:
@@ -90,7 +90,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                     PoolingChoiceObject();
 
                     InitContentOnChoiceObject(((PlayerChoice)dialogueItem));
-                    StartCoroutine(ChoiceObjectFadeAnimation("on"));
+                    yield return StartCoroutine(ChoiceObjectFadeAnimation("on"));
                     break;
 
                 case ItemType.PlayerText:
@@ -100,12 +100,12 @@ namespace HandByHand.NightSystem.DialogueSystem
                     SetButtonInteractable(false);
 
                     InitContentOnChoiceObject(((PlayerText)dialogueItem));
-                    StartCoroutine(ChoiceObjectFadeAnimation("on"));
+                    yield return StartCoroutine(ChoiceObjectFadeAnimation("on"));
                     break;
 
                 case ItemType.MakeSignLanguage:
                 case ItemType.Tutorial:
-                    StartCoroutine(AnnouncePrintDone());
+                    yield return null;
                     break;
             }
         }
@@ -135,9 +135,9 @@ namespace HandByHand.NightSystem.DialogueSystem
         }
 
         #region RETURNFUNCTION
-        public void ReturnChoiceObject()
+        public IEnumerator ReturnChoiceObject()
         {
-            StartCoroutine(ChoiceObjectFadeAnimation("off"));
+            yield return StartCoroutine(ChoiceObjectFadeAnimation("off"));
         }
 
         void ObjectSetActiveFalse()

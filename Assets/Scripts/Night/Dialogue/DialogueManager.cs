@@ -129,10 +129,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                 yield return null;
 
                 //Print Item
-                printManager.StartPrint(itemList[itemCount]);
-
-                yield return new WaitUntil(() => printManager.IsPrintEnd == true);
-                yield return new WaitForEndOfFrame();
+                yield return StartCoroutine(printManager.StartPrint(itemList[itemCount]));
 
                 //Act by type of item
                 switch (itemList[itemCount].itemType)
@@ -176,20 +173,15 @@ namespace HandByHand.NightSystem.DialogueSystem
                         SoundManager.Instance.PlaySE(SoundName.Select);
                         BlinkIcon.SetActive(false);
 
-                        printManager.ReturnChoiceObject();
-
-                        yield return new WaitUntil(() => printManager.IsPrintEnd == true);
+                        yield return StartCoroutine(printManager.ReturnChoiceObject());
                         break;
 
                     case ItemType.PlayerChoice:
 
-                        dialogueChoiceSelectManager.WaitForSelectChoice();
-                        yield return new WaitUntil(() => dialogueChoiceSelectManager.IsChoiceSelected == true);
+                        yield return StartCoroutine(dialogueChoiceSelectManager.DetectingSelectChoice());
                         //Play Click SE
                         SoundManager.Instance.PlaySE(SoundName.Select);
-                        printManager.ReturnChoiceObject();
-
-                        yield return new WaitUntil(() => printManager.IsPrintEnd == true);
+                        yield return StartCoroutine(printManager.ReturnChoiceObject());
 
                         SignLanguageSO selectedSignLanguageSO = dialogueChoiceSelectManager.GetSelectedSignLanguageSO();
 

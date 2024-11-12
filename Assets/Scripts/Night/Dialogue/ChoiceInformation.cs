@@ -2,6 +2,7 @@ using HandByHand.NightSystem.SignLanguageSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HandByHand.NightSystem.DialogueSystem
 {
@@ -10,26 +11,24 @@ namespace HandByHand.NightSystem.DialogueSystem
         [HideInInspector]
         public SignLanguageSO signLanguageSO;
 
-        public bool IsSelected { get; private set; }
+        public bool IsSelected { get; set; }
 
-        private static bool HadSelected = false;
+        //중복 클릭 방지
+        public static bool alreadySelected { get; set; }
 
-        void OnEnabled()
+        void OnEnable()
         {
             IsSelected = false;
-            HadSelected = false;
+            alreadySelected = false;
         }
 
         public void Select()
         {
-            //�ߺ� ���� ����
-            if(HadSelected)
-            {
+            if (alreadySelected)
                 return;
-            }
 
             IsSelected = true;
-            HadSelected = true;
+            alreadySelected = true;
         }
 
         public SignLanguageSO GetSignLanguageSO()
