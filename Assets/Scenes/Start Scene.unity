@@ -631,13 +631,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BGMClips:
   - Name: 0
-    AudioClip: {fileID: 8300000, guid: 67612a0c1b87262428fc2e058c727bef, type: 3}
+    AudioClip: {fileID: 8300000, guid: 3d668b4dc54e2484fbea040da8daeb3f, type: 3}
   - Name: 1
-    AudioClip: {fileID: 8300000, guid: 6af1e06d772880148a2e4f87841b8bbb, type: 3}
+    AudioClip: {fileID: 8300000, guid: 96f702c8e385d4a6bb894e04cf983718, type: 3}
   - Name: 2
     AudioClip: {fileID: 8300000, guid: 86975cd8a1619ac48be02752ccb3236a, type: 3}
   - Name: 3
-    AudioClip: {fileID: 8300000, guid: 471347de796cc0347960b5087e3e3eba, type: 3}
+    AudioClip: {fileID: 8300000, guid: e7d77a0cd56f44fc88fb62d6950bacb8, type: 3}
   - Name: 15
     AudioClip: {fileID: 8300000, guid: 32f971642dcc65f4e996c112059d7539, type: 3}
   - Name: 16
@@ -648,9 +648,9 @@ MonoBehaviour:
   - Name: 5
     AudioClip: {fileID: 8300000, guid: 621034c1fd4654f4f8c379a41a71efaa, type: 3}
   - Name: 6
-    AudioClip: {fileID: 8300000, guid: c6ceb92904c1f7040b6a378db1b89bb0, type: 3}
+    AudioClip: {fileID: 8300000, guid: e1d757657e6c64cbd8d52dcb9622bc6d, type: 3}
   - Name: 7
-    AudioClip: {fileID: 8300000, guid: a3153efd927cfb04a9296cab7e753f43, type: 3}
+    AudioClip: {fileID: 8300000, guid: 4c35829a1411742d1aa0d17fdd57681e, type: 3}
   - Name: 8
     AudioClip: {fileID: 8300000, guid: 98f0058b9aff6704fb35ee9c7e661daa, type: 3}
   - Name: 9
