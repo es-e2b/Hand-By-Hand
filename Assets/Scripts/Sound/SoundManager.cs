@@ -57,6 +57,7 @@ namespace HandByHand.SoundSystem
 
         public void PlayBGM(SoundName clipName)
         {
+            StopBGM();
             _BGMAudioSource.clip = bgmDict[clipName];
             _BGMAudioSource.Play();
         }
@@ -67,6 +68,7 @@ namespace HandByHand.SoundSystem
 
         public void PlaySE(SoundName clipName)
         {
+            StopSE();
             _SEAudioSource.PlayOneShot(seDict[clipName], SEVolume);
         }
         public void StopSE()
@@ -80,6 +82,7 @@ namespace HandByHand.SoundSystem
         /// <param name="clip"></param>
         public void PlaySE(AudioClip clip)
         {
+            StopSE();
             _SEAudioSource.PlayOneShot(clip, SEVolume);
         }
 

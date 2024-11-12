@@ -27,14 +27,13 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
 
             while (elapsedTime < _animationDuration && !_isSkipping)
             {
+                yield return null;
                 float t = elapsedTime / _animationDuration;
 
                 _targetRectTransform.pivot=Vector2.Lerp(_initialPivot, _targetPivot, Mathf.Pow(t, _animationExponent));
 
                 elapsedTime += Time.deltaTime;
-                yield return null;
             }
-            _targetRectTransform.pivot=_targetPivot;
             yield return base.Execute();
         }
         public override IEnumerator Finalize()
