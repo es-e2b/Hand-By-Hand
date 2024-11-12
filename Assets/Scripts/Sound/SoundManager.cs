@@ -68,7 +68,6 @@ namespace HandByHand.SoundSystem
 
         public void PlaySE(SoundName clipName)
         {
-            StopSE();
             _SEAudioSource.PlayOneShot(seDict[clipName], SEVolume);
         }
         public void StopSE()
