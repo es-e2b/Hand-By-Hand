@@ -28,22 +28,18 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
 
             while (elapsedTime < _animationDuration && !_isSkipping)
             {
+                yield return null;
                 float t = elapsedTime / _animationDuration;
 
                 _targetRectTransform.anchoredPosition=_initialPosition+Vector2.Lerp(Vector2.zero, _targetPosition, Mathf.Pow(t, _animationExponent));
 
                 elapsedTime += Time.deltaTime;
-                yield return null;
             }
             yield return base.Execute();
         }
         public override IEnumerator Finalize()
         {
-            print("Move Position Class: Called Finalize Method");
             _targetRectTransform.anchoredPosition=_initialPosition+_targetPosition;
-            print("Move Position Class: _targetRectTransform.anchoredPosition - "+_targetRectTransform.anchoredPosition);
-            print("Move Position Class: _initialPosition - "+_initialPosition);
-            print("Move Position Class: _targetPosition - "+_targetPosition);
             yield return base.Finalize();
         }
     }
