@@ -14,9 +14,10 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         private static bool HadSelected = false;
 
-        void Awake()
+        void OnEnabled()
         {
             IsSelected = false;
+            HadSelected = false;
         }
 
         public void Select()
@@ -33,14 +34,7 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         public SignLanguageSO GetSignLanguageSO()
         {
-            ResetVariable();
             return signLanguageSO;
-        }
-
-        private void ResetVariable()
-        {
-            IsSelected = false;
-            HadSelected = false;
         }
     }
 }

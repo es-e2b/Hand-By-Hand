@@ -14,23 +14,27 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         public Vocabulary selectedChoiceVocabulary;
 
+        private PrintManager printManager;
+
         private SignLanguageSO SelectedSignLanguageSO;
 
         void Start()
         {
             IsChoiceSelected = false;
+            printManager = gameObject.transform.parent.Find("PrintManager").GetComponent<PrintManager>();
         }
 
         public void WaitForSelectChoice()
         {
-            PrintManager printManager = gameObject.transform.parent.Find("PrintManager").GetComponent<PrintManager>();
-            List<GameObject> choiceObjectList = new List<GameObject>(printManager.PooledChoiceObjectList);
-
-            StartCoroutine(DetectingSelectChoice(choiceObjectList));
+            StartCoroutine(DetectingSelectChoice());
         }
 
-        IEnumerator DetectingSelectChoice(List<GameObject> choiceObjectList)
+        IEnumerator DetectingSelectChoice()
         {
+            yield return new WaitUntil(() => printManager.isSignLanguageSOInit);
+
+            List<GameObject> choiceObjectList = new List<GameObject>(printManager.PooledChoiceObjectList);
+
             bool isChoiceSelected = false;
 
             while (!isChoiceSelected)

@@ -41,6 +41,8 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         public bool IsPrintEnd { get; private set; } = false;
 
+        public bool isSignLanguageSOInit { get; private set; } = false;
+
         [HideInInspector]
         public List<GameObject> PooledChoiceObjectList;
 
@@ -62,7 +64,7 @@ namespace HandByHand.NightSystem.DialogueSystem
         {
             playerChoiceButtonComponentList = PlayerChoiceButtonComponentList.ButtonComponentList;
 
-            for(int i = 0; i < playerChoiceButtonComponentList.Count; i++)
+            for (int i = 0; i < playerChoiceButtonComponentList.Count; i++)
             {
                 playerChoiceImageComponentList.Add(playerChoiceButtonComponentList[i].GetComponent<Image>());
             }
@@ -79,7 +81,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                 case ItemType.NPCText:
                     NPCText.text = "";
 
-                    InitNPCName( ( ( NPCText ) dialogueItem ).Name );
+                    InitNPCName(((NPCText)dialogueItem).Name);
                     StartCoroutine(TextPrintAnimation(((NPCText)dialogueItem).Text));
                     break;
 
@@ -87,7 +89,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                     poolingCount = ((PlayerChoice)dialogueItem).ChoiceContentList.Count;
                     PoolingChoiceObject();
 
-                    InitContentOnChoiceObject( ( ( PlayerChoice ) dialogueItem) );
+                    InitContentOnChoiceObject(((PlayerChoice)dialogueItem));
                     StartCoroutine(ChoiceObjectFadeAnimation("on"));
                     break;
 
@@ -97,7 +99,7 @@ namespace HandByHand.NightSystem.DialogueSystem
 
                     SetButtonInteractable(false);
 
-                    InitContentOnChoiceObject( ( ( PlayerText ) dialogueItem ) );
+                    InitContentOnChoiceObject(((PlayerText)dialogueItem));
                     StartCoroutine(ChoiceObjectFadeAnimation("on"));
                     break;
 
@@ -149,6 +151,7 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         private void InitContentOnChoiceObject(PlayerChoice playerChoiceItem)
         {
+            isSignLanguageSOInit = false;
             for (int i = 0; i < PooledChoiceObjectList.Count; i++)
             {
                 //choice ������Ʈ�� SO�Ҵ�
@@ -158,6 +161,7 @@ namespace HandByHand.NightSystem.DialogueSystem
 
                 textComponent.SetText(playerChoiceItem.ChoiceContentList[i].ChoiceText);
             }
+            isSignLanguageSOInit = true;
         }
         #endregion
 
@@ -245,7 +249,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                         break;
 
                     case "off":
-                        alpha = previewAlpha - ( time / ChoiceObjectAnimationTime );
+                        alpha = previewAlpha - (time / ChoiceObjectAnimationTime);
                         condition = alpha > 0;
                         break;
                 }
