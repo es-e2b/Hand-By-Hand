@@ -204,7 +204,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                         else
                         {
                             //Set Active Popup
-                            PopupObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+                            PopupObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 1120);
                             IsSwipeEnable = false;
 
                             //Show SignLanguageUICanvas (Make SignLanguage)
@@ -265,7 +265,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                         //waiting offset
                         yield return new WaitForSeconds(waitingTimeOffset);
 
-                        PopupObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+                        PopupObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 1120);
                         IsSwipeEnable = false;
 
                         //Show SignLanguageVocabulary

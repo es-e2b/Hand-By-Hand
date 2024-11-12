@@ -11,6 +11,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
     public class WhatIsSelectedComponent : MonoBehaviour
     {
         #region VARIABLE
+        [SerializeField]
+        SignLanguageUIManager signLanguageUIManager;
 
         [SerializeField]
         private int ignoreLayoutIndex = 0;
@@ -28,7 +30,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         private List<Button> buttonComponentList = new List<Button>();
         private List<GameObject> buttonGameObject = new List<GameObject>();
 
-
         //오브젝트를 초기화 할 경우에 할당할 오브젝트의 기존 투명도
         private float originalImageOpacity;
         private float originalOutlineImageOpacity;
@@ -39,7 +40,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         Coroutine AdjustButtonImageOpacityCoroutine = null;
         Coroutine AdjustObjectScaleCoroutine = null;
 
-        private bool isInputOn = true;
+        [SerializeField]
+        private bool isEventObject = true;
         #endregion
 
         #region INIT
@@ -54,16 +56,18 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 buttonGameObject.Add(transform.GetChild(i).gameObject);
             }
 
-            //버튼 오브젝트에 리스너 추가
-            for (int i = 0; i < buttonComponentList.Count; i++)
-            {
-                buttonComponentList[i].onClick.AddListener(AdjustOpacityExceptSelectedButton);
-                //buttonComponentList[i].onClick.AddListener(AdjustObjectScale);
-            }
-
             //초기화시 사용할 오브젝트 기존 투명도
             originalImageOpacity = ((Color32)imageComponentList[0].color).a;
             originalObjectScale = imageComponentList[0].gameObject.transform.localScale;
+
+            if (isEventObject)
+            {
+                //버튼 오브젝트에 리스너 추가
+                for (int i = 0; i < buttonComponentList.Count; i++)
+                {
+                    buttonComponentList[i].onClick.AddListener(ShowSelectedButton);
+                }
+            }
         }
 
         public void Init()
@@ -80,21 +84,29 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         }
         #endregion
 
+
+
         /// <summary>
-        /// SignLanguageUIManager에서 ChangeToTextUI()함수 실행시 상단 버튼 오브젝트의 Opacity값 변경을 위해 별도로 만든 함수
-        /// 버튼 클릭시 불러오는 것이 아니고 스크립트 내 메소드로 사용하기 위한 함수
+        /// SignLanguageUIManager.cs에서 패널 좌우 이동과 함께 호출하는 함수
         /// </summary>
-        /// <param name="index"></param>
-        public void AdjustOpacityOfIndex(int index)
+        public void ShowSelectedButton(int clickObjectIndex)
         {
-            StartCoroutine(AdjustButtonImageOpacity(index));
+            if (signLanguageUIManager.horizontalSlideCoroutine != null)
+                return;
+
+            //눌렀던 버튼 또 누를시 중단
+            if (clickObjectIndex == formerSelectedButtonIndex)
+            {
+                return;
+            }
+
+            SoundManager.Instance.PlaySE(SoundName.Select);
+            AdjustButtonImageOpacityCoroutine = StartCoroutine(AdjustButtonImageOpacity(clickObjectIndex));
+            AdjustObjectScaleCoroutine = StartCoroutine(AdjustObjectSize(clickObjectIndex));
         }
 
-        #region BUTTONEVENT
-        /// <summary>
-        /// 버튼 클릭시 해당 함수를 불러옴
-        /// </summary>
-        private void AdjustOpacityExceptSelectedButton()
+        //버튼 이벤트용
+        public void ShowSelectedButton()
         {
             //오브젝트의 hierarchy에서의 인덱스 받아오기
             GameObject clickObject = EventSystem.current.currentSelectedGameObject;
@@ -106,80 +118,10 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 return;
             }
 
-            if(isInputOn == false)
-            {
-                return;
-            }
-            else
-            {
-                isInputOn = false;
-            }
-
-            AdjustObjectScale(clickObjectHierarchyIndex);
-
-            if (AdjustButtonImageOpacityCoroutine != null)
-            {
-                StopCoroutine(AdjustButtonImageOpacityCoroutine);
-                AdjustButtonImageOpacityCoroutine = null;
-            }
-
+            SoundManager.Instance.PlaySE(SoundName.Select);
             AdjustButtonImageOpacityCoroutine = StartCoroutine(AdjustButtonImageOpacity(clickObjectHierarchyIndex));
-            Invoke("OnInput", 0.6f);
-        }
-
-        private void OnInput()
-        {
-            isInputOn = true;
-        }
-
-        private void AdjustObjectScale(int clickObjectHierarchyIndex)
-        {
-            //눌렀던 버튼 또 누를시 중단
-            if (clickObjectHierarchyIndex == formerSelectedButtonIndex)
-            {
-                return;
-            }
-
-            if (AdjustObjectScaleCoroutine != null)
-            {
-                StopCoroutine(AdjustObjectScaleCoroutine);
-                AdjustObjectScaleCoroutine = null;
-            }
-
             AdjustObjectScaleCoroutine = StartCoroutine(AdjustObjectSize(clickObjectHierarchyIndex));
         }
-
-        /// <summary>
-        /// 버튼 클릭시 오브젝트 크기 조정
-        /// </summary>
-        /*
-        private void AdjustObjectScale()
-        {
-            //오브젝트의 hierarchy에서의 인덱스 받아오기
-            GameObject clickObject = EventSystem.current.currentSelectedGameObject;
-            int clickObjectHierarchyIndex = clickObject.transform.GetSiblingIndex() - ignoreLayoutIndex;
-
-            //눌렀던 버튼 또 누를시 중단
-            if (clickObjectHierarchyIndex == formerSelectedButtonIndex)
-            {
-                return;
-            }
-
-            if (isInputOn == false)
-            {
-                return;
-            }
-
-            if (AdjustObjectScaleCoroutine != null)
-            {
-                StopCoroutine(AdjustObjectScaleCoroutine);
-                AdjustObjectScaleCoroutine = null;
-            }
-
-            AdjustObjectScaleCoroutine = StartCoroutine(AdjustObjectSize(clickObjectHierarchyIndex));
-        }
-        */
-        #endregion
 
         #region COROUTINE
         /// <summary>
@@ -268,7 +210,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 }
 
                 time += Time.deltaTime;
-                yield return null;
             }
 
             //투명도 조정 애니메이션이 끝났을시 변수 연산 오차를 고려해 최종적으로 변수 할당

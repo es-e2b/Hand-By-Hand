@@ -41,14 +41,14 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         private bool completeButtonHadPushed { get; set; } = false;
         public int presentPanelIndex { get; private set; } = 0;
 
-        Coroutine horizontalSlideCoroutine;
+        public Coroutine horizontalSlideCoroutine;
         public bool IsVerticalAnimationDone { get; private set; }
         public bool SignLanguageUIActiveSelf { get; private set; } = false;
 
         [HideInInspector]
         public List<int> incorrectAnswerIndexList = new List<int>() { -1 };
 
-        public bool isHorizontalAnimationEnd { get; private set; } = true;
+        private int formerSelectedIndex = -1;
         #endregion
 
         #endregion
@@ -118,7 +118,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             {
                 viewportObjectList[i].GetComponent<WhatIsSelectedComponent>().Init();
             }
-            this.ButtonListUIComponent.GetComponent<WhatIsSelectedComponent>().AdjustOpacityOfIndex(0);
+            this.ButtonListUIComponent.GetComponent<WhatIsSelectedComponent>().ShowSelectedButton(0);
         }
 
         private void InitButtonInteractable()
@@ -137,12 +137,12 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             if (horizontalSlideCoroutine != null)
             {
-                StopCoroutine(horizontalSlideCoroutine);
+                return;
             }
-            horizontalSlideCoroutine = StartCoroutine(ViewportHorizontalSlideCoroutine(targetPosition, animationWaitingTime));
-
             //상단 버튼 오브젝트 투명도 변경
-            this.ButtonListUIComponent.GetComponent<WhatIsSelectedComponent>().AdjustOpacityOfIndex(index);
+            this.ButtonListUIComponent.GetComponent<WhatIsSelectedComponent>().ShowSelectedButton(index);
+
+            horizontalSlideCoroutine = StartCoroutine(ViewportHorizontalSlideCoroutine(targetPosition, animationWaitingTime));
 
             presentPanelIndex = index;
         }
@@ -181,13 +181,21 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             //함수를 부른 버튼 오브젝트의 hierarchy상 인덱스 받기
             int eventButtonSiblingIndex = EventSystem.current.currentSelectedGameObject.transform.GetSiblingIndex();
 
+            if (eventButtonSiblingIndex == formerSelectedIndex) return;
+
             Vector2 targetPosition = viewportObjectList[eventButtonSiblingIndex].GetComponent<RectTransform>().anchoredPosition;
 
 
             if (horizontalSlideCoroutine != null)
             {
-                StopCoroutine(horizontalSlideCoroutine);
+                return;
             }
+
+            formerSelectedIndex = eventButtonSiblingIndex;
+
+            //상단 버튼 오브젝트 투명도 변경
+            this.ButtonListUIComponent.GetComponent<WhatIsSelectedComponent>().ShowSelectedButton(eventButtonSiblingIndex);
+
             horizontalSlideCoroutine = StartCoroutine(ViewportHorizontalSlideCoroutine(targetPosition));
         }
 
@@ -291,7 +299,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         {
             if (FindUnselectedNextUI() == -1)
             {
-                Vector3 offsetPosition = new Vector3(0, -1065, 0);
+                Vector3 offsetPosition = new Vector3(0, -145, 0);
                 StartCoroutine(CompareButtonVerticalSlideCoroutine(offsetPosition));
                 completeButtonHadPushed = true;
             }
@@ -425,9 +433,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// <returns></returns>
         IEnumerator ViewportHorizontalSlideCoroutine(Vector2 viewportObjectRectPosition, float animationWaitingTime = 0)
         {
-            if (!isHorizontalAnimationEnd) yield break;
-            else isHorizontalAnimationEnd = false;
-
             if (!IsVerticalAnimationDone)
             {
                 yield return new WaitUntil(() => IsVerticalAnimationDone == true);
@@ -479,7 +484,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             viewportRectTransformComponent.anchoredPosition = targetPosition;
 
-            isHorizontalAnimationEnd = true;
+            horizontalSlideCoroutine = null;
         }
 
         IEnumerator AnnounceAnimationDone(bool isInitObject)
@@ -538,8 +543,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             }
 
             rectTransform.anchoredPosition = targetPosition;
-
-            yield return null;
         }
         #endregion
 
