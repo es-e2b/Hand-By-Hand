@@ -26,6 +26,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         private bool isSignLanguageCorrect = false;
         public bool IsSignLanguageMade { get; private set; }
+
+        public bool isCheckEnd { get; private set; } = false;
         #endregion
 
         #region INIT
@@ -65,12 +67,18 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         public void ComparingHandSignSO()
         {
+            if (!isCheckEnd)
+                return;
+
+            isCheckEnd = false;
+
             //검사 후 맞는지 틀린지에 따라 isSignLanguageCorrect = true;
             if (handCountComponent.IsCorrect && symbolAndDirectionComponent.IsCorrect
                 && handPositionComponent.IsCorrect && particularComponent.IsCorrect)
             {
                 isSignLanguageCorrect = true;
                 SoundManager.Instance.PlaySE(SoundName.Success);
+                CheckEnd();
                 StartCoroutine(MadeSignLanguageCoroutine());
             }
             else
@@ -97,6 +105,13 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             signLanguageUIManager.ChangeToWrongAnswerTab();
             isSignLanguageCorrect = false;
+            CheckEnd();
+        }
+
+
+        private void CheckEnd()
+        {
+            isCheckEnd = true;
         }
 
         #region COROUTINE
