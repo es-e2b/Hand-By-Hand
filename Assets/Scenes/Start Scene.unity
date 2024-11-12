@@ -642,7 +642,7 @@ MonoBehaviour:
     AudioClip: {fileID: 8300000, guid: 48bb01839e8114ba985c547c00aa775f, type: 3}
   SEClips:
   - Name: 4
-    AudioClip: {fileID: 8300000, guid: 35fc06d627853ad429f2692f96fe62dc, type: 3}
+    AudioClip: {fileID: 8300000, guid: 604289bc9ba53459a8b15130e5f78c08, type: 3}
   - Name: 5
     AudioClip: {fileID: 8300000, guid: 621034c1fd4654f4f8c379a41a71efaa, type: 3}
   - Name: 6
