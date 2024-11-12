@@ -5,6 +5,7 @@ using UnityEngine;
 using HandByHand.NightSystem.SignLanguageSystem;
 using Assets.Scripts.SignLanguage;
 using HandByHand.SoundSystem;
+using Assets.Scripts;
 
 namespace HandByHand.NightSystem.DialogueSystem
 {
@@ -55,6 +56,7 @@ namespace HandByHand.NightSystem.DialogueSystem
         #region INIT
         void Awake()
         {
+            //Set False
             if (EndingCanvasObject.activeSelf)
                 EndingCanvasObject.SetActive(false);
 
@@ -113,9 +115,9 @@ namespace HandByHand.NightSystem.DialogueSystem
             List<DialogueItem> itemList = new List<DialogueItem>(DialogueFileSO.DialogueItemList);
 
             yield return new WaitUntil(() => SoundManager.Instance != null);
-            //yield return new WaitUntil(() => SoundManager.Instance.bgmDict[SoundName.NightBGM] != null);
+            yield return new WaitUntil(() => SoundManager.Instance.bgmDict[SoundName.NightBGM] != null);
 
-            //SoundManager.Instance.PlayBGM(SoundName.NightBGM);
+            SoundManager.Instance.PlayBGM(SoundName.NightBGM);
 
             while (true)
             {

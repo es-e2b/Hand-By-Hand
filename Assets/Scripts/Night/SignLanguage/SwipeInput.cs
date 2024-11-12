@@ -68,13 +68,14 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                         }
                         else
                         {
+                            /*
                             foreach (int i in signLanguageUIManager.incorrectAnswerIndexList)
                             {
                                 if (i == (signLanguageUIManager.presentPanelIndex + 1))
                                 {
                                     signLanguageUIManager.ChangeUITab(signLanguageUIManager.presentPanelIndex + 1);
                                 }
-                            }
+                            } */
                         }
                     }
                 }
@@ -89,6 +90,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                         }
                         else
                         {
+                            /*
                             foreach (int i in signLanguageUIManager.incorrectAnswerIndexList)
                             {
                                 if (i == (signLanguageUIManager.presentPanelIndex - 1))
@@ -96,6 +98,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                                     signLanguageUIManager.ChangeUITab(signLanguageUIManager.presentPanelIndex - 1);
                                 }
                             }
+                            */
                         }
                     }
                 }
