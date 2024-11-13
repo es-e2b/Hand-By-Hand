@@ -1,4 +1,4 @@
-namespace Scripts.Editors
+namespace Assets.Scripts.Editors
 {
     #if UNITY_EDITOR
     using UnityEditor;
