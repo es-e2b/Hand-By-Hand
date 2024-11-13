@@ -49,8 +49,8 @@ namespace HandByHand.NightSystem
         [SerializeField]
         private TMP_Text[] endingText = new TMP_Text[3];
 
-        private string[] endingString = new string[3] { "´ç½ÅÀÇ ¼±ÅÃÀ¸·Î ÁÖÀÎ°øÀº ¸¶À»¿¡ ³²¾Æ ¸¶À» ÁÖ¹Îµé°ú Çàº¹ÇÏ°Ô »ì¾Ò½À´Ï´Ù.",
-                                                        "±×·¸°Ô ¿µ¿øÈ÷, Çàº¹ÇÏ°Ô »ì¾Ò´ä´Ï´Ù.", "¡¦The End."};
+        private string[] endingString = new string[3] { "ë‹¹ì‹ ì˜ ì„ íƒìœ¼ë¡œ ì£¼ì¸ê³µì€ ë§ˆì„ì— ë‚¨ì•„ ë§ˆì„ ì£¼ë¯¼ë“¤ê³¼ í–‰ë³µí•˜ê²Œ ì‚´ì•˜ìŠµë‹ˆë‹¤.",
+                                                        "ê·¸ë ‡ê²Œ ì˜ì›íˆ, í–‰ë³µí•˜ê²Œ ì‚´ì•˜ë‹µë‹ˆë‹¤.", "â€¦The End."};
 
         [Header("Variable")]
         [SerializeField]
@@ -83,7 +83,7 @@ namespace HandByHand.NightSystem
         {
             float waitingOffset = 0.5f;
 
-            //¹ã ¾À ÀüÁ¦ ÆäÀÌµå ¾Æ¿ô
+            //ë°¤ ì”¬ ì „ì œ í˜ì´ë“œ ì•„ì›ƒ
             yield return StartCoroutine(AdjustImageAlpha(fadePanel, true));
 
             yield return new WaitForSeconds(waitingOffset);
@@ -159,6 +159,8 @@ namespace HandByHand.NightSystem
 
             yield return StartCoroutine(AdjustImageAlpha(fadePanel3, true));
 
+            PlayerPrefs.DeleteAll();
+
             GameManager.Instance.CurrentDayCycle = DayCycle.Start;
         }
 
@@ -174,7 +176,7 @@ namespace HandByHand.NightSystem
             {
                 textComp.text += text[count].ToString();
 
-                //»ö»ó Ãß°¡
+                //ìƒ‰ìƒ ì¶”ê°€
                 if (text[count].ToString() == "<")
                 {
                     while (text[count].ToString() != ">")

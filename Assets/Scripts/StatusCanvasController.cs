@@ -6,6 +6,7 @@ namespace Assets.Scripts
 
     public class StatusCanvasController : MonoBehaviour
     {
+        public static StatusCanvasController Instance { get; private set; }
         [SerializeField]
         private GameObject _statusPanel;
         private UniversalTimer _dayTimer;
@@ -13,6 +14,11 @@ namespace Assets.Scripts
         private int _dayTargetTime;
         private void Awake()
         {
+            if(Instance!=null && Instance!=this)
+            {
+                Destroy(gameObject);
+                return;
+            }
             DontDestroyOnLoad(this);
             _dayTimer=new UniversalTimer(1, ()=>ChangeDayCycle(DayCycle.Day), StartCoroutine, StopCoroutine);
             SceneManager.sceneLoaded+=(_, _)=>GetComponent<Canvas>().worldCamera=Camera.main;
