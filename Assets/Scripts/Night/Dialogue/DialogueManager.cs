@@ -70,7 +70,7 @@ namespace HandByHand.NightSystem.DialogueSystem
         void Start()
         {
             //노래 재생
-            //SoundManager.Instance.PlayBGM(SoundName.NightBGM);
+            SoundManager.Instance.PlayBGM(SoundName.NightBGM);
             DialogueCoroutine = StartCoroutine(StartDialogue());
         }
 
