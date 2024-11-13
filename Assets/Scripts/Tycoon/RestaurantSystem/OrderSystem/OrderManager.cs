@@ -64,7 +64,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.OrderSystem
         private IEnumerator Initailize()
         {
             yield return new WaitUntil(()=>GameManager.Instance!=null);
-            if(!GameManager.Instance.hasCompletedTutorial)
+            if(!GameManager.Instance.HasCompletedTutorial)
             {
                 yield return new WaitUntil(()=>TutorialManager.Instance!=null);
                 yield break;
