@@ -7,7 +7,21 @@ namespace Assets.Scripts
     {
         private void OnEnable()
         {
-            LayoutRebuilder.ForceRebuildLayoutImmediate(transform.parent.GetComponent<RectTransform>());
+            RebuildLayout();
+        }
+        private void RebuildLayout()
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
+
+            RebuildParentLayout();
+        }
+
+        private void RebuildParentLayout()
+        {
+            if (transform.parent != null && transform.parent.TryGetComponent<LayoutRebuilderComponent>(out var parentLayoutRebuilder))
+            {
+                parentLayoutRebuilder.RebuildLayout();
+            }
         }
     }
 }
