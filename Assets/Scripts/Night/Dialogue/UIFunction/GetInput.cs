@@ -11,14 +11,15 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         void OnEnable()
         {
-            IsGetInput = false;
+            //IsGetInput = false;
         }
 
         private void Update()
         {
             if(Input.touchCount > 0)
             {
-                IsGetInput = true;
+                //IsGetInput = true;
+                gameObject.SetActive(false);
             }
         }
     }

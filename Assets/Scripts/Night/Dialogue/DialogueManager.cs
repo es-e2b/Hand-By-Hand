@@ -69,7 +69,8 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         void Start()
         {
-            BlinkIcon.SetActive(false);
+            //노래 재생
+            SoundManager.Instance.PlayBGM(SoundName.NightBGM);
             DialogueCoroutine = StartCoroutine(StartDialogue());
         }
 
@@ -114,11 +115,6 @@ namespace HandByHand.NightSystem.DialogueSystem
             int itemCount = 0;
             List<DialogueItem> itemList = new List<DialogueItem>(DialogueFileSO.DialogueItemList);
 
-            yield return new WaitUntil(() => SoundManager.Instance != null);
-            yield return new WaitUntil(() => SoundManager.Instance.bgmDict[SoundName.NightBGM] != null);
-
-            SoundManager.Instance.PlayBGM(SoundName.NightBGM);
-
             while (true)
             {
                 if (itemCount >= itemList.Count)
@@ -152,8 +148,9 @@ namespace HandByHand.NightSystem.DialogueSystem
                             itemList[itemCount + 1].itemType == ItemType.MakeSignLanguage)
                         {
                             BlinkIcon.SetActive(true);
-                            yield return new WaitUntil(() => getInput.IsGetInput == true);
-                            BlinkIcon.SetActive(false);
+                            yield return new WaitUntil(() => !BlinkIcon.activeSelf);
+                            //yield return new WaitUntil(() => getInput.IsGetInput == true);
+                            //BlinkIcon.SetActive(false);
                             //Play Click SE
                             SoundManager.Instance.PlaySE(SoundName.Select);
                         }
@@ -167,11 +164,12 @@ namespace HandByHand.NightSystem.DialogueSystem
 
                     case ItemType.PlayerText:
                         BlinkIcon.SetActive(true);
-
-                        yield return new WaitUntil(() => getInput.IsGetInput == true);
+                        yield return new WaitUntil(() => !BlinkIcon.activeSelf);
+                        
+                        // yield return new WaitUntil(() => getInput.IsGetInput == true);
                         //Play Click SE
                         SoundManager.Instance.PlaySE(SoundName.Select);
-                        BlinkIcon.SetActive(false);
+                        //BlinkIcon.SetActive(false);
 
                         yield return StartCoroutine(printManager.ReturnChoiceObject());
                         break;
@@ -199,10 +197,10 @@ namespace HandByHand.NightSystem.DialogueSystem
                             PopupObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 1120);
                             IsSwipeEnable = false;
 
+                            signLanguageManager.MakeSignLanguage(selectedSignLanguageSO);
+
                             //Show SignLanguageUICanvas (Make SignLanguage)
                             signLanguageUIManager.ActiveUIObject(selectedSignLanguageSO.Mean);
-
-                            signLanguageManager.MakeSignLanguage(selectedSignLanguageSO);
 
                             //waiting offset
                             yield return new WaitForSeconds(waitingTimeOffset);

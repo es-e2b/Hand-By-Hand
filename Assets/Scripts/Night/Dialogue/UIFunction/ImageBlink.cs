@@ -15,6 +15,7 @@ namespace HandByHand.NightSystem.DialogueSystem
         private void Awake()
         {
             image = transform.GetComponent<Image>();
+            gameObject.SetActive(false);
         }
 
         void OnEnable()
