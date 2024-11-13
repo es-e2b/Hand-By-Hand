@@ -19,6 +19,12 @@ namespace Assets.Scripts.SignLanguage
         private void Awake()
         {
             renderingQueue=new();
+            
+            leftHandObject=InstantiateHandObject();
+            leftHandObject.SetActive(false);
+
+            rightHandObject=InstantiateHandObject();
+            rightHandObject.SetActive(false);
         }
         public IEnumerator StopAndEnqueueVocabulary(Vocabulary vocabulary)
         {
@@ -70,7 +76,10 @@ namespace Assets.Scripts.SignLanguage
                 }
                 yield return MoveHandshape(handshape, handObject);
             }
-            handObject.SetActive(false);
+            if(handObject!=null)
+            {
+                handObject.SetActive(false);
+            }
         }
         private IEnumerator MoveHandshape(Handshape handshape, GameObject handObject)
         {
