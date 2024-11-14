@@ -19,6 +19,7 @@ namespace Assets.Scripts
                 Destroy(gameObject);
                 return;
             }
+            Instance=this;
             DontDestroyOnLoad(this);
             _dayTimer=new UniversalTimer(1, ()=>ChangeDayCycle(DayCycle.Day), StartCoroutine, StopCoroutine);
             SceneManager.sceneLoaded+=(_, _)=>GetComponent<Canvas>().worldCamera=Camera.main;
