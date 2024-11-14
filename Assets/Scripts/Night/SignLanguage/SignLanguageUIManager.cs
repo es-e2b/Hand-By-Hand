@@ -198,6 +198,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             this.ButtonListUIComponent.GetComponent<WhatIsSelectedComponent>().ShowSelectedButton(eventButtonSiblingIndex);
 
             horizontalSlideCoroutine = StartCoroutine(ViewportHorizontalSlideCoroutine(targetPosition));
+
+            presentPanelIndex = eventButtonSiblingIndex;
         }
 
         /// <summary>
@@ -441,6 +443,11 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// <returns></returns>
         IEnumerator ViewportHorizontalSlideCoroutine(Vector2 viewportObjectRectPosition, float animationWaitingTime = 0)
         {
+            if(horizontalSlideCoroutine != null)
+            {
+                yield break;
+            }
+
             if (!IsVerticalAnimationDone)
             {
                 yield return new WaitUntil(() => IsVerticalAnimationDone == true);

@@ -17,9 +17,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         void Update()
         {
-            //SignLanguageUICanvas가 Active 되지 않았다면 스와이프는 안 됨
-            if (!signLanguageUIManager.SignLanguageUIActiveSelf) return;
-
             // 터치 입력의 개수를 확인합니다.
             if (Input.touchCount > 0)
             {
@@ -55,51 +52,35 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             float swipeDistanceY = Mathf.Abs(fingerDownPosition.y - fingerUpPosition.y);
 
             // 좌우 스와이프 확인
-            if (isSwiping && swipeDistanceX > swipeThreshold && swipeDistanceX > swipeDistanceY)
+            if (dialogueManager.IsSwipeEnable && isSwiping && swipeDistanceX > swipeThreshold && swipeDistanceX > swipeDistanceY)
             {
-                if (fingerDownPosition.x - fingerUpPosition.x > 0 && dialogueManager.IsSwipeEnable)
+                if (fingerDownPosition.x - fingerUpPosition.x > 0)
                 {
                     // 오른쪽으로 스와이프한 경우
-                    if ((signLanguageUIManager.presentPanelIndex + 1) < 4)
+                    //현재 탭이 오른쪽 끝이 아님 && 이동할 목표 탭이 틀린 탭이 아니라면
+                    if ((signLanguageUIManager.presentPanelIndex + 1) < 4 && 
+                        (signLanguageUIManager.incorrectAnswerIndexList[0] == -1 || signLanguageUIManager.incorrectAnswerIndexList.Contains(signLanguageUIManager.presentPanelIndex + 1)))
                     {
-                        if (signLanguageUIManager.incorrectAnswerIndexList[0] == -1)
-                        {
-                            signLanguageUIManager.ChangeUITab(signLanguageUIManager.presentPanelIndex + 1);
-                        }
-                        else
-                        {
-                            /*
-                            foreach (int i in signLanguageUIManager.incorrectAnswerIndexList)
-                            {
-                                if (i == (signLanguageUIManager.presentPanelIndex + 1))
-                                {
-                                    signLanguageUIManager.ChangeUITab(signLanguageUIManager.presentPanelIndex + 1);
-                                }
-                            } */
-                        }
+                        signLanguageUIManager.ChangeUITab(signLanguageUIManager.presentPanelIndex + 1);
                     }
                 }
                 else
                 {
                     // 왼쪽으로 스와이프한 경우
-                    if ((signLanguageUIManager.presentPanelIndex - 1) > -1 && dialogueManager.IsSwipeEnable)
+                    if ((signLanguageUIManager.presentPanelIndex - 1) > -1 &&
+                        (signLanguageUIManager.incorrectAnswerIndexList[0] == -1 || signLanguageUIManager.incorrectAnswerIndexList.Contains((signLanguageUIManager.presentPanelIndex - 1))))
                     {
-                        if (signLanguageUIManager.incorrectAnswerIndexList[0] != -1)
+                        signLanguageUIManager.ChangeUITab(signLanguageUIManager.presentPanelIndex - 1);
+                        /*
+                        foreach (int i in signLanguageUIManager.incorrectAnswerIndexList)
                         {
-                            signLanguageUIManager.ChangeUITab(signLanguageUIManager.presentPanelIndex - 1);
-                        }
-                        else
-                        {
-                            /*
-                            foreach (int i in signLanguageUIManager.incorrectAnswerIndexList)
+                            if (i == (signLanguageUIManager.presentPanelIndex - 1))
                             {
-                                if (i == (signLanguageUIManager.presentPanelIndex - 1))
-                                {
-                                    signLanguageUIManager.ChangeUITab(signLanguageUIManager.presentPanelIndex - 1);
-                                }
+                                signLanguageUIManager.ChangeUITab(signLanguageUIManager.presentPanelIndex - 1);
                             }
-                            */
                         }
+                        */
+
                     }
                 }
             }

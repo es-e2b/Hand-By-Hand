@@ -201,6 +201,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                                 yield return StartCoroutine(ShowVocabulary(playerChoiceItem.Vocabulary, PopupSpeaker));
                             }
 
+                            IsSwipeEnable = true;
                             yield return new WaitUntil(() => signLanguageManager.IsSignLanguageMade == true);
                             IsSwipeEnable = false;
 
@@ -231,12 +232,14 @@ namespace HandByHand.NightSystem.DialogueSystem
 
                         yield return StartCoroutine(InitAndActiveUI(signLanguageSO));
 
+
                         //Show SignLanguageVocabulary while it's closing
                         if (makeSignLanguageItem.AdditionalSetting.ShowVocabularyFirst)
                         {
                             yield return StartCoroutine(ShowVocabulary(makeSignLanguageItem.Vocabulary, PopupSpeaker));
                         }
 
+                        IsSwipeEnable = true;
                         yield return new WaitUntil(() => signLanguageManager.IsSignLanguageMade == true);
                         IsSwipeEnable = false;
 
