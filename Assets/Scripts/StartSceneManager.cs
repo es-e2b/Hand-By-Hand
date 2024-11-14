@@ -1,7 +1,5 @@
 namespace Assets.Scripts
 {
-    using System.Collections;
-    using Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem;
     using UnityEngine;
     using UnityEngine.UI;
 
@@ -28,11 +26,13 @@ namespace Assets.Scripts
         }
         public void StartGame()
         {
-            GameManager.Instance.CurrentDayCycle=(DayCycle)PlayerPrefs.GetInt("DayCycle", 1);
+            GameManager.Instance.CurrentDayCycle=(DayCycle)PlayerPrefs.GetInt("DayCycle", (int)DayCycle.Cartoon);
         }
         public void ResetGame()
         {
             PlayerPrefs.DeleteAll();
+            PlayerPrefs.SetInt("Day", 1);
+            GameManager.Instance.HasCompletedTutorial=false;
             GameManager.Instance.CurrentDayCycle=DayCycle.Cartoon;
         }
         public void ToggleContinueButton(Button continueButton)

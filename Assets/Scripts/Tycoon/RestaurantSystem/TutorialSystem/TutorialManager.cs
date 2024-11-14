@@ -43,7 +43,7 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
         {
             yield return new WaitUntil(()=>GameManager.Instance!=null);
             _executor.StartExecutableList(_restaurantInitializationList);
-            if(GameManager.Instance.hasCompletedTutorial)
+            if(GameManager.Instance.HasCompletedTutorial)
             {
                 _executor.StartExecutableList(_restaurantTimerList);
                 yield break;
@@ -70,6 +70,10 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
             {
                 GameManager.Instance.CurrentDayCycle=DayCycle.Day;
             }
+        }
+        public void SetHasCompletedTutorial()
+        {
+            GameManager.Instance.HasCompletedTutorial=true;
         }
         private IEnumerator HidePanelAndRestart(ObjectDisplayAnimator objectDisplayAnimator)
         {

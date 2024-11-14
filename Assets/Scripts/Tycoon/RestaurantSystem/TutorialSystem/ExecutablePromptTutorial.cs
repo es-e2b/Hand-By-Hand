@@ -8,10 +8,5 @@ namespace Assets.Scripts.Tycoon.RestaurantSystem.TutorialSystem
     [Serializable]
     public class ExecutablePromptTutorial : ExecutablePromptLegacy
     {
-        public override IEnumerator Finalize()
-        {
-            GameManager.Instance.hasCompletedTutorial=true;
-            yield return base.Finalize();
-        }
     }
 }

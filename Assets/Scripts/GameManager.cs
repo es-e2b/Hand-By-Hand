@@ -14,7 +14,16 @@ namespace Assets.Scripts
         [field:SerializeField]
         private int StartDayCount { get; set; }
         public static GameManager Instance { get; private set; }
-        public bool hasCompletedTutorial;
+        public bool _hasCompletedTutorial;
+        public bool HasCompletedTutorial
+        {
+            get=>_hasCompletedTutorial;
+            set
+            {
+                _hasCompletedTutorial=value;
+                PlayerPrefs.SetInt("HasCompletedTutorial", value?1:0);
+            }
+        }
         [SerializeField]
         private DayCycle _currentDayCycle;
         public DayCycle CurrentDayCycle
@@ -73,7 +82,7 @@ namespace Assets.Scripts
         }
         private void Start()
         {
-            // DayCount=StartDayCount;
+            HasCompletedTutorial= PlayerPrefs.GetInt("HasCompletedTutorial", 0) != 0;
         }
         public void ExitGame()
         {
