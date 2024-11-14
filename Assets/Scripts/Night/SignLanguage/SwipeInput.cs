@@ -58,29 +58,45 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 {
                     // 오른쪽으로 스와이프한 경우
                     //현재 탭이 오른쪽 끝이 아님 && 이동할 목표 탭이 틀린 탭이 아니라면
-                    if ((signLanguageUIManager.presentPanelIndex + 1) < 4 && 
-                        (signLanguageUIManager.incorrectAnswerIndexList[0] == -1 || signLanguageUIManager.incorrectAnswerIndexList.Contains(signLanguageUIManager.presentPanelIndex + 1)))
+                    if ((signLanguageUIManager.presentPanelIndex + 1) < 4)
                     {
-                        signLanguageUIManager.ChangeUITab(signLanguageUIManager.presentPanelIndex + 1);
+                        if (signLanguageUIManager.incorrectAnswerIndexList[0] == -1)
+                        {
+                            signLanguageUIManager.ChangeUITab(signLanguageUIManager.presentPanelIndex + 1);
+                        }
+                        else
+                        {
+                            for (int i = signLanguageUIManager.presentPanelIndex + 1; i <= 3; i++)
+                            {
+                                if (signLanguageUIManager.incorrectAnswerIndexList.Contains(i))
+                                {
+                                    signLanguageUIManager.ChangeUITab(i);
+                                    return;
+                                }
+                            }
+                        }
                     }
                 }
                 else
                 {
                     // 왼쪽으로 스와이프한 경우
-                    if ((signLanguageUIManager.presentPanelIndex - 1) > -1 &&
-                        (signLanguageUIManager.incorrectAnswerIndexList[0] == -1 || signLanguageUIManager.incorrectAnswerIndexList.Contains((signLanguageUIManager.presentPanelIndex - 1))))
+                    if ((signLanguageUIManager.presentPanelIndex - 1) > -1)
                     {
-                        signLanguageUIManager.ChangeUITab(signLanguageUIManager.presentPanelIndex - 1);
-                        /*
-                        foreach (int i in signLanguageUIManager.incorrectAnswerIndexList)
+                        if (signLanguageUIManager.incorrectAnswerIndexList[0] == -1)
                         {
-                            if (i == (signLanguageUIManager.presentPanelIndex - 1))
+                            signLanguageUIManager.ChangeUITab(signLanguageUIManager.presentPanelIndex - 1);
+                        }
+                        else
+                        {
+                            for (int i = signLanguageUIManager.presentPanelIndex - 1; i >= 0; i--)
                             {
-                                signLanguageUIManager.ChangeUITab(signLanguageUIManager.presentPanelIndex - 1);
+                                if (signLanguageUIManager.incorrectAnswerIndexList.Contains(i))
+                                {
+                                    signLanguageUIManager.ChangeUITab(i);
+                                    return;
+                                }
                             }
                         }
-                        */
-
                     }
                 }
             }

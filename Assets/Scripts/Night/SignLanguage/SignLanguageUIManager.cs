@@ -48,8 +48,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
         [HideInInspector]
         public List<int> incorrectAnswerIndexList = new List<int>() { -1 };
-
-        private int formerSelectedIndex = -1;
         #endregion
 
         #endregion
@@ -182,7 +180,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             //함수를 부른 버튼 오브젝트의 hierarchy상 인덱스 받기
             int eventButtonSiblingIndex = EventSystem.current.currentSelectedGameObject.transform.GetSiblingIndex();
 
-            if (eventButtonSiblingIndex == formerSelectedIndex) return;
+            if (eventButtonSiblingIndex == presentPanelIndex) return;
 
             Vector2 targetPosition = viewportObjectList[eventButtonSiblingIndex].GetComponent<RectTransform>().anchoredPosition;
 
@@ -191,8 +189,6 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             {
                 return;
             }
-
-            formerSelectedIndex = eventButtonSiblingIndex;
 
             //상단 버튼 오브젝트 투명도 변경
             this.ButtonListUIComponent.GetComponent<WhatIsSelectedComponent>().ShowSelectedButton(eventButtonSiblingIndex);
