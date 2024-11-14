@@ -25,9 +25,10 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             IsCorrect = false;
         }
 
-        public void SetAnswer(HandCount handCount)
+        public IEnumerator SetAnswer(HandCount handCount)
         {
             answerHandCount.UsingHand = handCount.UsingHand;
+            yield return null;
         }
 
         public void GetPlayerAnswer()

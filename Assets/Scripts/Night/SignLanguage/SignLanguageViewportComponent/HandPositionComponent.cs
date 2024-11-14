@@ -65,9 +65,10 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         }
         #endregion
 
-        public void SetAnswer(Position position)
+        public IEnumerator SetAnswer(Position position)
         {
             answerPosition = position;
+            yield return null;
         }
 
         public void GetPlayerAnswer()

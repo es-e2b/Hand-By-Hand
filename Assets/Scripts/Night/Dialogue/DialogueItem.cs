@@ -89,25 +89,25 @@ namespace HandByHand.NightSystem.DialogueSystem
     [System.Serializable]
     public class PlayerChoice : DialogueItem
     {
-        [System.Serializable]
-        public class ChoiceContent
-        {
-            public SignLanguageSO SignLanguageItem;
-            public string ChoiceText;
-            public Vocabulary Vocabulary;
-            public AdditionalSetting AdditionalSetting;
-
-            public ChoiceContent()
-            {
-                AdditionalSetting = new AdditionalSetting();
-            }
-        }
-
         public List<ChoiceContent> ChoiceContentList;
 
-        public PlayerChoice() : base(WhoseItem.Player, ItemType.PlayerChoice) 
-        { 
+        public PlayerChoice() : base(WhoseItem.Player, ItemType.PlayerChoice)
+        {
             ChoiceContentList = new List<ChoiceContent>();
+        }
+    }
+
+    [System.Serializable]
+    public class ChoiceContent
+    {
+        public SignLanguageSO SignLanguageItem;
+        public string ChoiceText;
+        public Vocabulary Vocabulary;
+        public AdditionalSetting AdditionalSetting;
+
+        public ChoiceContent()
+        {
+            AdditionalSetting = new AdditionalSetting();
         }
     }
 

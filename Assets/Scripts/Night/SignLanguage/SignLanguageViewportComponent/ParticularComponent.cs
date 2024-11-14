@@ -66,13 +66,14 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         }
 
         #region SETANSWER
-        public void SetAnswer(Particular particular)
+        public IEnumerator SetAnswer(Particular particular)
         {
             answerParticular._Particular = particular._Particular;
             answerParticular.Sprite = particular.Sprite;
 
             SetRandomChoice(transform.childCount);
             SetCorrectChoice(transform.childCount);
+            yield return null;
         }
 
         private void SetRandomChoice(int childCount)

@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 using System;
 using System.Reflection;
+using HandByHand.NightSystem.DialogueSystem;
 
 namespace HandByHand.NightSystem.SignLanguageSystem
 {
@@ -29,7 +30,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         private List<GameObject> buttonGameObjectList;
         private List<GameObject> viewportObjectList;
 
-        private GameObject UIObjectInSignLanguageCanvas;
+        public GameObject UIObjectInSignLanguageCanvas { get; private set; }
         private Vector3 originalCompareEventButtonPosition;
 
         #endregion
@@ -148,7 +149,7 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         }
 
         #region CANVASACTIVATEFUNCTION
-        public void ActiveUIObject(string SignLanguageMean)
+        public IEnumerator ActiveUIObject(string SignLanguageMean)
         {
             if (SignLanguageCanvas.activeSelf)
             {
@@ -156,18 +157,18 @@ namespace HandByHand.NightSystem.SignLanguageSystem
                 WordToMake.SetText("수화로 표현해보자!\n\"" + SignLanguageMean + "\"");
                 SignLanguageUIActiveSelf = true;
 
-                StartCoroutine(UICanvasVerticalSlideCoroutine(targetPosition, false));
+                yield return StartCoroutine(UICanvasVerticalSlideCoroutine(targetPosition, false));
             }
         }
 
-        public void InActiveUIObject()
+        public IEnumerator InActiveUIObject()
         {
             if (SignLanguageCanvas.activeSelf)
             {
                 Vector3 targetPosition = new Vector3(0, -2340, 0);
                 SignLanguageUIActiveSelf = false;
 
-                StartCoroutine(UICanvasVerticalSlideCoroutine(targetPosition, true));
+                yield return StartCoroutine(UICanvasVerticalSlideCoroutine(targetPosition, true));
             }
         }
         #endregion
@@ -383,6 +384,8 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         /// <returns></returns>
         IEnumerator UICanvasVerticalSlideCoroutine(Vector2 targetPosition, bool isInitObject)
         {
+            IsVerticalAnimationDone = false;
+
             //변수 선언
             #region VARIABLEFIELD
             RectTransform rectTransform = UIObjectInSignLanguageCanvas.GetComponent<RectTransform>();
@@ -421,10 +424,15 @@ namespace HandByHand.NightSystem.SignLanguageSystem
 
             rectTransform.anchoredPosition = targetPosition;
 
+            IsVerticalAnimationDone = true;
             RayCastBlock(false);
 
             //애니메이션 완료를 알림
-            yield return StartCoroutine(AnnounceAnimationDone(isInitObject));
+            if (isInitObject)
+            {
+
+                InitAllVariable();
+            }
         }
 
         /// <summary>
@@ -487,26 +495,20 @@ namespace HandByHand.NightSystem.SignLanguageSystem
             horizontalSlideCoroutine = null;
         }
 
-        IEnumerator AnnounceAnimationDone(bool isInitObject)
+        private void InitAllVariable()
         {
-            if (isInitObject)
-            {
-                InitViewportObject();
-                InitButtonColor();
-                InitHadPushedArray();
-                InitCompareEventButtonPosition();
-                InitViewportAndButtonOpacity();
-                InitButtonInteractable();
-                completeButtonHadPushed = false;
+            InitViewportObject();
+            InitButtonColor();
+            InitHadPushedArray();
+            InitCompareEventButtonPosition();
+            InitViewportAndButtonOpacity();
+            InitButtonInteractable();
+            completeButtonHadPushed = false;
 
-                SignLanguageUIActiveSelf = false;
-                incorrectAnswerIndexList = new List<int>() { -1 };
-                presentPanelIndex = 0;
-                RayCastBlock(true);
-            }
-
-            IsVerticalAnimationDone = true;
-            yield return null;
+            SignLanguageUIActiveSelf = false;
+            incorrectAnswerIndexList = new List<int>() { -1 };
+            presentPanelIndex = 0;
+            RayCastBlock(true);
         }
 
         IEnumerator CompareButtonVerticalSlideCoroutine(Vector2 targetPosition)

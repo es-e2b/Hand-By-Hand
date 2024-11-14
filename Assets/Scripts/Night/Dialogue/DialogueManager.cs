@@ -28,8 +28,6 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         private GetInput getInput;
 
-        float waitingTimeOffset = 1.5f;
-
         public Coroutine DialogueCoroutine;
 
         [SerializeField]
@@ -51,6 +49,8 @@ namespace HandByHand.NightSystem.DialogueSystem
 
         [SerializeField]
         private DialogueChoiceSelectManager dialogueChoiceSelectManager;
+
+        private delegate GameObject returnObject(GameObject gameObj);
         #endregion
 
         #region INIT
@@ -64,6 +64,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                 ConnectionCanvasObject.SetActive(false);
 
             getInput = BlinkIcon.GetComponent<GetInput>();
+
             LoadDialogue();
         }
 
@@ -89,7 +90,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                 PlayerPrefs.SetInt("Day", 1);
             }
 
-            if(DialogueFileSO == null)
+            if (DialogueFileSO == null)
             {
                 LoadDialogueFileSO();
             }
@@ -165,7 +166,7 @@ namespace HandByHand.NightSystem.DialogueSystem
                     case ItemType.PlayerText:
                         BlinkIcon.SetActive(true);
                         yield return new WaitUntil(() => !BlinkIcon.activeSelf);
-                        
+
                         // yield return new WaitUntil(() => getInput.IsGetInput == true);
                         //Play Click SE
                         SoundManager.Instance.PlaySE(SoundName.Select);
@@ -185,59 +186,38 @@ namespace HandByHand.NightSystem.DialogueSystem
 
                         int selectedChoiceNumber = dialogueChoiceSelectManager.SelectedChoiceNumber;
 
+                        ChoiceContent playerChoiceItem = ((PlayerChoice)itemList[itemCount]).ChoiceContentList[selectedChoiceNumber];
+
                         //SO가 없다면 무시하고 넘어가기
                         //if it doesn't have SO, break.
-                        if (selectedSignLanguageSO == null)
+                        //SO가 있을시 선택 프로토콜 실행
+                        if (selectedSignLanguageSO != null)
                         {
-                            yield return null;
-                        }
-                        else
-                        {
-                            //Set Active Popup
-                            PopupObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 1120);
-                            IsSwipeEnable = false;
-
-                            signLanguageManager.MakeSignLanguage(selectedSignLanguageSO);
-
-                            //Show SignLanguageUICanvas (Make SignLanguage)
-                            signLanguageUIManager.ActiveUIObject(selectedSignLanguageSO.Mean);
-
-                            //waiting offset
-                            yield return new WaitForSeconds(waitingTimeOffset);
+                            yield return StartCoroutine(InitAndActiveUI(selectedSignLanguageSO));
 
                             //Show SignLanguageVocabulary while it's closing
-                            if (((PlayerChoice)itemList[itemCount]).ChoiceContentList[selectedChoiceNumber].AdditionalSetting.ShowVocabularyFirst)
+                            if (playerChoiceItem.AdditionalSetting.ShowVocabularyFirst)
                             {
-                                Vocabulary vocabulary = ((PlayerChoice)itemList[itemCount]).ChoiceContentList[selectedChoiceNumber].Vocabulary;
-
-                                while (!IsSwipeEnable)
-                                {
-                                    yield return new WaitForSeconds(0.5f);
-
-                                    yield return StartCoroutine(SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(PopupSpeaker, vocabulary));
-                                }
+                                yield return StartCoroutine(ShowVocabulary(playerChoiceItem.Vocabulary, PopupSpeaker));
                             }
 
                             yield return new WaitUntil(() => signLanguageManager.IsSignLanguageMade == true);
                             IsSwipeEnable = false;
 
                             //Close SignLanguageUICanvas
-                            signLanguageUIManager.InActiveUIObject();
+                            yield return StartCoroutine(signLanguageUIManager.InActiveUIObject());
 
-                            yield return new WaitForSeconds(waitingTimeOffset);
-
-                            //Show SignLanguageVocabulary
-                            if (((PlayerChoice)itemList[itemCount]).ChoiceContentList[selectedChoiceNumber].AdditionalSetting.ShowVocabularyLast)
+                            //Show SignLanguageVocabulary while it's closing
+                            if (playerChoiceItem.AdditionalSetting.ShowVocabularyLast)
                             {
-                                Vocabulary vocabulary = ((PlayerChoice)itemList[itemCount]).ChoiceContentList[selectedChoiceNumber].Vocabulary;
-                                yield return StartCoroutine(SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(DialogueSpeaker, vocabulary));
+                                yield return StartCoroutine(SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(DialogueSpeaker, playerChoiceItem.Vocabulary));
                             }
                         }
 
                         //if it have DialogueFileSO, load to it
-                        if (((PlayerChoice)itemList[itemCount]).ChoiceContentList[selectedChoiceNumber].AdditionalSetting.DialogueSO != null)
+                        if (playerChoiceItem.AdditionalSetting.DialogueSO != null)
                         {
-                            DialogueFileSO = ((PlayerChoice)itemList[itemCount]).ChoiceContentList[selectedChoiceNumber].AdditionalSetting.DialogueSO;
+                            DialogueFileSO = playerChoiceItem.AdditionalSetting.DialogueSO;
                             Restart();
                             yield break;
                         }
@@ -247,44 +227,26 @@ namespace HandByHand.NightSystem.DialogueSystem
 
                         MakeSignLanguage makeSignLanguageItem = ((MakeSignLanguage)itemList[itemCount]);
 
-                        //Show SignLanguageUICanvas (Make SignLanguage)
-                        signLanguageUIManager.ActiveUIObject(makeSignLanguageItem.SignLanguageSO.Mean);
+                        SignLanguageSO signLanguageSO = makeSignLanguageItem.SignLanguageSO;
 
-                        signLanguageManager.MakeSignLanguage(makeSignLanguageItem.SignLanguageSO);
+                        yield return StartCoroutine(InitAndActiveUI(signLanguageSO));
 
-                        //waiting offset
-                        yield return new WaitForSeconds(waitingTimeOffset);
-
-                        PopupObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 1120);
-                        IsSwipeEnable = false;
-
-                        //Show SignLanguageVocabulary
+                        //Show SignLanguageVocabulary while it's closing
                         if (makeSignLanguageItem.AdditionalSetting.ShowVocabularyFirst)
                         {
-                            Vocabulary vocabulary = makeSignLanguageItem.Vocabulary;
-
-                            while(!IsSwipeEnable)
-                            {
-                                yield return new WaitForSeconds(0.5f);
-
-                                yield return StartCoroutine(SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(PopupSpeaker, vocabulary));
-                            }
+                            yield return StartCoroutine(ShowVocabulary(makeSignLanguageItem.Vocabulary, PopupSpeaker));
                         }
 
                         yield return new WaitUntil(() => signLanguageManager.IsSignLanguageMade == true);
-
                         IsSwipeEnable = false;
 
                         //Close SignLanguageUICanvas
-                        signLanguageUIManager.InActiveUIObject();
+                        yield return StartCoroutine(signLanguageUIManager.InActiveUIObject());
 
-                        yield return new WaitForSeconds(waitingTimeOffset);
-
-                        //Show SignLanguageVocabulary
+                        //Show SignLanguageVocabulary while it's closing
                         if (makeSignLanguageItem.AdditionalSetting.ShowVocabularyLast)
                         {
-                            Vocabulary vocabulary = makeSignLanguageItem.Vocabulary;
-                            yield return StartCoroutine(SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(DialogueSpeaker, vocabulary));
+                            yield return StartCoroutine(SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(DialogueSpeaker, makeSignLanguageItem.Vocabulary));
                         }
 
                         //if it have DialogueFileSO, load to it
@@ -298,21 +260,17 @@ namespace HandByHand.NightSystem.DialogueSystem
 
                     case ItemType.Tutorial:
                         //Show SignLanguageUICanvas (Make SignLanguage)
-                        signLanguageUIManager.ActiveUIObject(((Tutorial)itemList[itemCount]).SignLanguageSO.Mean);
+                        yield return StartCoroutine(signLanguageUIManager.ActiveUIObject(((Tutorial)itemList[itemCount]).SignLanguageSO.Mean));
 
-                        //waiting offset
-                        yield return new WaitForSeconds(waitingTimeOffset);
+                        GameObject tutorialAsset = Instantiate(((Tutorial)itemList[itemCount]).TutorialAsset);
 
-                        GameObject tutorialAsset = Instantiate(((Tutorial)itemList[itemCount]).TutorialAsset, null) as GameObject;
+                        yield return new WaitUntil (() => tutorialAsset != null);
 
                         yield return StartCoroutine(tutorialAsset.transform.GetChild(0).GetComponent<TutorialManager>().StartTutorial(((Tutorial)itemList[itemCount])));
 
                         Destroy(tutorialAsset);
 
-                        signLanguageUIManager.InActiveUIObject();
-
-                        //waiting offset
-                        yield return new WaitForSeconds(waitingTimeOffset);
+                        yield return StartCoroutine(signLanguageUIManager.InActiveUIObject());
 
                         break;
                 }
@@ -321,7 +279,7 @@ namespace HandByHand.NightSystem.DialogueSystem
             }
 
             //3일차의 경우 끝나고 엔딩으로 넘어감
-            if(PlayerPrefs.GetInt("Day") == 3)
+            if (PlayerPrefs.GetInt("Day") == 3)
             {
                 EndingCanvasObject.SetActive(true);
                 yield break;
@@ -331,8 +289,28 @@ namespace HandByHand.NightSystem.DialogueSystem
             SaveDayIndex();
             //씬 전환
             ConnectionCanvasObject.SetActive(true);
+        }
 
-            yield return null;
+        IEnumerator InitAndActiveUI(SignLanguageSO signLanguageSO)
+        {
+            //Set Active Popup
+            PopupObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 1120);
+            IsSwipeEnable = false;
+
+            yield return StartCoroutine(signLanguageManager.MakeSignLanguage(signLanguageSO));
+
+            //Show SignLanguageUICanvas (Make SignLanguage)
+            yield return StartCoroutine(signLanguageUIManager.ActiveUIObject(signLanguageSO.Mean));
+        }
+
+        IEnumerator ShowVocabulary(Vocabulary vocabulary, GameObject speaker)
+        {
+                while (!IsSwipeEnable)
+                {
+                    yield return new WaitForSeconds(0.5f);
+
+                    yield return StartCoroutine(SignAnimationRenderer.Instance.StopAndEnqueueVocabulary(speaker, vocabulary));
+                }
         }
 
         //CloseButton Event

@@ -75,12 +75,13 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         }
 
         #region SETANSWER
-        public void SetAnswer(SymbolAndDirection symbolAndDirection)
+        public IEnumerator SetAnswer(SymbolAndDirection symbolAndDirection)
         {
             answerSymbolAndDirection.Sprite = symbolAndDirection.Sprite;
 
             SetRandomChoice(transform.childCount);
             SetCorrectChoice(transform.childCount);
+            yield return null;
         }
 
         private void SetRandomChoice(int childCount)

@@ -79,7 +79,7 @@ namespace HandByHand.NightSystem
             StartCoroutine(StartEnding());
         }
 
-        IEnumerator StartEnding()
+        public IEnumerator StartEnding()
         {
             float waitingOffset = 0.5f;
 

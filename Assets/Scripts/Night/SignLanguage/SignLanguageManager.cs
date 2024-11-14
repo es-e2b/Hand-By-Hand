@@ -47,22 +47,22 @@ namespace HandByHand.NightSystem.SignLanguageSystem
         }
         #endregion
 
-        public void MakeSignLanguage(SignLanguageSO signLanguageSO)
+        public IEnumerator MakeSignLanguage(SignLanguageSO signLanguageSO)
         {
             //수화 SO 파일 받아오기
             this.signLanguageSO = signLanguageSO;
 
             //각 뷰포트의 component스크립트에 변수 할당
-            SetComponent();
+            yield return SetComponent();
         }
 
 
-        private void SetComponent()
+        private IEnumerator SetComponent()
         {
-            handCountComponent.SetAnswer(signLanguageSO.HandCount);
-            symbolAndDirectionComponent.SetAnswer(signLanguageSO.SymbolAndDirection);
-            handPositionComponent.SetAnswer(signLanguageSO.Position);
-            particularComponent.SetAnswer(signLanguageSO.Special);
+            yield return StartCoroutine(handCountComponent.SetAnswer(signLanguageSO.HandCount));
+            yield return StartCoroutine(symbolAndDirectionComponent.SetAnswer(signLanguageSO.SymbolAndDirection));
+            yield return StartCoroutine(handPositionComponent.SetAnswer(signLanguageSO.Position));
+            yield return StartCoroutine(particularComponent.SetAnswer(signLanguageSO.Special));
         }
 
         public void ComparingHandSignSO()
